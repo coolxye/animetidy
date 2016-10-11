@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnimeTidyLib", "AnimeTidyLib\AnimeTidyLib.csproj", "{18FEDA0C-D147-4286-B39A-01204808106A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnimeTidy", "AnimeTidy\AnimeTidy.csproj", "{D8150175-8B6E-4EFF-B85A-F768B5F949C1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnimeTidyRefer", "AnimeTidyRefer\AnimeTidyRefer.csproj", "{74BBA084-349B-4DCB-9AF8-0A8254CC5A9C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{18FEDA0C-D147-4286-B39A-01204808106A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18FEDA0C-D147-4286-B39A-01204808106A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18FEDA0C-D147-4286-B39A-01204808106A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18FEDA0C-D147-4286-B39A-01204808106A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8150175-8B6E-4EFF-B85A-F768B5F949C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8150175-8B6E-4EFF-B85A-F768B5F949C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8150175-8B6E-4EFF-B85A-F768B5F949C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8150175-8B6E-4EFF-B85A-F768B5F949C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74BBA084-349B-4DCB-9AF8-0A8254CC5A9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74BBA084-349B-4DCB-9AF8-0A8254CC5A9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74BBA084-349B-4DCB-9AF8-0A8254CC5A9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74BBA084-349B-4DCB-9AF8-0A8254CC5A9C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
