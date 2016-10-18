@@ -64,6 +64,7 @@
 			this.olvAnime.AllColumns.Add(this.olvColGrade);
 			this.olvAnime.AllColumns.Add(this.olvColNote);
 			this.olvAnime.AllowColumnReorder = true;
+			this.olvAnime.CellEditActivation = AnimeTidyLib.ObjectListView.CellEditActivateMode.DoubleClick;
 			this.olvAnime.CellEditUseWholeCell = false;
 			this.olvAnime.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.olvColTitle,
@@ -81,11 +82,20 @@
 			this.olvAnime.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.olvAnime.EmptyListMsg = "アニメがない...";
 			this.olvAnime.FullRowSelect = true;
+			this.olvAnime.GroupWithItemCountFormat = "{0} [{1} Animes]";
+			this.olvAnime.GroupWithItemCountSingularFormat = "{0} [{1} Anime]";
 			this.olvAnime.Location = new System.Drawing.Point(0, 0);
 			this.olvAnime.Name = "olvAnime";
+			this.olvAnime.ShowCommandMenuOnRightClick = true;
+			this.olvAnime.ShowGroups = false;
+			this.olvAnime.ShowItemCountOnGroups = true;
+			this.olvAnime.ShowItemToolTips = true;
 			this.olvAnime.Size = new System.Drawing.Size(150, 106);
 			this.olvAnime.TabIndex = 1;
+			this.olvAnime.UseAlternatingBackColors = true;
 			this.olvAnime.UseCompatibleStateImageBehavior = false;
+			this.olvAnime.UseFiltering = true;
+			this.olvAnime.UseHyperlinks = true;
 			this.olvAnime.View = System.Windows.Forms.View.Details;
 			// 
 			// olvColTitle
