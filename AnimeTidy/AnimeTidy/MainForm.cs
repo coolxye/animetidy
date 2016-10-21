@@ -23,7 +23,7 @@ namespace AnimeTidy
 			// AnimeTidy.xml
 			InitTidyXmlFile();
 			// Anime, Music, Other..
-			InitTabAnime();
+			InitTabs();
 		}
 
 		private static List<TidyXml> TidyXmlLst
@@ -100,20 +100,66 @@ namespace AnimeTidy
 			xWriter.Close();
 		}
 
-		private void InitTabAnime()
+		private void InitTabs()
+		{
+			foreach (TidyXml tx in TidyXmlLst)
+			{
+				switch (tx.XatType)
+				{
+					case TidyType.Anime:
+						InitTabAnime(tx.XatName, tx.XatPath);
+						break;
+
+					case TidyType.Music:
+						break;
+
+					case TidyType.Other:
+						break;
+
+					default:
+						break;
+				}
+			}
+		}
+
+		private void InitTabAnime(string name, string path)
 		{
 			AnimeInfo info = new AnimeInfo(this);
-
-			foreach (TidyXml tx in TidyXmlLst)
-				if (tx.XatType == TidyType.Anime)
-				{
-					info.Name = tx.XatName;
-					info.Path = tx.XatPath;
-
-					break;
-				}
-
+			info.Name = name;
+			info.Path = path;
 			this.tabAnimes.AnimeInfo = info;
+		}
+
+		private void tsbtnNew_Click(object sender, EventArgs e)
+		{
+			switch (this.tabControlMain.SelectedIndex)
+			{
+				case 0:
+					this.tabAnimes.CreateAnimeInfo();
+					break;
+
+				case 1:
+					break;
+
+				default:
+					break;
+			}
+		}
+
+		private void tsbtnOpen_Click(object sender, EventArgs e)
+		{
+			switch (this.tabControlMain.SelectedIndex)
+			{
+				case 0:
+					this.tabAnimes.OpenAnimeInfo();
+					break;
+
+				case 1:
+					break;
+
+				default:
+					break;
+			}
 		}
 	}
 }

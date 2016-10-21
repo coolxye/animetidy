@@ -155,8 +155,44 @@ namespace AnimeTidy
 
 		private void InitAnime()
 		{
+			AnimeInfo.TotalChanged += AnimeInfo_TotalChanged;
+
 			if (AnimeInfo.AnimeList != null)
+			{
 				this.olvAnime.SetObjects(AnimeInfo.AnimeList);
+
+				// todo
+				AnimeInfo.IsCreated = true;
+				AnimeInfo.IsSaved = true;
+				AnimeInfo.UpdateStatusStrip();
+			}
+
+			AnimeInfo.CreateStatusChanged += AnimeInfo_CreateStatusChanged;
+		}
+
+		private void AnimeInfo_TotalChanged(object sender, PropertyChangedEventArgs e)
+		{
+			AnimeInfo.UpdateStatusStripTotal();
+		}
+
+		private void AnimeInfo_CreateStatusChanged(object sender, PropertyChangedEventArgs e)
+		{
+			if (!AnimeInfo.IsCreated)
+			{
+				this.olvAnime.ClearObjects();
+
+				AnimeInfo.Total = 0;
+			}
+		}
+
+		public void CreateAnimeInfo()
+		{
+			AnimeInfo.CreateInfoList();
+		}
+
+		internal void OpenAnimeInfo()
+		{
+			AnimeInfo.OpenInfoList();
 		}
 	}
 }

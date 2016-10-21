@@ -9,76 +9,12 @@ using System.Windows.Forms;
 
 namespace AnimeTidy.Cores
 {
-	public class AnimeInfo
+	public class AnimeInfo : TidyInfo
 	{
-		public String Path
-		{ get; set; }
-
-		public String Name
-		{ get; set; }
-
-		public Int32 Total
-		{ get; set; }
-
-		public Int64 Space
-		{ get; set; }
-
-		public UInt64 Uid
-		{ get; set; }
-
-		public static TidyType Type
+		public override TidyType Type
 		{
 			get
 			{ return TidyType.Anime; }
-		}
-
-		/// <summary>
-		/// Total Space Uid
-		/// </summary>
-		private static Int32 _infLength = 3;
-
-		public event EventHandler<PropertyChangedEventArgs> NewStatusChanged;
-
-		private Boolean _isNew;
-
-		public Boolean IsNew
-		{
-			get
-			{
-				return _isNew;
-			}
-			set
-			{
-				if (value != _isNew)
-				{
-					_isNew = value;
-
-					PropertyChangedEventArgs e = new PropertyChangedEventArgs("IsNew");
-					OnPropertyChanged(NewStatusChanged, e);
-				}
-			}
-		}
-
-		public event EventHandler<PropertyChangedEventArgs> SaveStatusChanged;
-
-		private Boolean _isSaved;
-
-		public Boolean IsSaved
-		{
-			get
-			{
-				return _isSaved;
-			}
-			set
-			{
-				if (value != _isSaved)
-				{
-					_isSaved = value;
-
-					PropertyChangedEventArgs e = new PropertyChangedEventArgs("IsSaved");
-					OnPropertyChanged(SaveStatusChanged, e);
-				}
-			}
 		}
 
 		private List<Anime> _animeList;
@@ -99,14 +35,8 @@ namespace AnimeTidy.Cores
 		{
 			this._mainForm = mainForm;
 
-			this._isNew = true;
-			this._isSaved = true;
-		}
-
-		protected virtual void OnPropertyChanged(EventHandler<PropertyChangedEventArgs> handler, PropertyChangedEventArgs e)
-		{
-			if (handler != null)
-				handler(this, e);
+			//this._isNew = true;
+			//this._isSaved = true;
 		}
 
 		public List<Anime> LoadAnimeList(String path)
@@ -122,7 +52,7 @@ namespace AnimeTidy.Cores
 			}
 
 			string[] info = line.Split('\t');
-			if (info.Length != _infLength)
+			if (info.Length != TidyConst.AnimeKeyLen)
 			{
 				sr.Close();
 
@@ -148,7 +78,7 @@ namespace AnimeTidy.Cores
 			this.Uid = ut;
 
 			List<Anime> lstAnime = new List<Anime>();
-			int iErr = 0;
+			int iErr = 1;
 			try
 			{
 				while (!String.IsNullOrEmpty(line = sr.ReadLine()))
@@ -180,25 +110,49 @@ namespace AnimeTidy.Cores
 					lstAnime.Add(ani);
 				}
 			}
-			catch (Exception)
+			catch (IndexOutOfRangeException)
 			{
-				MessageBox.Show(String.Format("The line {0} is wrong.", iErr + 1), "Read error",
+				MessageBox.Show(String.Format("The line {0} is out of index.", iErr), "Read error",
 					MessageBoxButtons.OK, MessageBoxIcon.Warning);
-
-				lstAnime.Clear();
-				lstAnime = null;
-
-				return null;
+			}
+			catch (FormatException)
+			{
+				MessageBox.Show(String.Format("The line {0} has wrong data.", iErr), "Read error",
+					MessageBoxButtons.OK, MessageBoxIcon.Warning);
 			}
 			finally
 			{
 				sr.Close();
 			}
 
-			this.IsNew = false;
-			this.IsSaved = true;
+			if (lstAnime.Count != this.Total)
+			{
+				lstAnime.Clear();
+
+				return null;
+			}
+
+			//this.IsCreated = true;
+			//this.IsSaved = true;
 
 			return lstAnime;
+		}
+
+		public void UpdateStatusStrip()
+		{
+			Form.tabControlMain.SelectedTab.Text = this.Name;
+			Form.tabControlMain.SelectedTab.ToolTipText = this.Path;
+		}
+
+		protected override void OpenDeal()
+		{
+			base.OpenDeal();
+		}
+
+		public void UpdateStatusStripTotal()
+		{
+			Form.tabControlMain.TabPages[1].Text = this.Total <= 0 ? "Total: -" :
+				String.Format("Total: {0}", this.Total);
 		}
 	}
 }
