@@ -94,6 +94,8 @@
 			this.tabControlMain.ShowToolTips = true;
 			this.tabControlMain.Size = new System.Drawing.Size(260, 209);
 			this.tabControlMain.TabIndex = 2;
+			this.tabControlMain.SelectedIndexChanged += new System.EventHandler(this.tabControlMain_SelectedIndexChanged);
+			this.tabControlMain.Deselected += new System.Windows.Forms.TabControlEventHandler(this.tabControlMain_Deselected);
 			// 
 			// tabPageAnime
 			// 

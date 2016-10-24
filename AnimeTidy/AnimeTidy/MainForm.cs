@@ -57,18 +57,27 @@ namespace AnimeTidy
 				{
 					TidyXml txml = new TidyXml();
 					txml.XatType = (TidyType)Enum.Parse(typeof(TidyType), type);
-					XPathNavigator xt = xpnavi.SelectSingleNode("LastAccessName");
+					XPathNavigator xt = xpnavi.SelectSingleNode("Name");
 					
 					if (xt == null || String.IsNullOrEmpty(xt.Value))
 						continue;
 
 					txml.XatName = xt.Value;
-					xt = xpnavi.SelectSingleNode("LastAccessPath");
+					xt = xpnavi.SelectSingleNode("Path");
 
 					if (xt == null || String.IsNullOrEmpty(xt.Value) || !File.Exists(xt.Value))
 						continue;
 
 					txml.XatPath = xt.Value;
+
+					xt = xpnavi.SelectSingleNode("Total");
+					txml.XatTotal = xt == null ? 0 : xt.ValueAsInt;
+
+					xt = xpnavi.SelectSingleNode("Space");
+					txml.XatSpace = xt == null ? 0 : xt.ValueAsLong;
+
+					xt = xpnavi.SelectSingleNode("Uid");
+					txml.XatUid = xt == null ? 0 : xt.ValueAsLong;
 
 					TidyXmlLst.Add(txml);
 				}
@@ -89,8 +98,17 @@ namespace AnimeTidy
 			{
 				xWriter.WriteStartElement("Xat");
 				xWriter.WriteAttributeString("Type", tx.XatType.ToString());
-				xWriter.WriteElementString("LastAccessName", tx.XatName);
-				xWriter.WriteElementString("LastAccessPath", tx.XatPath);
+				xWriter.WriteElementString("Name", tx.XatName);
+				xWriter.WriteElementString("Path", tx.XatPath);
+				xWriter.WriteStartElement("Total");
+				xWriter.WriteValue(tx.XatTotal);
+				xWriter.WriteEndElement();
+				xWriter.WriteStartElement("Space");
+				xWriter.WriteValue(tx.XatSpace);
+				xWriter.WriteEndElement();
+				xWriter.WriteStartElement("Uid");
+				xWriter.WriteValue(tx.XatUid);
+				xWriter.WriteEndElement();
 				xWriter.WriteEndElement();
 			}
 
@@ -107,7 +125,7 @@ namespace AnimeTidy
 				switch (tx.XatType)
 				{
 					case TidyType.Anime:
-						InitTabAnime(tx.XatName, tx.XatPath);
+						InitTabAnime(tx);
 						break;
 
 					case TidyType.Music:
@@ -122,23 +140,38 @@ namespace AnimeTidy
 			}
 		}
 
-		private void InitTabAnime(string name, string path)
+		private void InitTabAnime(TidyXml tx)
 		{
 			AnimeInfo info = new AnimeInfo(this);
-			info.Name = name;
-			info.Path = path;
+			info.Name = tx.XatName;
+			info.Path = tx.XatPath;
+			info.Total = tx.XatTotal;
+			info.Space = tx.XatSpace;
+			info.Uid = tx.XatUid;
 			this.tabAnimes.AnimeInfo = info;
 		}
 
 		private void tsbtnNew_Click(object sender, EventArgs e)
 		{
+			this.tabAnimes.CreateAnimeInfo();
+		}
+
+		private void tsbtnOpen_Click(object sender, EventArgs e)
+		{
+			this.tabAnimes.OpenAnimeInfo();
+		}
+
+		private void tabControlMain_Deselected(object sender, TabControlEventArgs e)
+		{
 			switch (this.tabControlMain.SelectedIndex)
 			{
 				case 0:
-					this.tabAnimes.CreateAnimeInfo();
+					//this.tsbtnNew.Visible = false;
+					this.tsbtnNew.Click -= this.tsbtnNew_Click;
 					break;
 
 				case 1:
+					this.tsbtnNew.Click -= this.tsbtnMusicNew_Click;
 					break;
 
 				default:
@@ -146,20 +179,28 @@ namespace AnimeTidy
 			}
 		}
 
-		private void tsbtnOpen_Click(object sender, EventArgs e)
+		private void tabControlMain_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			switch (this.tabControlMain.SelectedIndex)
 			{
 				case 0:
-					this.tabAnimes.OpenAnimeInfo();
+					//this.tsbtnNew.Visible = true;
+					this.tsbtnNew.Click += tsbtnNew_Click;
 					break;
 
 				case 1:
+					this.tsbtnNew.Click += this.tsbtnMusicNew_Click;
 					break;
 
 				default:
 					break;
 			}
+		}
+
+		private void tsbtnMusicNew_Click(object sender, EventArgs e)
+		{
+			this.tabPageMusic.Text = "MusicNew";
+			this.SetTidyXmlFile();
 		}
 	}
 }

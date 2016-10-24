@@ -73,9 +73,9 @@ namespace AnimeTidy.Cores
 				return null;
 			}
 
-			this.Total = it;
-			this.Space = lt;
-			this.Uid = ut;
+			//this.Total = it;
+			//this.Space = lt;
+			//this.Uid = ut;
 
 			List<Anime> lstAnime = new List<Anime>();
 			int iErr = 1;
@@ -146,11 +146,27 @@ namespace AnimeTidy.Cores
 
 		protected override void OpenDeal()
 		{
-			base.OpenDeal();
+			OpenFileDialog ofd = new OpenFileDialog();
+			ofd.Filter = TidyConst.Filter;
+
+			if (ofd.ShowDialog() == DialogResult.OK)
+			{
+				if (this.Path != ofd.FileName)
+				{
+					//_ai.Path = ofd.FileName;
+					//_ai.Name = ofd.SafeFileName;
+
+					if (this.LoadAnimeList(ofd.FileName) != null)
+					{
+						// todo
+					}
+				}
+			}
 		}
 
 		public void UpdateStatusStripTotal()
 		{
+			// test
 			Form.tabControlMain.TabPages[1].Text = this.Total <= 0 ? "Total: -" :
 				String.Format("Total: {0}", this.Total);
 		}

@@ -35,7 +35,7 @@ namespace AnimeTidy.Cores
 		public Int64 Space
 		{ get; set; }
 
-		public UInt64 Uid
+		public Int64 Uid
 		{ get; set; }
 
 		public virtual TidyType Type
@@ -133,7 +133,7 @@ namespace AnimeTidy.Cores
 
 		public void CreateInfoList()
 		{
-			if (CheckSaveStatus())
+			if (this.CheckSaveStatus())
 			{
 				this.IsCreated = false;
 			}
@@ -141,8 +141,8 @@ namespace AnimeTidy.Cores
 
 		public void OpenInfoList()
 		{
-
-			this.OpenDeal();
+			if (this.CheckSaveStatus())
+				this.OpenDeal();
 		}
 
 		protected virtual void OpenDeal()

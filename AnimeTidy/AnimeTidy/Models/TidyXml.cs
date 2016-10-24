@@ -7,13 +7,22 @@ namespace AnimeTidy.Models
 {
 	public class TidyXml
 	{
-		public String XatPath
+		public TidyType XatType
 		{ get; set; }
 
 		public String XatName
 		{ get; set; }
 
-		public TidyType XatType
+		public String XatPath
+		{ get; set; }
+
+		public Int32 XatTotal
+		{ get; set; }
+
+		public Int64 XatSpace
+		{ get; set; }
+
+		public Int64 XatUid
 		{ get; set; }
 	}
 }

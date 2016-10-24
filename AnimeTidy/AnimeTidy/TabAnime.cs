@@ -165,6 +165,9 @@ namespace AnimeTidy
 				AnimeInfo.IsCreated = true;
 				AnimeInfo.IsSaved = true;
 				AnimeInfo.UpdateStatusStrip();
+
+				// todo
+				AnimeInfo.UpdateStatusStripTotal();
 			}
 
 			AnimeInfo.CreateStatusChanged += AnimeInfo_CreateStatusChanged;
