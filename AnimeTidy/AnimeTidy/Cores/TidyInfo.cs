@@ -136,6 +136,7 @@ namespace AnimeTidy.Cores
 			if (this.CheckSaveStatus())
 			{
 				this.IsCreated = false;
+				this.IsSaved = false;
 			}
 		}
 

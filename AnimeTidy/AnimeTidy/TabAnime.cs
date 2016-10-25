@@ -180,7 +180,13 @@ namespace AnimeTidy
 
 		private void AnimeInfo_CreateStatusChanged(object sender, PropertyChangedEventArgs e)
 		{
-			if (!AnimeInfo.IsCreated)
+			if (AnimeInfo.IsCreated)
+			{
+				this.olvAnime.SetObjects(AnimeInfo.AnimeList);
+
+				AnimeInfo.UpdateStatusStrip();
+			}
+			else
 			{
 				this.olvAnime.ClearObjects();
 

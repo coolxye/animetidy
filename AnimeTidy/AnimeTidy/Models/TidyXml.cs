@@ -15,14 +15,5 @@ namespace AnimeTidy.Models
 
 		public String XatPath
 		{ get; set; }
-
-		public Int32 XatTotal
-		{ get; set; }
-
-		public Int64 XatSpace
-		{ get; set; }
-
-		public Int64 XatUid
-		{ get; set; }
 	}
 }

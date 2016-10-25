@@ -70,15 +70,6 @@ namespace AnimeTidy
 
 					txml.XatPath = xt.Value;
 
-					xt = xpnavi.SelectSingleNode("Total");
-					txml.XatTotal = xt == null ? 0 : xt.ValueAsInt;
-
-					xt = xpnavi.SelectSingleNode("Space");
-					txml.XatSpace = xt == null ? 0 : xt.ValueAsLong;
-
-					xt = xpnavi.SelectSingleNode("Uid");
-					txml.XatUid = xt == null ? 0 : xt.ValueAsLong;
-
 					TidyXmlLst.Add(txml);
 				}
 			}
@@ -100,15 +91,6 @@ namespace AnimeTidy
 				xWriter.WriteAttributeString("Type", tx.XatType.ToString());
 				xWriter.WriteElementString("Name", tx.XatName);
 				xWriter.WriteElementString("Path", tx.XatPath);
-				xWriter.WriteStartElement("Total");
-				xWriter.WriteValue(tx.XatTotal);
-				xWriter.WriteEndElement();
-				xWriter.WriteStartElement("Space");
-				xWriter.WriteValue(tx.XatSpace);
-				xWriter.WriteEndElement();
-				xWriter.WriteStartElement("Uid");
-				xWriter.WriteValue(tx.XatUid);
-				xWriter.WriteEndElement();
 				xWriter.WriteEndElement();
 			}
 
@@ -145,9 +127,6 @@ namespace AnimeTidy
 			AnimeInfo info = new AnimeInfo(this);
 			info.Name = tx.XatName;
 			info.Path = tx.XatPath;
-			info.Total = tx.XatTotal;
-			info.Space = tx.XatSpace;
-			info.Uid = tx.XatUid;
 			this.tabAnimes.AnimeInfo = info;
 		}
 

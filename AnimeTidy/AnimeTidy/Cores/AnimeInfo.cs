@@ -59,12 +59,12 @@ namespace AnimeTidy.Cores
 				return null;
 			}
 
-			int it;
-			long lt;
-			ulong ut;
-			if (!Int32.TryParse(info[0], out it) ||
-				!Int64.TryParse(info[1], out lt) ||
-				!UInt64.TryParse(info[2], out ut))
+			int itotal;
+			long lspace;
+			long luid;
+			if (!Int32.TryParse(info[0], out itotal) ||
+				!Int64.TryParse(info[1], out lspace) ||
+				!Int64.TryParse(info[2], out luid))
 			{
 				MessageBox.Show("The line 1 is wrong.", "Read error",
 					MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -125,7 +125,7 @@ namespace AnimeTidy.Cores
 				sr.Close();
 			}
 
-			if (lstAnime.Count != this.Total)
+			if (lstAnime.Count != itotal)
 			{
 				lstAnime.Clear();
 
@@ -134,6 +134,12 @@ namespace AnimeTidy.Cores
 
 			//this.IsCreated = true;
 			//this.IsSaved = true;
+
+			this.IsCreated = false;
+
+			this.Total = itotal;
+			this.Space = lspace;
+			this.Uid = luid;
 
 			return lstAnime;
 		}
@@ -155,10 +161,17 @@ namespace AnimeTidy.Cores
 				{
 					//_ai.Path = ofd.FileName;
 					//_ai.Name = ofd.SafeFileName;
-
-					if (this.LoadAnimeList(ofd.FileName) != null)
+					List<Anime> lstAnime;
+					if ((lstAnime = this.LoadAnimeList(ofd.FileName)) != null)
 					{
-						// todo
+						//this.IsCreated = false;
+
+						this._animeList.Clear();
+						this._animeList = lstAnime;
+
+						this.Name = ofd.SafeFileName;
+						this.Path = ofd.FileName;
+						this.IsCreated = true;
 					}
 				}
 			}
