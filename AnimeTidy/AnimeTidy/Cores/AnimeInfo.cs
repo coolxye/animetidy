@@ -17,6 +17,12 @@ namespace AnimeTidy.Cores
 			{ return TidyType.Anime; }
 		}
 
+		private String Summary
+		{
+			get
+			{ return String.Join("\t", Total, Space, Uid); }
+		}
+
 		private List<Anime> _animeList;
 		public List<Anime> AnimeList
 		{
@@ -34,9 +40,6 @@ namespace AnimeTidy.Cores
 		public AnimeInfo(MainForm mainForm)
 		{
 			this._mainForm = mainForm;
-
-			//this._isNew = true;
-			//this._isSaved = true;
 		}
 
 		public List<Anime> LoadAnimeList(String path)
@@ -72,10 +75,6 @@ namespace AnimeTidy.Cores
 
 				return null;
 			}
-
-			//this.Total = it;
-			//this.Space = lt;
-			//this.Uid = ut;
 
 			List<Anime> lstAnime = new List<Anime>();
 			int iErr = 1;
@@ -125,6 +124,7 @@ namespace AnimeTidy.Cores
 				sr.Close();
 			}
 
+			// exception check
 			if (lstAnime.Count != itotal)
 			{
 				lstAnime.Clear();
@@ -135,6 +135,8 @@ namespace AnimeTidy.Cores
 			//this.IsCreated = true;
 			//this.IsSaved = true;
 
+			// init: no event -> no clear
+			// open: event -> clear all
 			this.IsCreated = false;
 
 			this.Total = itotal;
@@ -146,6 +148,7 @@ namespace AnimeTidy.Cores
 
 		public void UpdateStatusStrip()
 		{
+			// test
 			Form.tabControlMain.SelectedTab.Text = this.Name;
 			Form.tabControlMain.SelectedTab.ToolTipText = this.Path;
 		}
@@ -177,11 +180,38 @@ namespace AnimeTidy.Cores
 			}
 		}
 
+		protected override void SaveDeal()
+		{
+			StreamWriter sw = new StreamWriter(this.Path, false, Encoding.Unicode);
+
+			sw.WriteLine(this.Summary);
+
+			foreach (Anime a in this.AnimeList)
+				sw.WriteLine(a.ToString());
+
+			sw.Close();
+
+			this.IsCreated = true;
+			this.IsSaved = true;
+		}
+
 		public void UpdateStatusStripTotal()
 		{
 			// test
 			Form.tabControlMain.TabPages[1].Text = this.Total <= 0 ? "Total: -" :
 				String.Format("Total: {0}", this.Total);
+		}
+
+		public void UpdateToolStripButton()
+		{
+			Form.tsbtnSave.Enabled = !this.IsSaved;
+		}
+
+		protected override void AddDeal()
+		{
+			// add ok test
+
+			base.AddDeal();
 		}
 	}
 }

@@ -10,10 +10,10 @@ namespace AnimeTidy.Cores
 {
 	public class TidyInfo
 	{
-		public String Path
+		public String Name
 		{ get; set; }
 
-		public String Name
+		public String Path
 		{ get; set; }
 
 		private Int32 _total;
@@ -76,6 +76,12 @@ namespace AnimeTidy.Cores
 			}
 		}
 
+		public TidyInfo()
+		{
+			this._isCreated = false;
+			this._isSaved = true;
+		}
+
 		public event EventHandler<PropertyChangedEventArgs> TotalChanged;
 		public event EventHandler<PropertyChangedEventArgs> CreateStatusChanged;
 		public event EventHandler<PropertyChangedEventArgs> SaveStatusChanged;
@@ -107,6 +113,7 @@ namespace AnimeTidy.Cores
 		{
 			if (this.IsCreated)
 			{
+				this.SaveDeal();
 				//UpdateAnimeDoc();
 				//_ai.IsSaved = true;
 
@@ -125,18 +132,25 @@ namespace AnimeTidy.Cores
 
 				//UpdateAnimeDoc();
 
+				this.Name = sfd.FileName.Substring(sfd.FileName.LastIndexOf('\\') + 1);
+				this.Path = sfd.FileName;
+
+				this.SaveDeal();
+
 				return true;
 			}
 			else
 				return false;
 		}
 
+		protected virtual void SaveDeal() { }
+
 		public void CreateInfoList()
 		{
 			if (this.CheckSaveStatus())
 			{
 				this.IsCreated = false;
-				this.IsSaved = false;
+				//this.IsSaved = false;
 			}
 		}
 
@@ -146,7 +160,21 @@ namespace AnimeTidy.Cores
 				this.OpenDeal();
 		}
 
-		protected virtual void OpenDeal()
-		{ }
+		protected virtual void OpenDeal() { }
+
+		public void SaveInfoList()
+		{
+			this.CheckCreateStatus();
+		}
+
+		public void AddInfo()
+		{
+			this.AddDeal();
+		}
+
+		protected virtual void AddDeal()
+		{
+			this.IsSaved = false;
+		}
 	}
 }

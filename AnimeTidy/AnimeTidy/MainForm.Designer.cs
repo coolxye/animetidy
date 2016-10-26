@@ -32,11 +32,14 @@
 			this.toolStripMain = new System.Windows.Forms.ToolStrip();
 			this.tsbtnNew = new System.Windows.Forms.ToolStripButton();
 			this.tsbtnOpen = new System.Windows.Forms.ToolStripButton();
+			this.tsbtnSave = new System.Windows.Forms.ToolStripButton();
 			this.statusStripMain = new System.Windows.Forms.StatusStrip();
 			this.tabControlMain = new System.Windows.Forms.TabControl();
 			this.tabPageAnime = new System.Windows.Forms.TabPage();
 			this.tabPageMusic = new System.Windows.Forms.TabPage();
 			this.tabAnimes = new AnimeTidy.TabAnime();
+			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+			this.tsbtnAdd = new System.Windows.Forms.ToolStripButton();
 			this.toolStripMain.SuspendLayout();
 			this.tabControlMain.SuspendLayout();
 			this.tabPageAnime.SuspendLayout();
@@ -46,7 +49,10 @@
 			// 
 			this.toolStripMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsbtnNew,
-            this.tsbtnOpen});
+            this.tsbtnOpen,
+            this.tsbtnSave,
+            this.toolStripSeparator1,
+            this.tsbtnAdd});
 			this.toolStripMain.Location = new System.Drawing.Point(0, 0);
 			this.toolStripMain.Name = "toolStripMain";
 			this.toolStripMain.Size = new System.Drawing.Size(284, 25);
@@ -72,6 +78,16 @@
 			this.tsbtnOpen.Size = new System.Drawing.Size(23, 22);
 			this.tsbtnOpen.Text = "Open";
 			this.tsbtnOpen.Click += new System.EventHandler(this.tsbtnOpen_Click);
+			// 
+			// tsbtnSave
+			// 
+			this.tsbtnSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsbtnSave.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnSave.Image")));
+			this.tsbtnSave.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsbtnSave.Name = "tsbtnSave";
+			this.tsbtnSave.Size = new System.Drawing.Size(23, 22);
+			this.tsbtnSave.Text = "Save";
+			this.tsbtnSave.Click += new System.EventHandler(this.tsbtnSave_Click);
 			// 
 			// statusStripMain
 			// 
@@ -128,6 +144,21 @@
 			this.tabAnimes.Size = new System.Drawing.Size(246, 177);
 			this.tabAnimes.TabIndex = 0;
 			// 
+			// toolStripSeparator1
+			// 
+			this.toolStripSeparator1.Name = "toolStripSeparator1";
+			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+			// 
+			// tsbtnAdd
+			// 
+			this.tsbtnAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsbtnAdd.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnAdd.Image")));
+			this.tsbtnAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsbtnAdd.Name = "tsbtnAdd";
+			this.tsbtnAdd.Size = new System.Drawing.Size(23, 22);
+			this.tsbtnAdd.Text = "Add";
+			this.tsbtnAdd.Click += new System.EventHandler(this.tsbtnAdd_Click);
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -157,6 +188,9 @@
 		private TabAnime tabAnimes;
 		private System.Windows.Forms.ToolStripButton tsbtnNew;
 		private System.Windows.Forms.ToolStripButton tsbtnOpen;
+		public System.Windows.Forms.ToolStripButton tsbtnSave;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+		private System.Windows.Forms.ToolStripButton tsbtnAdd;
 	}
 }
 

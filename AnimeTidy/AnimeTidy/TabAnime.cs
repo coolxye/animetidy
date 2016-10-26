@@ -155,22 +155,25 @@ namespace AnimeTidy
 
 		private void InitAnime()
 		{
+			// AnimeList Load before
+			// Total, Total Size todo
 			AnimeInfo.TotalChanged += AnimeInfo_TotalChanged;
 
-			if (AnimeInfo.AnimeList != null)
-			{
-				this.olvAnime.SetObjects(AnimeInfo.AnimeList);
+			//if (AnimeInfo.AnimeList != null)
+			//{
+			//	this.olvAnime.SetObjects(AnimeInfo.AnimeList);
 
-				// todo
-				AnimeInfo.IsCreated = true;
-				AnimeInfo.IsSaved = true;
-				AnimeInfo.UpdateStatusStrip();
+			//	// todo
+			//	AnimeInfo.IsCreated = true;
+			//	AnimeInfo.IsSaved = true;
+			//	AnimeInfo.UpdateStatusStrip();
 
-				// todo
-				AnimeInfo.UpdateStatusStripTotal();
-			}
+			//	// todo
+			//	//AnimeInfo.UpdateStatusStripTotal();
+			//}
 
 			AnimeInfo.CreateStatusChanged += AnimeInfo_CreateStatusChanged;
+			AnimeInfo.SaveStatusChanged += AnimeInfo_SaveStatusChanged;
 		}
 
 		private void AnimeInfo_TotalChanged(object sender, PropertyChangedEventArgs e)
@@ -184,13 +187,47 @@ namespace AnimeTidy
 			{
 				this.olvAnime.SetObjects(AnimeInfo.AnimeList);
 
+				// test
 				AnimeInfo.UpdateStatusStrip();
 			}
 			else
 			{
 				this.olvAnime.ClearObjects();
 
+				// clear AnimeInfo todo
+				AnimeInfo.Name = TidyConst.TabAnimeName;
+				AnimeInfo.Path = String.Empty;
 				AnimeInfo.Total = 0;
+				AnimeInfo.Space = 0L;
+
+				// clear MainForm test todo
+				AnimeInfo.UpdateStatusStrip();
+			}
+		}
+
+		private void AnimeInfo_SaveStatusChanged(object sender, PropertyChangedEventArgs e)
+		{
+			AnimeInfo.UpdateToolStripButton();
+		}
+
+		public void InitAnimeInfo(TidyXml xml)
+		{
+			AnimeInfo.Name = xml.XatName;
+			AnimeInfo.Path = xml.XatPath;
+
+			if (AnimeInfo.AnimeList != null)
+			{
+				//this.olvAnime.SetObjects(AnimeInfo.AnimeList);
+
+				// todo
+				AnimeInfo.IsCreated = true;
+				//AnimeInfo.IsSaved = true;
+
+				// test
+				//AnimeInfo.UpdateStatusStrip();
+
+				// todo
+				//AnimeInfo.UpdateStatusStripTotal();
 			}
 		}
 
@@ -199,9 +236,19 @@ namespace AnimeTidy
 			AnimeInfo.CreateInfoList();
 		}
 
-		internal void OpenAnimeInfo()
+		public void OpenAnimeInfo()
 		{
 			AnimeInfo.OpenInfoList();
+		}
+
+		public void SaveAnimeInfo()
+		{
+			AnimeInfo.SaveInfoList();
+		}
+
+		public void AddAnime()
+		{
+			AnimeInfo.AddInfo();
 		}
 	}
 }

@@ -104,7 +104,16 @@ namespace AnimeTidy.Models
 			}
 		}
 
-		public Anime(UInt64 id)
+		public override string ToString()
+		{		
+			return String.Join("\t", 
+				this.ID, this.Title, this.Name, this.Year, this.Season, this.Type, this.Format,
+				this.SubTeam, this.SubStyle, this.Path, this.Size, this.Store,
+				this.Enjoy, this.Grade, this.CreateTime, this.UpdateTime, this.Kana,
+				this.Episode, this.Inc, this.Note);
+		}
+
+		public Anime(Int64 id)
 		{
 			this.ID = id;
 		}
