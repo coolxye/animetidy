@@ -36,19 +36,15 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Design" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Deployment" />
+    <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cores\AnimeInfo.cs" />
+    <Compile Include="Cores\TidyInfo.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -62,6 +58,7 @@
     <Compile Include="Models\Metadata.cs" />
     <Compile Include="Models\Music.cs" />
     <Compile Include="Models\SubStyle.cs" />
+    <Compile Include="Models\TidyConst.cs" />
     <Compile Include="Models\TidyType.cs" />
     <Compile Include="Models\TidyXml.cs" />
     <Compile Include="Program.cs" />
@@ -103,7 +100,7 @@
     <None Include="Resources\Accept.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\add.png" />
+    <None Include="Resources\TsAdd.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Alert.png" />
@@ -112,19 +109,19 @@
     <None Include="Resources\AVI.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\backup.png" />
+    <None Include="Resources\TsBackup.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\del.png" />
+    <None Include="Resources\TsDel.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Diamond.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\duplicate.png" />
+    <None Include="Resources\TsDuplicate.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\edit.png" />
+    <None Include="Resources\TsModify.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Embedded.png" />
@@ -133,10 +130,10 @@
     <None Include="Resources\External.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\format.png" />
+    <None Include="Resources\TsFormat.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\group.png" />
+    <None Include="Resources\TsGroup.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\M2TS.png" />
@@ -148,34 +145,34 @@
     <None Include="Resources\MP4.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\new.png" />
+    <None Include="Resources\TsNew.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\open.png" />
+    <None Include="Resources\TsOpen.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\overlay.png" />
+    <None Include="Resources\TsOverlay.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\refresh.png" />
+    <None Include="Resources\TsRefresh.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Sad.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\save.png" />
+    <None Include="Resources\TsSave.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Sealed.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\search.png" />
+    <None Include="Resources\TsSearch.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Smile.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\undo.png" />
+    <None Include="Resources\TsUndo.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\WMV.png" />

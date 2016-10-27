@@ -1,4 +1,5 @@
 ﻿using AnimeTidy.Models;
+using AnimeTidyLib;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -92,7 +93,7 @@ namespace AnimeTidy.Cores
 				handler(this, e);
 		}
 
-		private bool CheckSaveStatus()
+		private bool CheckSaveStatus(ObjectListView olv)
 		{
 			if (this.IsSaved)
 				return true;
@@ -102,18 +103,18 @@ namespace AnimeTidy.Cores
 				"Save",	MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
 
 			if (dr == DialogResult.Yes)
-				return CheckCreateStatus();
+				return CheckCreateStatus(olv);
 			else if (dr == DialogResult.No)
 				return true;
 			else
 				return false;
 		}
 
-		private bool CheckCreateStatus()
+		private bool CheckCreateStatus(ObjectListView olv)
 		{
 			if (this.IsCreated)
 			{
-				this.SaveDeal();
+				this.SaveDeal(olv);
 				//UpdateAnimeDoc();
 				//_ai.IsSaved = true;
 
@@ -135,7 +136,7 @@ namespace AnimeTidy.Cores
 				this.Name = sfd.FileName.Substring(sfd.FileName.LastIndexOf('\\') + 1);
 				this.Path = sfd.FileName;
 
-				this.SaveDeal();
+				this.SaveDeal(olv);
 
 				return true;
 			}
@@ -143,38 +144,58 @@ namespace AnimeTidy.Cores
 				return false;
 		}
 
-		protected virtual void SaveDeal() { }
+		protected virtual void SaveDeal(ObjectListView olv) { }
 
-		public void CreateInfoList()
+		public void CreateInfoList(ObjectListView olv)
 		{
-			if (this.CheckSaveStatus())
+			if (this.CheckSaveStatus(olv))
 			{
 				this.IsCreated = false;
 				//this.IsSaved = false;
 			}
 		}
 
-		public void OpenInfoList()
+		public void OpenInfoList(ObjectListView olv)
 		{
-			if (this.CheckSaveStatus())
+			if (this.CheckSaveStatus(olv))
 				this.OpenDeal();
 		}
 
 		protected virtual void OpenDeal() { }
 
-		public void SaveInfoList()
+		public void SaveInfoList(ObjectListView olv)
 		{
-			this.CheckCreateStatus();
+			this.CheckCreateStatus(olv);
 		}
 
-		public void AddInfo()
+		public virtual void AddInfo(ObjectListView olv)
 		{
-			this.AddDeal();
-		}
-
-		protected virtual void AddDeal()
-		{
+			// Add Fin
 			this.IsSaved = false;
+		}
+
+		public virtual void ModifyInfo(ObjectListView olv)
+		{
+			// Modify Fin
+			this.IsSaved = false;
+		}
+
+		public virtual void DuplicateInfo(ObjectListView olv)
+		{
+			// Duplicate Fin
+			this.IsSaved = false;
+		}
+
+		public virtual void DeleteInfo(ObjectListView olv)
+		{
+			// Duplicate Fin
+			this.IsSaved = false;
+		}
+
+		public virtual void UndoInfo(ObjectListView olv)
+		{
+			// Duplicate Fin
+			///this.IsSaved = false;
 		}
 	}
 }

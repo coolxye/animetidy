@@ -233,22 +233,42 @@ namespace AnimeTidy
 
 		public void CreateAnimeInfo()
 		{
-			AnimeInfo.CreateInfoList();
+			AnimeInfo.CreateInfoList(this.olvAnime);
 		}
 
 		public void OpenAnimeInfo()
 		{
-			AnimeInfo.OpenInfoList();
+			AnimeInfo.OpenInfoList(this.olvAnime);
 		}
 
 		public void SaveAnimeInfo()
 		{
-			AnimeInfo.SaveInfoList();
+			AnimeInfo.SaveInfoList(this.olvAnime);
 		}
 
 		public void AddAnime()
 		{
-			AnimeInfo.AddInfo();
+			AnimeInfo.AddInfo(this.olvAnime);
+		}
+
+		public void ModifyAnime()
+		{
+			AnimeInfo.ModifyInfo(this.olvAnime);
+		}
+
+		public void DuplicateAnime()
+		{
+			AnimeInfo.DuplicateInfo(this.olvAnime);
+		}
+
+		public void DeleteAnime()
+		{
+			AnimeInfo.DeleteInfo(this.olvAnime);
+		}
+
+		public void UndoAnime()
+		{
+			AnimeInfo.UndoInfo(this.olvAnime);
 		}
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using AnimeTidy.Models;
+using AnimeTidyLib;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -180,13 +181,13 @@ namespace AnimeTidy.Cores
 			}
 		}
 
-		protected override void SaveDeal()
+		protected override void SaveDeal(ObjectListView olv)
 		{
 			StreamWriter sw = new StreamWriter(this.Path, false, Encoding.Unicode);
 
 			sw.WriteLine(this.Summary);
 
-			foreach (Anime a in this.AnimeList)
+			foreach (Anime a in olv.Objects)
 				sw.WriteLine(a.ToString());
 
 			sw.Close();
@@ -207,11 +208,39 @@ namespace AnimeTidy.Cores
 			Form.tsbtnSave.Enabled = !this.IsSaved;
 		}
 
-		protected override void AddDeal()
+		public override void AddInfo(ObjectListView olv)
 		{
 			// add ok test
+			Anime a = new Anime(this.Uid++);
+			a.Title = "xxx";
+			a.Note = "test";
+			olv.AddObject(a);
 
-			base.AddDeal();
+			base.AddInfo(olv);
+		}
+
+		public override void ModifyInfo(ObjectListView olv)
+		{
+			// modify ok test
+
+			base.ModifyInfo(olv);
+		}
+
+		public override void DuplicateInfo(ObjectListView olv)
+		{
+			// duplicate ok test
+
+			base.DuplicateInfo(olv);
+		}
+
+		public override void DeleteInfo(ObjectListView olv)
+		{
+			base.DeleteInfo(olv);
+		}
+
+		public override void UndoInfo(ObjectListView olv)
+		{
+			base.UndoInfo(olv);
 		}
 	}
 }
