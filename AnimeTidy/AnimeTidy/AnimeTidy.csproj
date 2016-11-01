@@ -43,8 +43,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Forms\AddAnime.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\EditAnime.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Cores\AnimeInfo.cs" />
     <Compile Include="Cores\TidyInfo.cs" />
+    <Compile Include="EditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditForm.Designer.cs">
+      <DependentUpon>EditForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -69,6 +81,9 @@
     <Compile Include="TabAnime.Designer.cs">
       <DependentUpon>TabAnime.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="EditForm.resx">
+      <DependentUpon>EditForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>

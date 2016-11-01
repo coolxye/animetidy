@@ -1,4 +1,5 @@
-﻿using AnimeTidy.Models;
+﻿using AnimeTidy.Forms;
+using AnimeTidy.Models;
 using AnimeTidyLib;
 using System;
 using System.Collections.Generic;
@@ -211,10 +212,14 @@ namespace AnimeTidy.Cores
 		public override void AddInfo(ObjectListView olv)
 		{
 			// add ok test
-			Anime a = new Anime(this.Uid++);
-			a.Title = "xxx";
-			a.Note = "test";
-			olv.AddObject(a);
+			//Anime a = new Anime(this.Uid++);
+			//a.Title = "xxx";
+			//a.Note = "test";
+			//olv.AddObject(a);
+			Anime a = null;
+
+			AddAnime aa = new AddAnime(a, this.Uid++);
+			aa.Show();
 
 			base.AddInfo(olv);
 		}
@@ -222,6 +227,9 @@ namespace AnimeTidy.Cores
 		public override void ModifyInfo(ObjectListView olv)
 		{
 			// modify ok test
+			Anime a = olv.SelectedObject as Anime;
+			EditAnime ea = new EditAnime(a);
+			ea.Show();
 
 			base.ModifyInfo(olv);
 		}
