@@ -218,20 +218,35 @@ namespace AnimeTidy.Cores
 			//olv.AddObject(a);
 			Anime a = null;
 
-			AddAnime aa = new AddAnime(a, this.Uid++);
+			AddAnime aa = new AddAnime(olv, a, this.Uid);
+			aa.FormClosed += aa_FormClosed;
 			aa.Show();
+		}
 
-			base.AddInfo(olv);
+		private void aa_FormClosed(object sender, FormClosedEventArgs e)
+		{
+			AddAnime aa = sender as AddAnime;
+			if (aa.DialogResult == DialogResult.OK)
+			{
+				this.Total++;
+				this.Space += aa.Ani.Size;
+				aa.ListView.AddObject(aa.Ani);
+
+				base.AddInfo(aa.ListView);
+			}
 		}
 
 		public override void ModifyInfo(ObjectListView olv)
 		{
 			// modify ok test
 			Anime a = olv.SelectedObject as Anime;
-			EditAnime ea = new EditAnime(a);
-			ea.Show();
+			if (a != null)
+			{
+				ModAnime ma = new ModAnime(olv, a);
+				ma.Show();
 
-			base.ModifyInfo(olv);
+				base.ModifyInfo(olv);
+			}
 		}
 
 		public override void DuplicateInfo(ObjectListView olv)

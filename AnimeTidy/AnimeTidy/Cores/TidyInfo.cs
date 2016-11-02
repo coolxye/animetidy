@@ -172,6 +172,7 @@ namespace AnimeTidy.Cores
 		{
 			// Add Fin
 			this.IsSaved = false;
+			this.Uid++;
 		}
 
 		public virtual void ModifyInfo(ObjectListView olv)

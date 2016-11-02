@@ -1,4 +1,5 @@
 ﻿using AnimeTidy.Models;
+using AnimeTidyLib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,19 +8,19 @@ using System.Windows.Forms;
 
 namespace AnimeTidy.Forms
 {
-	public class AddAnime : EditAnime
+	public class AddAnime : AniEditor
 	{
-		public AddAnime(Anime a, Int64 id) : base(a)
+		public AddAnime(ObjectListView olv, Anime a, Int64 id) : base(olv, a)
 		{
 			this._id = id;
 		}
 
 		private Int64 _id;
-		protected override Anime Ani
+		public override Anime Ani
 		{
 			get
 			{
-				return base.Ani ?? new Anime(_id);
+				return base.Ani ?? (this._ani = new Anime(_id));
 			}
 		}
 
@@ -42,7 +43,6 @@ namespace AnimeTidy.Forms
 
 			this.cboType = new ComboBox();
 			this.cboType.DropDownStyle = ComboBoxStyle.DropDownList;
-			this.cboType.DataSource = Enum.GetValues(typeof(MediaType));
 			this.cboType.Anchor = AnchorStyles.Left;
 
 			this.lblSubTeam = new Label();
@@ -109,7 +109,7 @@ namespace AnimeTidy.Forms
 		protected override void InitTable()
 		{
 			this.tableLayoutPanelEdit.ColumnCount = 2;
-			this.tableLayoutPanelEdit.RowCount = 15;
+			this.tableLayoutPanelEdit.RowCount = 16;
 			this.tableLayoutPanelEdit.Controls.AddRange(new Control[] {
 				this.lblTitle, this.tbTitle,
 				this.lblName, this.tbName,
@@ -124,8 +124,16 @@ namespace AnimeTidy.Forms
 				this.lblPath, this.pnlPath,
 				this.lblKana, this.tbKana,
 				this.lblEpisode, this.tbEpisode,
-				this.lblInc, this.tbInc
+				this.lblInc, this.tbInc,
+				this.lblNote, this.rtbNote
 			});
+		}
+
+		protected override void InitData()
+		{
+			base.InitData();
+
+			this.cboType.DataSource = Enum.GetValues(typeof(MediaType));
 		}
 
 		protected Label lblName;
@@ -140,5 +148,28 @@ namespace AnimeTidy.Forms
 		protected ComboBox cboEnjoy;
 		protected Label lblGrade;
 		protected ComboBox cboGrade;
+
+		protected override void Manipulate()
+		{
+			Ani.Name = this.tbName.Text;
+			Ani.Title = this.tbTitle.Text;
+			Ani.Year = this.dtpAirDate.Value.Year;
+			Ani.Month = this.dtpAirDate.Value.Month;
+			Ani.Type = (MediaType)this.cboType.SelectedItem;
+			Ani.Format = (MergeFormat)this.cboFormat.SelectedItem;
+			Ani.SubTeam = this.cboSubTeam.Text;
+			Ani.SubStyle = (SubStyle)this.cboSubStyle.SelectedItem;
+			Ani.Path = this.tbPath.Text;
+			Ani.Size = Anime.GetSize(Ani.Path);
+			Ani.Store = (this.cboStore.SelectedIndex == 1) ? true : false;
+			Ani.Enjoy = (this.cboEnjoy.SelectedIndex == 1) ? true : false;
+			Ani.Grade = Int32.Parse(this.cboGrade.Text);
+			Ani.CreateTime = DateTime.Now;
+			Ani.UpdateTime = DateTime.Now;
+			Ani.Kana = this.tbKana.Text;
+			Ani.Episode = this.tbEpisode.Text;
+			Ani.Inc = this.tbInc.Text;
+			Ani.Note = this.rtbNote.Text.Replace(Environment.NewLine, "\u0002");
+		}
 	}
 }

@@ -46,7 +46,7 @@
     <Compile Include="Forms\AddAnime.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\EditAnime.cs">
+    <Compile Include="Forms\AniEditor.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Cores\AnimeInfo.cs" />
@@ -56,6 +56,9 @@
     </Compile>
     <Compile Include="EditForm.Designer.cs">
       <DependentUpon>EditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ModAnime.cs">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>

@@ -1,21 +1,24 @@
 ﻿using AnimeTidy.Models;
+using AnimeTidyLib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace AnimeTidy.Forms
 {
-	public class EditAnime : EditForm
+	public class AniEditor : EditForm
 	{
-		public EditAnime(Anime a)
+		public AniEditor(ObjectListView olv, Anime a) : base(olv)
 		{
 			this._ani = a;
+			this.InitData();
 		}
 
-		private Anime _ani;
-		protected virtual Anime Ani
+		protected Anime _ani;
+		public virtual Anime Ani
 		{
 			get { return this._ani; }
 		}
@@ -50,7 +53,6 @@ namespace AnimeTidy.Forms
 
 			this.cboFormat = new ComboBox();
 			this.cboFormat.DropDownStyle = ComboBoxStyle.DropDownList;
-			this.cboFormat.DataSource = Enum.GetValues(typeof(MergeFormat));
 			this.cboFormat.Anchor = AnchorStyles.Left;
 
 			this.lblSubStyle = new Label();
@@ -60,7 +62,6 @@ namespace AnimeTidy.Forms
 
 			this.cboSubStyle = new ComboBox();
 			this.cboSubStyle.DropDownStyle = ComboBoxStyle.DropDownList;
-			this.cboSubStyle.DataSource = Enum.GetValues(typeof(SubStyle));
 			this.cboSubStyle.Anchor = AnchorStyles.Left;
 
 			this.lblPath = new Label();
@@ -103,22 +104,36 @@ namespace AnimeTidy.Forms
 
 			this.tbInc = new TextBox();
 			this.tbInc.Anchor = AnchorStyles.Left;
+
+			this.lblNote = new Label();
+			this.lblNote.AutoSize = true;
+			this.lblNote.Text = "Note";
+			this.lblNote.Anchor = AnchorStyles.Left;
+
+			this.rtbNote = new RichTextBox();
+			this.rtbNote.Anchor = AnchorStyles.Left;
 		}
 
-		protected override void InitTable()
+		//protected override void InitTable()
+		//{
+		//	this.tableLayoutPanelEdit.ColumnCount = 2;
+		//	this.tableLayoutPanelEdit.RowCount = 9;
+		//	this.tableLayoutPanelEdit.Controls.AddRange(new Control[] {
+		//		this.lblTitle, this.tbTitle,
+		//		this.lblAirDate, this.dtpAirDate,
+		//		this.lblFormat, this.cboFormat,
+		//		this.lblSubStyle, this.cboSubStyle,
+		//		this.lblPath, this.pnlPath,
+		//		this.lblKana, this.tbKana,
+		//		this.lblEpisode, this.tbEpisode,
+		//		this.lblInc, this.tbInc
+		//	});
+		//}
+
+		protected virtual void InitData()
 		{
-			this.tableLayoutPanelEdit.ColumnCount = 2;
-			this.tableLayoutPanelEdit.RowCount = 9;
-			this.tableLayoutPanelEdit.Controls.AddRange(new Control[] {
-				this.lblTitle, this.tbTitle,
-				this.lblAirDate, this.dtpAirDate,
-				this.lblFormat, this.cboFormat,
-				this.lblSubStyle, this.cboSubStyle,
-				this.lblPath, this.pnlPath,
-				this.lblKana, this.tbKana,
-				this.lblEpisode, this.tbEpisode,
-				this.lblInc, this.tbInc
-			});
+			this.cboFormat.DataSource = Enum.GetValues(typeof(MergeFormat));
+			this.cboSubStyle.DataSource = Enum.GetValues(typeof(SubStyle));
 		}
 
 		protected Label lblTitle;
@@ -139,5 +154,41 @@ namespace AnimeTidy.Forms
 		protected TextBox tbEpisode;
 		protected Label lblInc;
 		protected TextBox tbInc;
+		protected Label lblNote;
+		protected RichTextBox rtbNote;
+
+		protected override void Confirm()
+		{
+			// check title, path
+			if (this.tbTitle.Text == String.Empty)
+				return;
+
+			if (this.tbPath.Text != String.Empty && !Regex.IsMatch(this.tbPath.Text, @"^[a-zA-Z]:(\\(?![\s\.])[^\\/:\*\?\x22<>\|]*[^\s\.\\/:\*\?\x22<>\|])+$"))
+				return;
+
+			this.Manipulate();
+			this.Close();
+		}
+
+		protected virtual void Manipulate() { }
+
+		protected override bool ProcessDialogKey(Keys keyData)
+		{
+			switch (keyData)
+			{
+				case (Keys.Enter):
+					if (!this.tbPath.Focused)
+						break;
+
+					// add endline
+					this.tbPath.Text = "focused";
+					return true;			
+
+				default:
+						break;
+			}
+
+			return base.ProcessDialogKey(keyData);
+		}
 	}
 }
