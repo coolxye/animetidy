@@ -3,6 +3,7 @@ using AnimeTidyLib;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -33,8 +34,21 @@ namespace AnimeTidy.Cores
 			}
 		}
 
+		private Int64 _space;
 		public Int64 Space
-		{ get; set; }
+		{
+			get
+			{ return _space; }
+			set
+			{
+				if (value != _space)
+				{
+					_space = value;
+
+					OnPropertyChanged(SpaceChanged, new PropertyChangedEventArgs("Space"));
+				}
+			}
+		}
 
 		public Int64 Uid
 		{ get; set; }
@@ -84,6 +98,7 @@ namespace AnimeTidy.Cores
 		}
 
 		public event EventHandler<PropertyChangedEventArgs> TotalChanged;
+		public event EventHandler<PropertyChangedEventArgs> SpaceChanged;
 		public event EventHandler<PropertyChangedEventArgs> CreateStatusChanged;
 		public event EventHandler<PropertyChangedEventArgs> SaveStatusChanged;
 
@@ -197,6 +212,23 @@ namespace AnimeTidy.Cores
 		{
 			// Duplicate Fin
 			///this.IsSaved = false;
+		}
+
+		public static Boolean IsStorageReady()
+		{
+			bool br = false;
+			DriveInfo[] allDrives = DriveInfo.GetDrives();
+
+			foreach (DriveInfo dr in allDrives)
+				if (dr.IsReady)
+					if ((dr.VolumeLabel == "Anime" || dr.VolumeLabel == "Favs") &&
+						(dr.DriveType == DriveType.Fixed || dr.DriveType == DriveType.Removable))
+					{
+						br = true;
+						break;
+					}
+
+			return br;
 		}
 	}
 }

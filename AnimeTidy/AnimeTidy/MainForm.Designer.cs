@@ -151,6 +151,7 @@
 			// tsbtnSave
 			// 
 			this.tsbtnSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsbtnSave.Enabled = false;
 			this.tsbtnSave.Image = global::AnimeTidy.Properties.Resources.TsSave;
 			this.tsbtnSave.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.tsbtnSave.Name = "tsbtnSave";
@@ -292,10 +293,10 @@
 		private System.Windows.Forms.ToolStripButton tsbtnDelete;
 		private System.Windows.Forms.ToolStripButton tsbtnUndo;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-		private System.Windows.Forms.ToolStripStatusLabel tsslSelName;
-		private System.Windows.Forms.ToolStripStatusLabel tsslSelSpace;
-		private System.Windows.Forms.ToolStripStatusLabel tsslTotal;
-		private System.Windows.Forms.ToolStripStatusLabel tsslTotSpace;
+		public System.Windows.Forms.ToolStripStatusLabel tsslSelName;
+		public System.Windows.Forms.ToolStripStatusLabel tsslSelSpace;
+		public System.Windows.Forms.ToolStripStatusLabel tsslTotal;
+		public System.Windows.Forms.ToolStripStatusLabel tsslTotSpace;
 	}
 }
 

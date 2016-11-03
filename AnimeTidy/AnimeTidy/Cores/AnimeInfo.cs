@@ -199,9 +199,27 @@ namespace AnimeTidy.Cores
 
 		public void UpdateStatusStripTotal()
 		{
-			// test
-			Form.tabControlMain.TabPages[1].Text = this.Total <= 0 ? "Total: -" :
+			Form.tsslTotal.Text = this.Total <= 0 ? "Total: -" :
 				String.Format("Total: {0}", this.Total);
+		}
+
+		public void UpdateStatusStripSpace()
+		{
+			long[] limits = new long[] { 1024 * 1024 * 1024, 1024 * 1024, 1024 };
+			string[] units = new string[] { "GB", "MB", "KB" };
+
+			for (int i = 0; i < limits.Length; i++)
+			{
+				if (this.Space >= limits[i])
+				{
+					Form.tsslTotSpace.Text = 
+						String.Format("{0:#,##0.#0} " + units[i], ((double)this.Space / limits[i]));
+					return;
+				}
+			}
+
+			Form.tsslTotSpace.Text = String.Format("{0} bytes", this.Space);
+			return;
 		}
 
 		public void UpdateToolStripButton()
@@ -243,9 +261,30 @@ namespace AnimeTidy.Cores
 			if (a != null)
 			{
 				ModAnime ma = new ModAnime(olv, a);
+				ma.FormClosed += ma_FormClosed;
 				ma.Show();
+			}
+		}
 
-				base.ModifyInfo(olv);
+		private void ma_FormClosed(object sender, FormClosedEventArgs e)
+		{
+			ModAnime ma = sender as ModAnime;
+			if (ma.DialogResult == DialogResult.OK)
+			{
+				if (ma.IsModified)
+				{
+					long lsize = ma.Ani.Size;
+					if (ma.Ani.Path == String.Empty)
+						ma.Ani.Size = 0L;
+					// up
+					else if (AnimeInfo.IsStorageReady())
+						ma.Ani.Size = Anime.GetSize(ma.Ani.Path);
+					this.Space += ma.Ani.Size - lsize;
+
+					ma.ListView.RefreshObject(ma.Ani);
+
+					base.ModifyInfo(ma.ListView);
+				}
 			}
 		}
 

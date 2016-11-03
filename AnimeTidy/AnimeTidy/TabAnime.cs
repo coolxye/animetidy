@@ -158,6 +158,7 @@ namespace AnimeTidy
 			// AnimeList Load before
 			// Total, Total Size todo
 			AnimeInfo.TotalChanged += AnimeInfo_TotalChanged;
+			AnimeInfo.SpaceChanged += AnimeInfo_SpaceChanged;
 
 			//if (AnimeInfo.AnimeList != null)
 			//{
@@ -179,6 +180,11 @@ namespace AnimeTidy
 		private void AnimeInfo_TotalChanged(object sender, PropertyChangedEventArgs e)
 		{
 			AnimeInfo.UpdateStatusStripTotal();
+		}
+
+		private void AnimeInfo_SpaceChanged(object sender, PropertyChangedEventArgs e)
+		{
+			AnimeInfo.UpdateStatusStripSpace();
 		}
 
 		private void AnimeInfo_CreateStatusChanged(object sender, PropertyChangedEventArgs e)
