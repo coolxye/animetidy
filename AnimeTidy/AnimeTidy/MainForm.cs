@@ -203,5 +203,30 @@ namespace AnimeTidy
 		{
 			this.tabAnimes.UndoAnime();
 		}
+
+		private void tsbtnRefresh_Click(object sender, EventArgs e)
+		{
+			this.tabAnimes.RefreshAnime();
+		}
+
+		private void tsbtnFind_Click(object sender, EventArgs e)
+		{
+			this.tabAnimes.FindAnime();
+		}
+
+		private void tsbtnGroup_Click(object sender, EventArgs e)
+		{
+			this.tabAnimes.GroupAnime();
+		}
+
+		private void tsbtnOverlay_Click(object sender, EventArgs e)
+		{
+			this.tabAnimes.OverlayAnime();
+		}
+
+		private void tabtnBackup_Click(object sender, EventArgs e)
+		{
+			this.tabAnimes.BackupAnime();
+		}
 	}
 }

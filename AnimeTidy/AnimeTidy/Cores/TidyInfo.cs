@@ -204,7 +204,7 @@ namespace AnimeTidy.Cores
 
 		public virtual void DeleteInfo(ObjectListView olv)
 		{
-			// Duplicate Fin
+			// Delete Fin
 			this.IsSaved = false;
 		}
 
@@ -213,6 +213,34 @@ namespace AnimeTidy.Cores
 			// Duplicate Fin
 			///this.IsSaved = false;
 		}
+
+		public virtual void RefreshInfo(ObjectListView olv)
+		{
+			this.IsSaved = false;
+		}
+
+		public virtual void FindInfo(ObjectListView olv)
+		{
+			FindForm ff = FindForm.GetInstance(olv);
+			if (!ff.Created || !ff.Visible)
+				ff.Show();
+			else
+				ff.Activate();
+		}
+
+		public virtual void GroupInfo(ObjectListView olv)
+		{
+			olv.ShowGroups = !olv.ShowGroups;
+			olv.BuildList();
+		}
+
+		public virtual void OverlayInfo(ObjectListView olv)
+		{
+			olv.UseOverlays = !olv.UseOverlays;
+			olv.HotItemStyle = olv.HotItemStyle;
+		}
+
+		public virtual void BackupInfo(ObjectListView olv) { }
 
 		public static Boolean IsStorageReady()
 		{

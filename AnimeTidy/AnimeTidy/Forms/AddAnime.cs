@@ -10,17 +10,13 @@ namespace AnimeTidy.Forms
 {
 	public class AddAnime : AniEditor
 	{
-		public AddAnime(ObjectListView olv, Anime a, Int64 id) : base(olv, a)
-		{
-			this._id = id;
-		}
+		public AddAnime(ObjectListView olv, Anime a) : base(olv, a) { }
 
-		private Int64 _id;
 		public override Anime Ani
 		{
 			get
 			{
-				return base.Ani ?? (this._ani = new Anime(_id));
+				return base.Ani ?? (this._ani = new Anime());
 			}
 		}
 

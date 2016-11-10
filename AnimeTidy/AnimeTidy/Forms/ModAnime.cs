@@ -65,6 +65,7 @@ namespace AnimeTidy.Forms
 				Ani.Format = (MergeFormat)this.cboFormat.SelectedItem;
 				Ani.SubStyle = (SubStyle)this.cboSubStyle.SelectedItem;
 				Ani.Path = this.tbPath.Text;
+				Ani.UpdateTime = DateTime.Now;
 				Ani.Kana = this.tbKana.Text;
 				Ani.Episode = this.tbEpisode.Text;
 				Ani.Inc = this.tbInc.Text;

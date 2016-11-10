@@ -113,9 +113,35 @@ namespace AnimeTidy.Models
 				this.Episode, this.Inc, this.Note);
 		}
 
+		public Anime() { }
+
 		public Anime(Int64 id)
 		{
 			this.ID = id;
+		}
+
+		public Anime(Anime copy, Int64 id)
+		{
+			this.ID = id;
+			this.Title = copy.Title;
+			this.Name = copy.Name;
+			this.Year = copy.Year;
+			this.Season = copy.Season;
+			this.Type = copy.Type;
+			this.Format = copy.Format;
+			this.SubTeam = copy.SubTeam;
+			this.SubStyle = copy.SubStyle;
+			this.Path = copy.Path;
+			this.Size = copy.Size;
+			this.Store = copy.Store;
+			this.Enjoy = copy.Enjoy;
+			this.Grade = copy.Grade;
+			this.CreateTime = DateTime.Now;
+			this.UpdateTime = DateTime.Now;
+			this.Kana = copy.Kana;
+			this.Episode = copy.Episode;
+			this.Inc = copy.Inc;
+			this.Note = copy.Note;
 		}
 
 		public static String GetPreview(String path)

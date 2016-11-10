@@ -236,7 +236,7 @@ namespace AnimeTidy.Cores
 			//olv.AddObject(a);
 			Anime a = null;
 
-			AddAnime aa = new AddAnime(olv, a, this.Uid);
+			AddAnime aa = new AddAnime(olv, a);
 			aa.FormClosed += aa_FormClosed;
 			aa.Show();
 		}
@@ -248,6 +248,7 @@ namespace AnimeTidy.Cores
 			{
 				this.Total++;
 				this.Space += aa.Ani.Size;
+				aa.Ani.ID = this.Uid++;
 				aa.ListView.AddObject(aa.Ani);
 
 				base.AddInfo(aa.ListView);
@@ -290,19 +291,104 @@ namespace AnimeTidy.Cores
 
 		public override void DuplicateInfo(ObjectListView olv)
 		{
-			// duplicate ok test
+			if (olv.SelectedIndices.Count > 0)
+			{
+				foreach (Anime a in olv.SelectedObjects)
+				{
+					Anime aCopy = new Anime(a, this.Uid);
+					this.Total++;
+					this.Space += aCopy.Size;
+					this.Uid++;
+					olv.AddObject(aCopy);
+				}
 
-			base.DuplicateInfo(olv);
+				base.DuplicateInfo(olv);
+			}
 		}
 
 		public override void DeleteInfo(ObjectListView olv)
 		{
-			base.DeleteInfo(olv);
+			if (olv.SelectedIndices.Count > 0)
+			{
+				foreach (Anime a in olv.SelectedObjects)
+				{
+					this.Total--;
+					this.Space -= a.Size;
+				}
+
+				olv.RemoveObjects(olv.SelectedObjects);
+				base.DeleteInfo(olv);
+			}
 		}
 
 		public override void UndoInfo(ObjectListView olv)
 		{
 			base.UndoInfo(olv);
+		}
+
+		public override void RefreshInfo(ObjectListView olv)
+		{
+			if (!AnimeInfo.IsStorageReady())
+				return;
+
+			long lSize = 0L;
+			long lSelSize = 0L;
+			long lSpace = this.Space;
+			bool bCheck = false;
+
+			foreach (Anime a in olv.SelectedObjects)
+			{
+				if (a.Path.Length == 0)
+					continue;
+
+				lSize = Anime.GetSize(a.Path);
+				if (a.Size != lSize)
+				{
+					bCheck = true;
+
+					lSpace += lSize - a.Size;
+					a.Size = lSize;
+					olv.RefreshObject(a);
+				}
+				lSelSize += a.Size;
+			}
+
+			if (bCheck)
+				base.RefreshInfo(olv);
+
+			this.Space = lSpace;
+
+			// Form SelSize update
+		}
+
+		// base delete
+		//public override void FindInfo(ObjectListView olv)
+		//{
+		//	base.FindInfo(olv);
+		//}
+
+		//public override void GroupInfo(ObjectListView olv)
+		//{
+		//	base.GroupInfo(olv);
+		//}
+
+		//public override void OverlayInfo(ObjectListView olv)
+		//{
+		//	base.OverlayInfo(olv);
+		//}
+
+		public override void BackupInfo(ObjectListView olv)
+		{
+			string bakpath = String.Format("{0}@{1}.bak", this.Path, DateTime.Now.ToString("yyyy-MM-dd_hh-mm-ss"));
+
+			StreamWriter sw = new StreamWriter(bakpath, false, Encoding.Unicode);
+
+			sw.WriteLine(this.Summary);
+
+			foreach (Anime a in olv.Objects)
+				sw.WriteLine(a.ToString());
+
+			sw.Close();
 		}
 	}
 }

@@ -147,7 +147,7 @@ namespace AnimeTidy
 
 			this.olvAnime.UseTranslucentHotItem = true;
 			this.olvAnime.UseTranslucentSelection = true;
-			//this.olvAnime.HotItemStyle.Overlay = new AnimeViewOverlay();
+			this.olvAnime.HotItemStyle.Overlay = new AnimeViewOverlay();
 			this.olvAnime.HotItemStyle = this.olvAnime.HotItemStyle;
 			this.olvAnime.PrimarySortColumn = this.olvColTitle;
 			this.olvAnime.PrimarySortOrder = SortOrder.Ascending;
@@ -275,6 +275,31 @@ namespace AnimeTidy
 		public void UndoAnime()
 		{
 			AnimeInfo.UndoInfo(this.olvAnime);
+		}
+
+		public void RefreshAnime()
+		{
+			AnimeInfo.RefreshInfo(this.olvAnime);
+		}
+
+		public void FindAnime()
+		{
+			AnimeInfo.FindInfo(this.olvAnime);
+		}
+
+		public void GroupAnime()
+		{
+			AnimeInfo.GroupInfo(this.olvAnime);
+		}
+
+		public void OverlayAnime()
+		{
+			AnimeInfo.OverlayInfo(this.olvAnime);
+		}
+
+		public void BackupAnime()
+		{
+			AnimeInfo.BackupInfo(this.olvAnime);
 		}
 	}
 }
