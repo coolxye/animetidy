@@ -148,13 +148,6 @@ namespace AnimeTidy.Cores
 			return lstAnime;
 		}
 
-		public void UpdateStatusStrip()
-		{
-			// test
-			Form.tabControlMain.SelectedTab.Text = this.Name;
-			Form.tabControlMain.SelectedTab.ToolTipText = this.Path;
-		}
-
 		protected override void OpenDeal()
 		{
 			OpenFileDialog ofd = new OpenFileDialog();
@@ -197,6 +190,17 @@ namespace AnimeTidy.Cores
 			this.IsSaved = true;
 		}
 
+		public void UpdateSelectedTab(string txt, string tip)
+		{
+			Form.tabControlMain.SelectedTab.Text = txt;
+			Form.tabControlMain.SelectedTab.ToolTipText = tip;
+		}
+
+		public void UpdateStatusStripSelected(string name)
+		{
+			Form.tsslSelName.Text = name;
+		}
+
 		public void UpdateStatusStripTotal()
 		{
 			Form.tsslTotal.Text = this.Total <= 0 ? "Total: -" :
@@ -205,21 +209,7 @@ namespace AnimeTidy.Cores
 
 		public void UpdateStatusStripSpace()
 		{
-			long[] limits = new long[] { 1024 * 1024 * 1024, 1024 * 1024, 1024 };
-			string[] units = new string[] { "GB", "MB", "KB" };
-
-			for (int i = 0; i < limits.Length; i++)
-			{
-				if (this.Space >= limits[i])
-				{
-					Form.tsslTotSpace.Text = 
-						String.Format("{0:#,##0.#0} " + units[i], ((double)this.Space / limits[i]));
-					return;
-				}
-			}
-
-			Form.tsslTotSpace.Text = String.Format("{0} bytes", this.Space);
-			return;
+			Form.tsslTotSpace.Text = FormatAnimeSize(this.Space);
 		}
 
 		public void UpdateToolStripButton()
@@ -283,6 +273,7 @@ namespace AnimeTidy.Cores
 					this.Space += ma.Ani.Size - lsize;
 
 					ma.ListView.RefreshObject(ma.Ani);
+					Form.tsslSelSpace.Text = String.Format("Selected Size: {0}", FormatAnimeSize(ma.Ani.Size));
 
 					base.ModifyInfo(ma.ListView);
 				}
@@ -359,6 +350,7 @@ namespace AnimeTidy.Cores
 			this.Space = lSpace;
 
 			// Form SelSize update
+			Form.tsslSelSpace.Text = String.Format("Selected Size: {0}", FormatAnimeSize(lSelSize));
 		}
 
 		// base delete
@@ -389,6 +381,61 @@ namespace AnimeTidy.Cores
 				sw.WriteLine(a.ToString());
 
 			sw.Close();
+		}
+
+		public void HandleSelectionChanged(ObjectListView olv)
+		{
+			int icount = olv.SelectedIndices.Count;
+			if (icount == 0)
+			{
+				Form.tsbtnModify.Enabled = false;
+				Form.tsbtnDuplicate.Enabled = false;
+				Form.tsbtnDelete.Enabled = false;
+				Form.tsbtnRefresh.Enabled = false;
+
+				Form.tsslSelName.Text = "Selected: -";
+				Form.tsslSelSpace.Text = "Selected Size: -";
+			}
+			else if (icount == 1)
+			{
+				Form.tsbtnModify.Enabled = true;
+				Form.tsbtnDuplicate.Enabled = true;
+				Form.tsbtnDelete.Enabled = true;
+				Form.tsbtnRefresh.Enabled = true;
+
+				Anime a = olv.SelectedObject as Anime;
+				Form.tsslSelName.Text = String.Format("Selected: {0}", a.Name);
+				Form.tsslSelSpace.Text = String.Format("Selected Size: {0}", FormatAnimeSize(a.Size));
+			}
+			else
+			{
+				Form.tsbtnModify.Enabled = false;
+				Form.tsbtnDuplicate.Enabled = true;
+				Form.tsbtnDelete.Enabled = true;
+				Form.tsbtnRefresh.Enabled = true;
+
+				long lc = 0L;
+				foreach (Anime ac in olv.SelectedObjects)
+					lc += ac.Size;
+				Form.tsslSelName.Text = String.Format("Selected: {0}", icount);
+				Form.tsslSelSpace.Text = String.Format("Selected Size: {0}", FormatAnimeSize(lc));
+			}
+		}
+
+		private string FormatAnimeSize(long size)
+		{
+			long[] limits = new long[] { 1024 * 1024 * 1024, 1024 * 1024, 1024 };
+			string[] units = new string[] { "GB", "MB", "KB" };
+
+			for (int i = 0; i < limits.Length; i++)
+			{
+				if (this.Space >= limits[i])
+				{
+					return String.Format("{0:#,##0.#0} " + units[i], ((double)size / limits[i]));
+				}
+			}
+
+			return String.Format("{0} bytes", size);
 		}
 	}
 }

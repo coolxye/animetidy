@@ -186,6 +186,7 @@
 			// tsbtnModify
 			// 
 			this.tsbtnModify.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsbtnModify.Enabled = false;
 			this.tsbtnModify.Image = global::AnimeTidy.Properties.Resources.TsModify;
 			this.tsbtnModify.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.tsbtnModify.Name = "tsbtnModify";
@@ -196,6 +197,7 @@
 			// tsbtnDuplicate
 			// 
 			this.tsbtnDuplicate.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsbtnDuplicate.Enabled = false;
 			this.tsbtnDuplicate.Image = global::AnimeTidy.Properties.Resources.TsDuplicate;
 			this.tsbtnDuplicate.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.tsbtnDuplicate.Name = "tsbtnDuplicate";
@@ -206,6 +208,7 @@
 			// tsbtnDelete
 			// 
 			this.tsbtnDelete.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsbtnDelete.Enabled = false;
 			this.tsbtnDelete.Image = global::AnimeTidy.Properties.Resources.TsDel;
 			this.tsbtnDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.tsbtnDelete.Name = "tsbtnDelete";
@@ -216,6 +219,7 @@
 			// tsbtnUndo
 			// 
 			this.tsbtnUndo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsbtnUndo.Enabled = false;
 			this.tsbtnUndo.Image = global::AnimeTidy.Properties.Resources.TsUndo;
 			this.tsbtnUndo.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.tsbtnUndo.Name = "tsbtnUndo";
@@ -231,6 +235,7 @@
 			// tsbtnRefresh
 			// 
 			this.tsbtnRefresh.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsbtnRefresh.Enabled = false;
 			this.tsbtnRefresh.Image = global::AnimeTidy.Properties.Resources.TsRefresh;
 			this.tsbtnRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.tsbtnRefresh.Name = "tsbtnRefresh";
@@ -366,16 +371,16 @@
 		public System.Windows.Forms.ToolStripButton tsbtnSave;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
 		private System.Windows.Forms.ToolStripButton tsbtnAdd;
-		private System.Windows.Forms.ToolStripButton tsbtnModify;
-		private System.Windows.Forms.ToolStripButton tsbtnDuplicate;
-		private System.Windows.Forms.ToolStripButton tsbtnDelete;
+		public System.Windows.Forms.ToolStripButton tsbtnModify;
+		public System.Windows.Forms.ToolStripButton tsbtnDuplicate;
+		public System.Windows.Forms.ToolStripButton tsbtnDelete;
 		private System.Windows.Forms.ToolStripButton tsbtnUndo;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
 		public System.Windows.Forms.ToolStripStatusLabel tsslSelName;
 		public System.Windows.Forms.ToolStripStatusLabel tsslSelSpace;
 		public System.Windows.Forms.ToolStripStatusLabel tsslTotal;
 		public System.Windows.Forms.ToolStripStatusLabel tsslTotSpace;
-		private System.Windows.Forms.ToolStripButton tsbtnRefresh;
+		public System.Windows.Forms.ToolStripButton tsbtnRefresh;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
 		private System.Windows.Forms.ToolStripButton tsbtnFind;
 		private System.Windows.Forms.ToolStripButton tsbtnGroup;

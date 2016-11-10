@@ -193,12 +193,13 @@ namespace AnimeTidy
 			{
 				this.olvAnime.SetObjects(AnimeInfo.AnimeList);
 
-				// test
-				AnimeInfo.UpdateStatusStrip();
+				AnimeInfo.UpdateSelectedTab(AnimeInfo.Name, AnimeInfo.Path);
 			}
 			else
 			{
 				this.olvAnime.ClearObjects();
+				// clear's bug: cann't trigger this, dispatch!
+				this.olvAnime_SelectionChanged(this.olvAnime, EventArgs.Empty);
 
 				// clear AnimeInfo todo
 				AnimeInfo.Name = TidyConst.TabAnimeName;
@@ -207,7 +208,7 @@ namespace AnimeTidy
 				AnimeInfo.Space = 0L;
 
 				// clear MainForm test todo
-				AnimeInfo.UpdateStatusStrip();
+				AnimeInfo.UpdateSelectedTab("Anime", String.Empty);
 			}
 		}
 
@@ -300,6 +301,46 @@ namespace AnimeTidy
 		public void BackupAnime()
 		{
 			AnimeInfo.BackupInfo(this.olvAnime);
+		}
+
+		private void olvAnime_SelectionChanged(object sender, EventArgs e)
+		{
+			AnimeInfo.HandleSelectionChanged(this.olvAnime);
+			
+			// todo upgrade
+			Anime a = this.olvAnime.SelectedObject as Anime;
+			this.richtxtNote.Text = (a == null ? String.Empty : a.Remark);
+		}
+
+		private void olvAnime_IsHyperlink(object sender, IsHyperlinkEventArgs e)
+		{
+			e.Url = e.Text;
+		}
+
+		private void olvAnime_CellEditFinishing(object sender, CellEditEventArgs e)
+		{
+			if (e.Cancel)
+				return;
+
+			// bug 选择项变更又取消的
+			if (e.Value.ToString() == e.NewValue.ToString())
+				return;
+
+			Anime a = e.RowObject as Anime;
+			a.UpdateTime = DateTime.Now;
+			this.richtxtNote.Text = a.Remark;
+
+			AnimeInfo.IsSaved = false;
+			AnimeInfo.UpdateStatusStripSelected(a.Name);
+		}
+
+		private void olvAnime_CellToolTipShowing(object sender, ToolTipShowingEventArgs e)
+		{
+			if (e.Column == null || e.Column != this.olvColPath)
+				return;
+
+			e.AutoPopDelay = 8000;
+			e.Text = ((Anime)e.Model).Preview;
 		}
 	}
 }
