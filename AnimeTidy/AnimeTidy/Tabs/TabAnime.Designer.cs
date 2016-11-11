@@ -1,4 +1,4 @@
-﻿namespace AnimeTidy
+﻿namespace AnimeTidy.Tabs
 {
 	partial class TabAnime
 	{
@@ -28,6 +28,8 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.lblDes = new System.Windows.Forms.Label();
+			this.splitCtnAnime = new System.Windows.Forms.SplitContainer();
 			this.olvAnime = new AnimeTidyLib.ObjectListView();
 			this.olvColTitle = ((AnimeTidyLib.OLVColumn)(new AnimeTidyLib.OLVColumn()));
 			this.olvColName = ((AnimeTidyLib.OLVColumn)(new AnimeTidyLib.OLVColumn()));
@@ -40,15 +42,42 @@
 			this.olvColEnjoy = ((AnimeTidyLib.OLVColumn)(new AnimeTidyLib.OLVColumn()));
 			this.olvColGrade = ((AnimeTidyLib.OLVColumn)(new AnimeTidyLib.OLVColumn()));
 			this.olvColNote = ((AnimeTidyLib.OLVColumn)(new AnimeTidyLib.OLVColumn()));
-			this.lblDes = new System.Windows.Forms.Label();
-			this.splitCtnAnime = new System.Windows.Forms.SplitContainer();
 			this.richtxtNote = new System.Windows.Forms.RichTextBox();
-			((System.ComponentModel.ISupportInitialize)(this.olvAnime)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.splitCtnAnime)).BeginInit();
 			this.splitCtnAnime.Panel1.SuspendLayout();
 			this.splitCtnAnime.Panel2.SuspendLayout();
 			this.splitCtnAnime.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.olvAnime)).BeginInit();
 			this.SuspendLayout();
+			// 
+			// lblDes
+			// 
+			this.lblDes.AutoSize = true;
+			this.lblDes.Location = new System.Drawing.Point(3, 0);
+			this.lblDes.Name = "lblDes";
+			this.lblDes.Size = new System.Drawing.Size(107, 12);
+			this.lblDes.TabIndex = 0;
+			this.lblDes.Text = "Anime description";
+			// 
+			// splitCtnAnime
+			// 
+			this.splitCtnAnime.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.splitCtnAnime.Location = new System.Drawing.Point(0, 15);
+			this.splitCtnAnime.Name = "splitCtnAnime";
+			this.splitCtnAnime.Orientation = System.Windows.Forms.Orientation.Horizontal;
+			// 
+			// splitCtnAnime.Panel1
+			// 
+			this.splitCtnAnime.Panel1.Controls.Add(this.olvAnime);
+			// 
+			// splitCtnAnime.Panel2
+			// 
+			this.splitCtnAnime.Panel2.Controls.Add(this.richtxtNote);
+			this.splitCtnAnime.Size = new System.Drawing.Size(150, 135);
+			this.splitCtnAnime.SplitterDistance = 106;
+			this.splitCtnAnime.TabIndex = 2;
 			// 
 			// olvAnime
 			// 
@@ -192,35 +221,6 @@
 			this.olvColNote.Text = "Note";
 			this.olvColNote.Width = 200;
 			// 
-			// lblDes
-			// 
-			this.lblDes.AutoSize = true;
-			this.lblDes.Location = new System.Drawing.Point(3, 0);
-			this.lblDes.Name = "lblDes";
-			this.lblDes.Size = new System.Drawing.Size(107, 12);
-			this.lblDes.TabIndex = 0;
-			this.lblDes.Text = "Anime description";
-			// 
-			// splitCtnAnime
-			// 
-			this.splitCtnAnime.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.splitCtnAnime.Location = new System.Drawing.Point(0, 15);
-			this.splitCtnAnime.Name = "splitCtnAnime";
-			this.splitCtnAnime.Orientation = System.Windows.Forms.Orientation.Horizontal;
-			// 
-			// splitCtnAnime.Panel1
-			// 
-			this.splitCtnAnime.Panel1.Controls.Add(this.olvAnime);
-			// 
-			// splitCtnAnime.Panel2
-			// 
-			this.splitCtnAnime.Panel2.Controls.Add(this.richtxtNote);
-			this.splitCtnAnime.Size = new System.Drawing.Size(150, 135);
-			this.splitCtnAnime.SplitterDistance = 106;
-			this.splitCtnAnime.TabIndex = 2;
-			// 
 			// richtxtNote
 			// 
 			this.richtxtNote.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -239,11 +239,11 @@
 			this.Controls.Add(this.splitCtnAnime);
 			this.Controls.Add(this.lblDes);
 			this.Name = "TabAnime";
-			((System.ComponentModel.ISupportInitialize)(this.olvAnime)).EndInit();
 			this.splitCtnAnime.Panel1.ResumeLayout(false);
 			this.splitCtnAnime.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitCtnAnime)).EndInit();
 			this.splitCtnAnime.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.olvAnime)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 

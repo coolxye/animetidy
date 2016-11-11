@@ -1,6 +1,6 @@
 ﻿namespace AnimeTidy
 {
-	partial class FindForm
+	partial class FilterForm
 	{
 		/// <summary>
 		/// Required designer variable.

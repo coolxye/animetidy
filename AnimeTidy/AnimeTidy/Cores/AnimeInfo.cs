@@ -164,12 +164,17 @@ namespace AnimeTidy.Cores
 					{
 						//this.IsCreated = false;
 
-						this._animeList.Clear();
+						// 程序初始时，执行打开，这里是空
+						if (this._animeList != null)
+							this._animeList.Clear();
 						this._animeList = lstAnime;
 
 						this.Name = ofd.SafeFileName;
 						this.Path = ofd.FileName;
 						this.IsCreated = true;
+
+						// update TidyXml todo upgrade
+						this.UpdateXmlDeal();
 					}
 				}
 			}
@@ -188,6 +193,15 @@ namespace AnimeTidy.Cores
 
 			this.IsCreated = true;
 			this.IsSaved = true;
+		}
+
+		protected override void UpdateXmlDeal()
+		{
+			TidyXml tx = new TidyXml();
+			tx.XatType = this.Type;
+			tx.XatName = this.Name;
+			tx.XatPath = this.Path;
+			Form.UpdateTidyXmlFile(tx);
 		}
 
 		public void UpdateSelectedTab(string txt, string tip)
@@ -429,7 +443,7 @@ namespace AnimeTidy.Cores
 
 			for (int i = 0; i < limits.Length; i++)
 			{
-				if (this.Space >= limits[i])
+				if (size >= limits[i])
 				{
 					return String.Format("{0:#,##0.#0} " + units[i], ((double)size / limits[i]));
 				}

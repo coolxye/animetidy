@@ -53,7 +53,7 @@
 			this.tsslTotal = new System.Windows.Forms.ToolStripStatusLabel();
 			this.tsslTotSpace = new System.Windows.Forms.ToolStripStatusLabel();
 			this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-			this.tabAnimes = new AnimeTidy.TabAnime();
+			this.tabAnimes = new AnimeTidy.Tabs.TabAnime();
 			this.tabtnBackup = new System.Windows.Forms.ToolStripButton();
 			this.toolStripMain.SuspendLayout();
 			this.statusStripMain.SuspendLayout();
@@ -321,7 +321,6 @@
 			// 
 			this.tabAnimes.AnimeInfo = null;
 			this.tabAnimes.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tabAnimes.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
 			this.tabAnimes.Location = new System.Drawing.Point(3, 3);
 			this.tabAnimes.Name = "tabAnimes";
 			this.tabAnimes.Size = new System.Drawing.Size(246, 173);
@@ -347,6 +346,7 @@
 			this.Controls.Add(this.toolStripMain);
 			this.Name = "MainForm";
 			this.Text = "AnimeTidy";
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
 			this.toolStripMain.ResumeLayout(false);
 			this.toolStripMain.PerformLayout();
 			this.statusStripMain.ResumeLayout(false);
@@ -365,7 +365,7 @@
 		public System.Windows.Forms.TabControl tabControlMain;
 		private System.Windows.Forms.TabPage tabPageAnime;
 		private System.Windows.Forms.TabPage tabPageMusic;
-		private TabAnime tabAnimes;
+		private Tabs.TabAnime tabAnimes;
 		private System.Windows.Forms.ToolStripButton tsbtnNew;
 		private System.Windows.Forms.ToolStripButton tsbtnOpen;
 		public System.Windows.Forms.ToolStripButton tsbtnSave;

@@ -10,9 +10,9 @@ using AnimeTidyLib;
 using AnimeTidy.Models;
 using AnimeTidy.Cores;
 
-namespace AnimeTidy
+namespace AnimeTidy.Tabs
 {
-	public partial class TabAnime : UserControl
+	public partial class TabAnime : ComTab
 	{
 		public TabAnime()
 		{
@@ -38,9 +38,6 @@ namespace AnimeTidy
 		// Initalize the Format of the ObjectListView
 		private void InitModel()
 		{
-			if (ObjectListView.IsVistaOrLater)
-				this.Font = new Font("msyh", 8);
-
 			this.olvAnime.AddDecoration(new EditingCellBorderDecoration(true));
 
 			TypedObjectListView<Anime> tolv = new TypedObjectListView<Anime>(this.olvAnime);
@@ -109,13 +106,13 @@ namespace AnimeTidy
 
 				if (ls == 0L)
 					return "-";
-				else if (ls >= 1000000000L)
-					return String.Format("{0:#,##0.#0} G", ls / 1073741824D);
+				else if (ls >= 1000L * 1024L * 1024L)	// 1000M -> 0.9765625G
+					return String.Format("{0:#,##0.#0} G", (double)ls / (1024 * 1024 * 1024));
 				else
-					return String.Format("{0:#,##0.#0} M", ls / 1048576D);
+					return String.Format("{0:#,##0.#0} M", (double)ls / (1024 * 1024));
 			};
 			this.olvColSize.MakeGroupies(
-				new long[] { 5368709120L, 10737418240L },
+				new long[] { 1024L * 1024L * 1024L * 5L, 1024L * 1024L * 1024L * 10L },
 				new string[] { "0~5 GB", "5~10 GB", ">10 GB" }
 				);
 
@@ -189,12 +186,16 @@ namespace AnimeTidy
 
 		private void AnimeInfo_CreateStatusChanged(object sender, PropertyChangedEventArgs e)
 		{
+			// init, open step2
 			if (AnimeInfo.IsCreated)
 			{
-				this.olvAnime.SetObjects(AnimeInfo.AnimeList);
+				// bug fix new->save
+				if (this.olvAnime.GetItemCount() <= 0)
+					this.olvAnime.SetObjects(AnimeInfo.AnimeList);
 
 				AnimeInfo.UpdateSelectedTab(AnimeInfo.Name, AnimeInfo.Path);
 			}
+			// new, open step1
 			else
 			{
 				this.olvAnime.ClearObjects();
@@ -206,9 +207,11 @@ namespace AnimeTidy
 				AnimeInfo.Path = String.Empty;
 				AnimeInfo.Total = 0;
 				AnimeInfo.Space = 0L;
+				// bug fix
+				AnimeInfo.Uid = 1L;
 
 				// clear MainForm test todo
-				AnimeInfo.UpdateSelectedTab("Anime", String.Empty);
+				AnimeInfo.UpdateSelectedTab(TidyConst.TabAnimeName, String.Empty);
 			}
 		}
 
@@ -236,6 +239,37 @@ namespace AnimeTidy
 				// todo
 				//AnimeInfo.UpdateStatusStripTotal();
 			}
+		}
+
+		public override void HandleNew() { AnimeInfo.CreateInfoList(this.olvAnime); }
+
+		public override void HandleOpen() { AnimeInfo.OpenInfoList(this.olvAnime); }
+
+		public override void HandleSave() { AnimeInfo.SaveInfoList(this.olvAnime); }
+
+		public override void HandleAdd() { AnimeInfo.AddInfo(this.olvAnime); }
+
+		public override void HandleModify() { AnimeInfo.ModifyInfo(this.olvAnime); }
+
+		public override void HandleDuplicate() { AnimeInfo.DuplicateInfo(this.olvAnime); }
+
+		public override void HandleDelete() { AnimeInfo.DeleteInfo(this.olvAnime); }
+
+		public override void HandleUndo() { AnimeInfo.UndoInfo(this.olvAnime); }
+
+		public override void HandleRefresh() { AnimeInfo.RefreshInfo(this.olvAnime); }
+
+		public override void HandleFind() { AnimeInfo.FindInfo(this.olvAnime); }
+
+		public override void HandleGroup() { AnimeInfo.GroupInfo(this.olvAnime); }
+
+		public override void HandleOverlay() { AnimeInfo.OverlayInfo(this.olvAnime); }
+
+		public override void HandleBackup() { AnimeInfo.BackupInfo(this.olvAnime); }
+
+		public override bool PerformClosing()
+		{
+			return AnimeInfo.CanClose(this.olvAnime);
 		}
 
 		public void CreateAnimeInfo()
@@ -306,7 +340,7 @@ namespace AnimeTidy
 		private void olvAnime_SelectionChanged(object sender, EventArgs e)
 		{
 			AnimeInfo.HandleSelectionChanged(this.olvAnime);
-			
+
 			// todo upgrade
 			Anime a = this.olvAnime.SelectedObject as Anime;
 			this.richtxtNote.Text = (a == null ? String.Empty : a.Remark);

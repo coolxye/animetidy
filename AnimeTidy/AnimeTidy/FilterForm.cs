@@ -12,16 +12,16 @@ using System.Windows.Forms;
 
 namespace AnimeTidy
 {
-	public partial class FindForm : Form
+	public partial class FilterForm : Form
 	{
-		private FindForm()
+		private FilterForm()
 		{
 			InitializeComponent();
 
 			this._kind = MatchKind.Prefix;
 		}
 
-		private static readonly FindForm ff = new FindForm();
+		private static readonly FilterForm ff = new FilterForm();
 
 		private static ObjectListView _olv;
 		private ObjectListView ListView
@@ -35,7 +35,7 @@ namespace AnimeTidy
 			get { return this._kind; }
 		}
 
-		public static FindForm GetInstance(ObjectListView olv)
+		public static FilterForm GetInstance(ObjectListView olv)
 		{
 			_olv = olv;
 			return ff;

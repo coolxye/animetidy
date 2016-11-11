@@ -151,6 +151,7 @@ namespace AnimeTidy.Cores
 				this.Name = sfd.FileName.Substring(sfd.FileName.LastIndexOf('\\') + 1);
 				this.Path = sfd.FileName;
 
+				this.UpdateXmlDeal();
 				this.SaveDeal(olv);
 
 				return true;
@@ -161,12 +162,15 @@ namespace AnimeTidy.Cores
 
 		protected virtual void SaveDeal(ObjectListView olv) { }
 
+		protected virtual void UpdateXmlDeal() { }
+
 		public void CreateInfoList(ObjectListView olv)
 		{
 			if (this.CheckSaveStatus(olv))
 			{
 				this.IsCreated = false;
 				//this.IsSaved = false;
+				// upgrade clear list?
 			}
 		}
 
@@ -187,7 +191,8 @@ namespace AnimeTidy.Cores
 		{
 			// Add Fin
 			this.IsSaved = false;
-			this.Uid++;
+			// bug fix
+			//this.Uid++;
 		}
 
 		public virtual void ModifyInfo(ObjectListView olv)
@@ -221,7 +226,7 @@ namespace AnimeTidy.Cores
 
 		public virtual void FindInfo(ObjectListView olv)
 		{
-			FindForm ff = FindForm.GetInstance(olv);
+			FilterForm ff = FilterForm.GetInstance(olv);
 			if (!ff.Created || !ff.Visible)
 				ff.Show();
 			else
@@ -241,6 +246,11 @@ namespace AnimeTidy.Cores
 		}
 
 		public virtual void BackupInfo(ObjectListView olv) { }
+
+		public virtual bool CanClose(ObjectListView olv)
+		{
+			return this.CheckSaveStatus(olv);
+		}
 
 		public static Boolean IsStorageReady()
 		{

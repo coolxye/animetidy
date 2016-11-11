@@ -1,5 +1,6 @@
 ﻿using AnimeTidy.Cores;
 using AnimeTidy.Models;
+using AnimeTidyLib;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -27,7 +28,7 @@ namespace AnimeTidy
 		}
 
 		private List<TidyXml> _tidyXmlLst = new List<TidyXml>();
-		private List<TidyXml> TidyXmlLst
+		public List<TidyXml> TidyXmlLst
 		{
 			get { return this._tidyXmlLst; }
 		}
@@ -96,8 +97,35 @@ namespace AnimeTidy
 			xWriter.Close();
 		}
 
+		private void WriteToTidyXmlFile(TidyXml tx)
+		{
+			XmlDocument xdoc = new XmlDocument();
+			xdoc.Load(TidyConst.XmlPath);
+			XmlNodeList xnlst = xdoc.SelectSingleNode("/AnimeTidy/Settings").ChildNodes;
+
+			foreach (XmlNode xn in xnlst)
+			{
+				XmlElement xe = xn as XmlElement;
+				if (xe.GetAttribute("Type") == tx.XatType.ToString())
+				{
+					xe.SelectSingleNode("Name").InnerText = tx.XatName;
+					xe.SelectSingleNode("Path").InnerText = tx.XatPath;
+
+					break;
+				}
+			}
+
+			// upgrade tab
+			xdoc.Save(TidyConst.XmlPath);
+		}
+
 		private void InitTabs()
 		{
+			if (ObjectListView.IsVistaOrLater)
+				this.Font = new Font("Segoe UI", 8);	// Microsoft YaHei
+
+			this.tabPageAnime.Tag = this.tabAnimes;
+
 			// Anime, Music, Other Info todo
 			AnimeInfo info = new AnimeInfo(this);
 			this.tabAnimes.AnimeInfo = info;
@@ -122,17 +150,44 @@ namespace AnimeTidy
 			}
 		}
 
+		protected override bool ProcessDialogKey(Keys keyData)
+		{
+			switch (keyData)
+			{
+				case (Keys.S | Keys.Control):
+					this.tsbtnSave_Click(this.tsbtnSave, EventArgs.Empty);
+					return true;
+
+				case (Keys.I | Keys.Control):
+					this.tsbtnAdd_Click(this.tsbtnAdd, EventArgs.Empty);
+					return true;
+
+				case (Keys.E | Keys.Control):
+					this.tsbtnModify_Click(this.tsbtnModify, EventArgs.Empty);
+					return true;
+
+				case (Keys.D | Keys.Control):
+					this.tsbtnDuplicate_Click(this.tsbtnDuplicate, EventArgs.Empty);
+					return true;
+
+				case (Keys.F | Keys.Control):
+					this.tsbtnFind_Click(this.tsbtnFind, EventArgs.Empty);
+					return true;
+
+				default:
+					return base.ProcessDialogKey(keyData);
+			}
+		}
+
 		private void tabControlMain_Deselected(object sender, TabControlEventArgs e)
 		{
 			switch (this.tabControlMain.SelectedIndex)
 			{
 				case 0:
 					//this.tsbtnNew.Visible = false;
-					this.tsbtnNew.Click -= this.tsbtnNew_Click;
 					break;
 
 				case 1:
-					this.tsbtnNew.Click -= this.tsbtnMusicNew_Click;
 					break;
 
 				default:
@@ -146,11 +201,9 @@ namespace AnimeTidy
 			{
 				case 0:
 					//this.tsbtnNew.Visible = true;
-					this.tsbtnNew.Click += tsbtnNew_Click;
 					break;
 
 				case 1:
-					this.tsbtnNew.Click += this.tsbtnMusicNew_Click;
 					break;
 
 				default:
@@ -160,73 +213,95 @@ namespace AnimeTidy
 
 		private void tsbtnNew_Click(object sender, EventArgs e)
 		{
-			this.tabAnimes.CreateAnimeInfo();
-		}
-
-		private void tsbtnMusicNew_Click(object sender, EventArgs e)
-		{
-			this.tabPageMusic.Text = "MusicNew";
-			//this.SetTidyXmlFile();
+			((ComTab)this.tabControlMain.SelectedTab.Tag).HandleNew();
 		}
 
 		private void tsbtnOpen_Click(object sender, EventArgs e)
 		{
-			this.tabAnimes.OpenAnimeInfo();
+			((ComTab)this.tabControlMain.SelectedTab.Tag).HandleOpen();
 		}
 
 		private void tsbtnSave_Click(object sender, EventArgs e)
 		{
-			this.tabAnimes.SaveAnimeInfo();
+			((ComTab)this.tabControlMain.SelectedTab.Tag).HandleSave();
 		}
 
 		private void tsbtnAdd_Click(object sender, EventArgs e)
 		{
-			this.tabAnimes.AddAnime();
+			((ComTab)this.tabControlMain.SelectedTab.Tag).HandleAdd();
 		}
 
 		private void tsbtnModify_Click(object sender, EventArgs e)
 		{
-			this.tabAnimes.ModifyAnime();
+			((ComTab)this.tabControlMain.SelectedTab.Tag).HandleModify();
 		}
 
 		private void tsbtnDuplicate_Click(object sender, EventArgs e)
 		{
-			this.tabAnimes.DuplicateAnime();
+			((ComTab)this.tabControlMain.SelectedTab.Tag).HandleDuplicate();
 		}
 
 		private void tsbtnDelete_Click(object sender, EventArgs e)
 		{
-			this.tabAnimes.DeleteAnime();
+			((ComTab)this.tabControlMain.SelectedTab.Tag).HandleDelete();
 		}
 
 		private void tsbtnUndo_Click(object sender, EventArgs e)
 		{
-			this.tabAnimes.UndoAnime();
+			((ComTab)this.tabControlMain.SelectedTab.Tag).HandleUndo();
 		}
 
 		private void tsbtnRefresh_Click(object sender, EventArgs e)
 		{
-			this.tabAnimes.RefreshAnime();
+			((ComTab)this.tabControlMain.SelectedTab.Tag).HandleRefresh();
 		}
 
 		private void tsbtnFind_Click(object sender, EventArgs e)
 		{
-			this.tabAnimes.FindAnime();
+			((ComTab)this.tabControlMain.SelectedTab.Tag).HandleFind();
 		}
 
 		private void tsbtnGroup_Click(object sender, EventArgs e)
 		{
-			this.tabAnimes.GroupAnime();
+			((ComTab)this.tabControlMain.SelectedTab.Tag).HandleGroup();
 		}
 
 		private void tsbtnOverlay_Click(object sender, EventArgs e)
 		{
-			this.tabAnimes.OverlayAnime();
+			((ComTab)this.tabControlMain.SelectedTab.Tag).HandleOverlay();
 		}
 
 		private void tabtnBackup_Click(object sender, EventArgs e)
 		{
-			this.tabAnimes.BackupAnime();
+			((ComTab)this.tabControlMain.SelectedTab.Tag).HandleBackup();
+		}
+
+		public void UpdateTidyXmlFile(TidyXml tx)
+		{
+			TidyXml ck = TidyXmlLst.Find(txml => txml.XatType == TidyType.Anime);
+			if (ck != null)
+			{
+				ck.XatName = tx.XatName;
+				ck.XatPath = tx.XatPath;
+			}
+			else
+			{
+				TidyXmlLst.Add(tx);
+			}
+
+			WriteToTidyXmlFile(tx);
+		}
+
+		private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			foreach (TabPage tab in this.tabControlMain.TabPages)
+			{
+				if (tab.Tag != null && !((ComTab)tab.Tag).PerformClosing())
+				{
+					e.Cancel = true;
+					break;
+				}
+			}
 		}
 	}
 }
