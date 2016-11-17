@@ -3,9 +3,7 @@ using AnimeTidy.Models;
 using AnimeTidyLib;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
@@ -157,13 +155,9 @@ namespace AnimeTidy.Cores
 			{
 				if (this.Path != ofd.FileName)
 				{
-					//_ai.Path = ofd.FileName;
-					//_ai.Name = ofd.SafeFileName;
 					List<Anime> lstAnime;
 					if ((lstAnime = this.LoadAnimeList(ofd.FileName)) != null)
 					{
-						//this.IsCreated = false;
-
 						// 程序初始时，执行打开，这里是空
 						if (this._animeList != null)
 							this._animeList.Clear();
@@ -182,17 +176,7 @@ namespace AnimeTidy.Cores
 
 		protected override void SaveDeal(ObjectListView olv)
 		{
-			StreamWriter sw = new StreamWriter(this.Path, false, Encoding.Unicode);
-
-			sw.WriteLine(this.Summary);
-
-			foreach (Anime a in olv.Objects)
-				sw.WriteLine(a.ToString());
-
-			sw.Close();
-
-			this.IsCreated = true;
-			this.IsSaved = true;
+			SaveToFile(this.Path, olv);
 		}
 
 		protected override void UpdateXmlDeal()
@@ -233,11 +217,6 @@ namespace AnimeTidy.Cores
 
 		public override void AddInfo(ObjectListView olv)
 		{
-			// add ok test
-			//Anime a = new Anime(this.Uid++);
-			//a.Title = "xxx";
-			//a.Note = "test";
-			//olv.AddObject(a);
 			Anime a = null;
 
 			AddAnime aa = new AddAnime(olv, a);
@@ -261,7 +240,6 @@ namespace AnimeTidy.Cores
 
 		public override void ModifyInfo(ObjectListView olv)
 		{
-			// modify ok test
 			Anime a = olv.SelectedObject as Anime;
 			if (a != null)
 			{
@@ -367,34 +345,13 @@ namespace AnimeTidy.Cores
 			Form.tsslSelSpace.Text = String.Format("Selected Size: {0}", FormatAnimeSize(lSelSize));
 		}
 
-		// base delete
-		//public override void FindInfo(ObjectListView olv)
-		//{
-		//	base.FindInfo(olv);
-		//}
-
-		//public override void GroupInfo(ObjectListView olv)
-		//{
-		//	base.GroupInfo(olv);
-		//}
-
-		//public override void OverlayInfo(ObjectListView olv)
-		//{
-		//	base.OverlayInfo(olv);
-		//}
-
 		public override void BackupInfo(ObjectListView olv)
 		{
-			string bakpath = String.Format("{0}@{1}.bak", this.Path, DateTime.Now.ToString("yyyy-MM-dd_hh-mm-ss"));
-
-			StreamWriter sw = new StreamWriter(bakpath, false, Encoding.Unicode);
-
-			sw.WriteLine(this.Summary);
-
-			foreach (Anime a in olv.Objects)
-				sw.WriteLine(a.ToString());
-
-			sw.Close();
+			SaveToFile(
+				String.Format("{0}@{1}.bak",
+					this.Path,
+					DateTime.Now.ToString("yyyy-MM-dd_hh-mm-ss")),
+				olv);
 		}
 
 		public void HandleSelectionChanged(ObjectListView olv)
@@ -450,6 +407,18 @@ namespace AnimeTidy.Cores
 			}
 
 			return String.Format("{0} bytes", size);
+		}
+
+		private void SaveToFile(string path, ObjectListView olv)
+		{
+			StreamWriter sw = new StreamWriter(path, false, Encoding.Unicode);
+
+			sw.WriteLine(this.Summary);
+
+			foreach (Anime a in olv.Objects)
+				sw.WriteLine(a.ToString());
+
+			sw.Close();
 		}
 	}
 }

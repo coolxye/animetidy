@@ -10,7 +10,10 @@ namespace AnimeTidy.Forms
 {
 	public class ModAnime : AniEditor
 	{
-		public ModAnime(ObjectListView olv, Anime a) : base(olv, a) { }
+		public ModAnime(ObjectListView olv, Anime a) : base(olv, a)
+		{
+			this.Text = "Modify a Anime";
+		}
 
 		protected override void InitTable()
 		{
@@ -57,7 +60,7 @@ namespace AnimeTidy.Forms
 				Ani.Kana != this.tbKana.Text ||
 				Ani.Episode != this.tbEpisode.Text ||
 				Ani.Inc != this.tbInc.Text ||
-				Ani.Note != this.rtbNote.Text.Replace(Environment.NewLine, "\u0002"))
+				Ani.Note != this.rtbNote.Text.Replace('\n', '\u0002'))
 			{
 				Ani.Title = this.tbTitle.Text;
 				Ani.Year = this.dtpAirDate.Value.Year;
@@ -69,7 +72,7 @@ namespace AnimeTidy.Forms
 				Ani.Kana = this.tbKana.Text;
 				Ani.Episode = this.tbEpisode.Text;
 				Ani.Inc = this.tbInc.Text;
-				Ani.Note = this.rtbNote.Text.Replace(Environment.NewLine, "\u0002");
+				Ani.Note = this.rtbNote.Text.Replace('\n', '\u0002');
 
 				IsModified = true;
 			}

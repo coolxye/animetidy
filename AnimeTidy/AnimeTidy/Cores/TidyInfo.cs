@@ -1,11 +1,8 @@
 ﻿using AnimeTidy.Models;
 using AnimeTidyLib;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace AnimeTidy.Cores
@@ -114,7 +111,7 @@ namespace AnimeTidy.Cores
 				return true;
 
 			DialogResult dr;
-			dr = MessageBox.Show(String.Format("Save current {0}?", Type.ToString()),
+			dr = MessageBox.Show(String.Format("Save current {0}?", Type),
 				"Save",	MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
 
 			if (dr == DialogResult.Yes)
@@ -227,6 +224,7 @@ namespace AnimeTidy.Cores
 		public virtual void FindInfo(ObjectListView olv)
 		{
 			FilterForm ff = FilterForm.GetInstance(olv);
+			ff.Text = "Find Animes";
 			if (!ff.Created || !ff.Visible)
 				ff.Show();
 			else

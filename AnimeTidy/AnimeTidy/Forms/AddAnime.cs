@@ -10,7 +10,10 @@ namespace AnimeTidy.Forms
 {
 	public class AddAnime : AniEditor
 	{
-		public AddAnime(ObjectListView olv, Anime a) : base(olv, a) { }
+		public AddAnime(ObjectListView olv, Anime a) : base(olv, a)
+		{
+			this.Text = "Add a Anime";
+		}
 
 		public override Anime Ani
 		{
@@ -165,7 +168,7 @@ namespace AnimeTidy.Forms
 			Ani.Kana = this.tbKana.Text;
 			Ani.Episode = this.tbEpisode.Text;
 			Ani.Inc = this.tbInc.Text;
-			Ani.Note = this.rtbNote.Text.Replace(Environment.NewLine, "\u0002");
+			Ani.Note = this.rtbNote.Text.Replace('\n', '\u0002');
 		}
 	}
 }

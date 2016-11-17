@@ -74,6 +74,7 @@ namespace AnimeTidy.Forms
 
 			this.btnPath = new Button();
 			this.btnPath.Anchor = AnchorStyles.Left;
+			this.btnPath.Click += btnPath_Click;
 
 			this.pnlPath = new FlowLayoutPanel();
 			this.pnlPath.AutoSize = true;
@@ -161,10 +162,16 @@ namespace AnimeTidy.Forms
 		{
 			// check title, path
 			if (this.tbTitle.Text == String.Empty)
+			{
+				this.tbTitle.Focus();
 				return;
+			}
 
 			if (this.tbPath.Text != String.Empty && !Regex.IsMatch(this.tbPath.Text, @"^[a-zA-Z]:(\\(?![\s\.])[^\\/:\*\?\x22<>\|]*[^\s\.\\/:\*\?\x22<>\|])+$"))
+			{
+				this.tbPath.Focus();
 				return;
+			}
 
 			this.Manipulate();
 			this.Close();
@@ -174,21 +181,20 @@ namespace AnimeTidy.Forms
 
 		protected override bool ProcessDialogKey(Keys keyData)
 		{
-			switch (keyData)
-			{
-				case (Keys.Enter):
-					if (!this.tbPath.Focused)
-						break;
-
-					// add endline
-					this.tbPath.Text = "focused";
-					return true;			
-
-				default:
-						break;
-			}
+			if (keyData == Keys.Enter)
+				if (this.rtbNote.Focused)
+				{
+					this.rtbNote.Text += "\n";
+					this.rtbNote.SelectionStart = this.rtbNote.TextLength;
+					return true;
+				}
 
 			return base.ProcessDialogKey(keyData);
+		}
+
+		private void btnPath_Click(object sender, EventArgs e)
+		{
+			// todo upgrade
 		}
 	}
 }

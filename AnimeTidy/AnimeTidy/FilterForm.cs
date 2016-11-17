@@ -21,7 +21,7 @@ namespace AnimeTidy
 			this._kind = MatchKind.Prefix;
 		}
 
-		private static readonly FilterForm ff = new FilterForm();
+		private static FilterForm ff = null;
 
 		private static ObjectListView _olv;
 		private ObjectListView ListView
@@ -38,6 +38,16 @@ namespace AnimeTidy
 		public static FilterForm GetInstance(ObjectListView olv)
 		{
 			_olv = olv;
+
+			if (ff == null)
+				ff = new FilterForm();
+
+			if (ff.IsDisposed)
+			{
+				ff = null;
+				ff = new FilterForm();
+			}
+
 			return ff;
 		}
 
@@ -46,6 +56,8 @@ namespace AnimeTidy
 			if (keyData == Keys.Escape)
 			{
 				this.Hide();
+				this.tbFind.Text = String.Empty;
+				this.TimedFilter(this.ListView, String.Empty);
 				return true;
 			}
 
