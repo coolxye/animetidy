@@ -181,11 +181,11 @@ namespace AnimeTidy.Cores
 
 		protected override void UpdateXmlDeal()
 		{
-			TidyXml tx = new TidyXml();
+			XatXml tx = new XatXml();
 			tx.XatType = this.Type;
 			tx.XatName = this.Name;
 			tx.XatPath = this.Path;
-			Form.UpdateTidyXmlFile(tx);
+			Form.TXml.UpdateXmlFile(tx);
 		}
 
 		public void UpdateSelectedTab(string txt, string tip)

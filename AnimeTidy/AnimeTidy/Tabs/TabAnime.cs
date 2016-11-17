@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using AnimeTidyLib;
 using AnimeTidy.Models;
@@ -220,7 +215,7 @@ namespace AnimeTidy.Tabs
 			AnimeInfo.UpdateToolStripButton();
 		}
 
-		public void InitAnimeInfo(TidyXml xml)
+		public void InitAnimeInfo(XatXml xml)
 		{
 			AnimeInfo.Name = xml.XatName;
 			AnimeInfo.Path = xml.XatPath;

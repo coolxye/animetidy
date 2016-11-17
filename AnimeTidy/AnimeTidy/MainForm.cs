@@ -3,13 +3,8 @@ using AnimeTidy.Models;
 using AnimeTidyLib;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.XPath;
@@ -21,102 +16,18 @@ namespace AnimeTidy
 		public MainForm()
 		{
 			InitializeComponent();
-			// AnimeTidy.xml
-			InitTidyXmlFile();
+			InitSelfData();
 			// Anime, Music, Other..
 			InitTabs();
 		}
 
-		private List<TidyXml> _tidyXmlLst = new List<TidyXml>();
-		public List<TidyXml> TidyXmlLst
+		public TidyXml TXml
+		{ get; set; }
+
+		private void InitSelfData()
 		{
-			get { return this._tidyXmlLst; }
-		}
-
-		private void InitTidyXmlFile()
-		{
-			if (!File.Exists(TidyConst.XmlPath))
-				return;
-
-			XPathDocument xptdoc = new XPathDocument(TidyConst.XmlPath);
-			XPathNavigator xptnavi = xptdoc.CreateNavigator();
-			XPathNodeIterator xpnode = xptnavi.Select("/AnimeTidy/Settings/Xat");
-
-			if (xpnode == null)
-				return;
-
-			while (xpnode.MoveNext())
-			{
-				XPathNavigator xpnavi = xpnode.Current;
-				String type = xpnavi.GetAttribute("Type", String.Empty);
-
-				if (!String.IsNullOrEmpty(type))
-				{
-					TidyXml txml = new TidyXml();
-					txml.XatType = (TidyType)Enum.Parse(typeof(TidyType), type);
-					XPathNavigator xt = xpnavi.SelectSingleNode("Name");
-
-					if (xt == null || String.IsNullOrEmpty(xt.Value))
-						continue;
-
-					txml.XatName = xt.Value;
-					xt = xpnavi.SelectSingleNode("Path");
-
-					if (xt == null || String.IsNullOrEmpty(xt.Value) || !File.Exists(xt.Value))
-						continue;
-
-					txml.XatPath = xt.Value;
-
-					TidyXmlLst.Add(txml);
-				}
-			}
-		}
-
-		private void SetTidyXmlFile()
-		{
-			XmlWriterSettings xwSet = new XmlWriterSettings();
-			xwSet.Indent = true;
-			xwSet.IndentChars = "\t";
-
-			XmlWriter xWriter = XmlWriter.Create(TidyConst.XmlPath, xwSet);
-			xWriter.WriteStartElement("AnimeTidy");
-			xWriter.WriteStartElement("Settings");
-
-			foreach (TidyXml tx in TidyXmlLst)
-			{
-				xWriter.WriteStartElement("Xat");
-				xWriter.WriteAttributeString("Type", tx.XatType.ToString());
-				xWriter.WriteElementString("Name", tx.XatName);
-				xWriter.WriteElementString("Path", tx.XatPath);
-				xWriter.WriteEndElement();
-			}
-
-			xWriter.WriteEndElement();
-			xWriter.WriteEndElement();
-			xWriter.Flush();
-			xWriter.Close();
-		}
-
-		private void WriteToTidyXmlFile(TidyXml tx)
-		{
-			XmlDocument xdoc = new XmlDocument();
-			xdoc.Load(TidyConst.XmlPath);
-			XmlNodeList xnlst = xdoc.SelectSingleNode("/AnimeTidy/Settings").ChildNodes;
-
-			foreach (XmlNode xn in xnlst)
-			{
-				XmlElement xe = xn as XmlElement;
-				if (xe.GetAttribute("Type") == tx.XatType.ToString())
-				{
-					xe.SelectSingleNode("Name").InnerText = tx.XatName;
-					xe.SelectSingleNode("Path").InnerText = tx.XatPath;
-
-					break;
-				}
-			}
-
-			// upgrade tab
-			xdoc.Save(TidyConst.XmlPath);
+			//this.Size = new Size(960, 540);
+			this.TXml = new TidyXml();
 		}
 
 		private void InitTabs()
@@ -130,12 +41,12 @@ namespace AnimeTidy
 			AnimeInfo info = new AnimeInfo(this);
 			this.tabAnimes.AnimeInfo = info;
 
-			foreach (TidyXml tx in TidyXmlLst)
+			foreach (XatXml xx in TXml.XatLst)
 			{
-				switch (tx.XatType)
+				switch (xx.XatType)
 				{
 					case TidyType.Anime:
-						this.tabAnimes.InitAnimeInfo(tx);
+						this.tabAnimes.InitAnimeInfo(xx);
 						break;
 
 					case TidyType.Music:
@@ -274,22 +185,6 @@ namespace AnimeTidy
 		private void tabtnBackup_Click(object sender, EventArgs e)
 		{
 			((ComTab)this.tabControlMain.SelectedTab.Tag).HandleBackup();
-		}
-
-		public void UpdateTidyXmlFile(TidyXml tx)
-		{
-			TidyXml ck = TidyXmlLst.Find(txml => txml.XatType == TidyType.Anime);
-			if (ck != null)
-			{
-				ck.XatName = tx.XatName;
-				ck.XatPath = tx.XatPath;
-			}
-			else
-			{
-				TidyXmlLst.Add(tx);
-			}
-
-			WriteToTidyXmlFile(tx);
 		}
 
 		private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
