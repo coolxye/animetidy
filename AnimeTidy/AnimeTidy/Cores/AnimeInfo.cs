@@ -37,6 +37,13 @@ namespace AnimeTidy.Cores
 			{ return this._mainForm; }
 		}
 
+		private Stack<AnimeStack> _aniStack;
+		private Stack<AnimeStack> AniStack
+		{
+			get
+			{ return this._aniStack ?? (this._aniStack = new Stack<AnimeStack>()); }
+		}
+
 		public AnimeInfo(MainForm mainForm)
 		{
 			this._mainForm = mainForm;
@@ -177,6 +184,9 @@ namespace AnimeTidy.Cores
 		protected override void SaveDeal(ObjectListView olv)
 		{
 			SaveToFile(this.Path, olv);
+
+			// undo clear
+			this.AniStack.Clear();
 		}
 
 		protected override void UpdateXmlDeal()
@@ -209,6 +219,7 @@ namespace AnimeTidy.Cores
 		public void UpdateToolStripButton()
 		{
 			Form.tsbtnSave.Enabled = !this.IsSaved;
+			Form.tsbtnUndo.Enabled = !this.IsSaved;
 		}
 
 		public override void AddInfo(ObjectListView olv)
@@ -230,6 +241,9 @@ namespace AnimeTidy.Cores
 				aa.Ani.ID = this.Uid++;
 				aa.ListView.AddObject(aa.Ani);
 
+				// undo
+				this.AniStack.Push(new AnimeStack(EditType.Add, aa.Ani));
+
 				base.AddInfo(aa.ListView);
 			}
 		}
@@ -242,29 +256,37 @@ namespace AnimeTidy.Cores
 				ModAnime ma = new ModAnime(olv, a);
 				ma.FormClosed += ma_FormClosed;
 				ma.Show();
+
+				// undo push
+				this.AniStack.Push(new AnimeStack(EditType.ModifyBefo, a.CopyForMod()));
 			}
 		}
 
 		private void ma_FormClosed(object sender, FormClosedEventArgs e)
 		{
 			ModAnime ma = sender as ModAnime;
-			if (ma.DialogResult == DialogResult.OK)
+			if (ma.DialogResult == DialogResult.OK &&
+				ma.IsModified)
 			{
-				if (ma.IsModified)
-				{
-					long lsize = ma.Ani.Size;
-					if (ma.Ani.Path == String.Empty)
-						ma.Ani.Size = 0L;
-					// up
-					else if (AnimeInfo.IsStorageReady())
-						ma.Ani.Size = Anime.GetSize(ma.Ani.Path);
-					this.Space += ma.Ani.Size - lsize;
+				long lsize = ma.Ani.Size;
+				if (ma.Ani.Path == String.Empty)
+					ma.Ani.Size = 0L;
+				// up
+				else if (AnimeInfo.IsStorageReady())
+					ma.Ani.Size = Anime.GetSize(ma.Ani.Path);
+				this.Space += ma.Ani.Size - lsize;
 
-					ma.ListView.RefreshObject(ma.Ani);
-					Form.tsslSelSpace.Text = String.Format("Selected Size: {0}", FormatAnimeSize(ma.Ani.Size));
+				ma.ListView.RefreshObject(ma.Ani);
+				Form.tsslSelSpace.Text = String.Format("Selected Size: {0}", FormatAnimeSize(ma.Ani.Size));
 
-					base.ModifyInfo(ma.ListView);
-				}
+				// undo push2
+				this.AniStack.Push(new AnimeStack(EditType.ModifyAftr, ma.Ani));
+
+				base.ModifyInfo(ma.ListView);
+			}
+			else
+			{
+				this.AniStack.Pop();
 			}
 		}
 
@@ -279,6 +301,9 @@ namespace AnimeTidy.Cores
 					this.Space += aCopy.Size;
 					this.Uid++;
 					olv.AddObject(aCopy);
+
+					// undo
+					this.AniStack.Push(new AnimeStack(EditType.Copy, aCopy));
 				}
 
 				base.DuplicateInfo(olv);
@@ -293,6 +318,9 @@ namespace AnimeTidy.Cores
 				{
 					this.Total--;
 					this.Space -= a.Size;
+
+					// undo
+					this.AniStack.Push(new AnimeStack(EditType.Delete, a));
 				}
 
 				olv.RemoveObjects(olv.SelectedObjects);
@@ -302,6 +330,41 @@ namespace AnimeTidy.Cores
 
 		public override void UndoInfo(ObjectListView olv)
 		{
+			Anime ma = null;
+			foreach (AnimeStack astk in this.AniStack)
+			{
+				switch (astk.EType)
+				{
+					case EditType.Add:
+					case EditType.Copy:
+						this.Total--;
+						this.Space -= astk.EAnime.Size;
+						this.Uid--;
+						olv.RemoveObject(astk.EAnime);
+
+						break;
+
+					case EditType.ModifyBefo:
+						this.Space += astk.EAnime.Size - ma.Size;
+						ma.RevertFromMod(astk.EAnime);
+						olv.RefreshObject(ma);
+						Form.tsslSelSpace.Text = String.Format("Selected Size: {0}", FormatAnimeSize(ma.Size));
+						break;
+
+					case EditType.ModifyAftr:
+						ma = astk.EAnime;
+						break;
+
+					case EditType.Delete:
+						this.Total++;
+						this.Space += astk.EAnime.Size;
+						olv.AddObject(astk.EAnime);
+						break;
+				}
+			}
+
+			this.AniStack.Clear();
+
 			base.UndoInfo(olv);
 		}
 

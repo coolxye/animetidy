@@ -76,7 +76,9 @@
     </Compile>
     <Compile Include="Models\AirSeason.cs" />
     <Compile Include="Models\Anime.cs" />
+    <Compile Include="Models\AnimeStack.cs" />
     <Compile Include="Models\AnimeViewOverlay.cs" />
+    <Compile Include="Models\EditType.cs" />
     <Compile Include="Models\MatchKind.cs" />
     <Compile Include="Models\MediaType.cs" />
     <Compile Include="Models\MergeFormat.cs" />

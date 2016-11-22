@@ -374,7 +374,7 @@
 		public System.Windows.Forms.ToolStripButton tsbtnModify;
 		public System.Windows.Forms.ToolStripButton tsbtnDuplicate;
 		public System.Windows.Forms.ToolStripButton tsbtnDelete;
-		private System.Windows.Forms.ToolStripButton tsbtnUndo;
+		public System.Windows.Forms.ToolStripButton tsbtnUndo;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
 		public System.Windows.Forms.ToolStripStatusLabel tsslSelName;
 		public System.Windows.Forms.ToolStripStatusLabel tsslSelSpace;

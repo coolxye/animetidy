@@ -212,8 +212,8 @@ namespace AnimeTidy.Cores
 
 		public virtual void UndoInfo(ObjectListView olv)
 		{
-			// Duplicate Fin
-			///this.IsSaved = false;
+			// Undo Fin
+			this.IsSaved = true;
 		}
 
 		public virtual void RefreshInfo(ObjectListView olv)

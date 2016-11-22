@@ -142,6 +142,29 @@ namespace AnimeTidy.Models
 			this.Note = copy.Note;
 		}
 
+		public Anime CopyForMod()
+		{
+			Anime ani = new Anime(this, this.ID);
+			ani.CreateTime = this.CreateTime;
+			ani.UpdateTime = this.UpdateTime;
+			return ani;
+		}
+
+		public void RevertFromMod(Anime nani)
+		{
+			this.Title = nani.Title;
+			this.Year = nani.Year;
+			this.Month = nani.Month;
+			this.Format = nani.Format;
+			this.SubStyle = nani.SubStyle;
+			this.Path = nani.Path;
+			this.UpdateTime = nani.UpdateTime;
+			this.Kana = nani.Kana;
+			this.Episode = nani.Episode;
+			this.Inc = nani.Inc;
+			this.Note = nani.Note;
+		}
+
 		public static String GetPreview(String path)
 		{
 			if (!Directory.Exists(path))
