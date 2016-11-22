@@ -127,6 +127,7 @@
 			this.olvAnime.UseHyperlinks = true;
 			this.olvAnime.View = System.Windows.Forms.View.Details;
 			this.olvAnime.CellEditFinishing += new AnimeTidyLib.CellEditEventHandler(this.olvAnime_CellEditFinishing);
+			this.olvAnime.CellEditStarting += new AnimeTidyLib.CellEditEventHandler(this.olvAnime_CellEditStarting);
 			this.olvAnime.CellToolTipShowing += new System.EventHandler<AnimeTidyLib.ToolTipShowingEventArgs>(this.olvAnime_CellToolTipShowing);
 			this.olvAnime.IsHyperlink += new System.EventHandler<AnimeTidyLib.IsHyperlinkEventArgs>(this.olvAnime_IsHyperlink);
 			this.olvAnime.SelectionChanged += new System.EventHandler(this.olvAnime_SelectionChanged);

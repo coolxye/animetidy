@@ -158,11 +158,19 @@ namespace AnimeTidy.Models
 			this.Format = nani.Format;
 			this.SubStyle = nani.SubStyle;
 			this.Path = nani.Path;
+			this.Size = nani.Size;
 			this.UpdateTime = nani.UpdateTime;
 			this.Kana = nani.Kana;
 			this.Episode = nani.Episode;
 			this.Inc = nani.Inc;
 			this.Note = nani.Note;
+
+			this.Name = nani.Name;
+			this.Type = nani.Type;
+			this.SubTeam = nani.SubTeam;
+			this.Store = nani.Store;
+			this.Enjoy = nani.Enjoy;
+			this.Grade = nani.Grade;
 		}
 
 		public static String GetPreview(String path)

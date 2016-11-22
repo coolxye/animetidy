@@ -38,7 +38,7 @@ namespace AnimeTidy.Cores
 		}
 
 		private Stack<AnimeStack> _aniStack;
-		private Stack<AnimeStack> AniStack
+		public Stack<AnimeStack> AniStack
 		{
 			get
 			{ return this._aniStack ?? (this._aniStack = new Stack<AnimeStack>()); }
@@ -202,7 +202,7 @@ namespace AnimeTidy.Cores
 
 		public void UpdateStatusStripSelected(string name)
 		{
-			Form.tsslSelName.Text = name;
+			Form.tsslSelName.Text = String.Format("Selected: {0}", name);
 		}
 
 		public void UpdateStatusStripTotal()
@@ -213,7 +213,7 @@ namespace AnimeTidy.Cores
 
 		public void UpdateStatusStripSpace()
 		{
-			Form.tsslTotSpace.Text = FormatAnimeSize(this.Space);
+			Form.tsslTotSpace.Text = String.Format("Total Size: {0}", FormatAnimeSize(this.Space));
 		}
 
 		public void UpdateToolStripButton()
@@ -348,6 +348,7 @@ namespace AnimeTidy.Cores
 						this.Space += astk.EAnime.Size - ma.Size;
 						ma.RevertFromMod(astk.EAnime);
 						olv.RefreshObject(ma);
+						// bug sel name also change
 						Form.tsslSelSpace.Text = String.Format("Selected Size: {0}", FormatAnimeSize(ma.Size));
 						break;
 

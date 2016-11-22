@@ -348,18 +348,28 @@ namespace AnimeTidy.Tabs
 
 		private void olvAnime_CellEditFinishing(object sender, CellEditEventArgs e)
 		{
+			// bug 选择项变更又取消的 -> fixed
 			if (e.Cancel)
+			{
+				AnimeInfo.AniStack.Pop();
 				return;
+			}
 
-			// bug 选择项变更又取消的
 			if (e.Value.ToString() == e.NewValue.ToString())
+			{
+				AnimeInfo.AniStack.Pop();
 				return;
+			}
 
 			Anime a = e.RowObject as Anime;
 			a.UpdateTime = DateTime.Now;
 			this.richtxtNote.Text = a.Remark;
 
+			// undo push2
+			AnimeInfo.AniStack.Push(new AnimeStack(EditType.ModifyAftr, a));
+
 			AnimeInfo.IsSaved = false;
+			// bug can't update
 			AnimeInfo.UpdateStatusStripSelected(a.Name);
 		}
 
@@ -370,6 +380,12 @@ namespace AnimeTidy.Tabs
 
 			e.AutoPopDelay = 8000;
 			e.Text = ((Anime)e.Model).Preview;
+		}
+
+		private void olvAnime_CellEditStarting(object sender, CellEditEventArgs e)
+		{
+			// undo push
+			AnimeInfo.AniStack.Push(new AnimeStack(EditType.ModifyBefo, ((Anime)e.RowObject).CopyForMod()));
 		}
 	}
 }
