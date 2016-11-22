@@ -12,5 +12,14 @@ namespace AnimeTidy.Models
 
 		public String XatPath
 		{ get; set; }
+
+		public XatXml() { }
+
+		public XatXml(TidyType type, string name, string path)
+		{
+			this.XatType = type;
+			this.XatName = name;
+			this.XatPath = path;
+		}
 	}
 }

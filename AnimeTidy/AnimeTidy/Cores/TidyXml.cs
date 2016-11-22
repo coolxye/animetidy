@@ -160,5 +160,10 @@ namespace AnimeTidy.Cores
 				AddToFile(xx);
 			}
 		}
+
+		public void UpdateXmlFile(TidyType type, string name, string path)
+		{
+			UpdateXmlFile(new XatXml(type, name, path));
+		}
 	}
 }
