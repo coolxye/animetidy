@@ -41,6 +41,7 @@ namespace AnimeTidy.Forms
 			this.tbKana.Text = Ani.Kana;
 			this.tbEpisode.Text = Ani.Episode;
 			this.tbInc.Text = Ani.Inc;
+			this.rtbNote.Text = Ani.Note.Replace('\u0002', '\n');
 		}
 
 		public Boolean IsModified

@@ -198,5 +198,10 @@ namespace AnimeTidy
 				}
 			}
 		}
+
+		public void UpdateTabAnime(string note)
+		{
+			this.tabAnimes.UpdateRichTxtNote(note);
+		}
 	}
 }

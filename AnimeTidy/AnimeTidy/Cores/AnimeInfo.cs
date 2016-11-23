@@ -277,7 +277,11 @@ namespace AnimeTidy.Cores
 				this.Space += ma.Ani.Size - lsize;
 
 				ma.ListView.RefreshObject(ma.Ani);
-				Form.tsslSelSpace.Text = String.Format("Selected Size: {0}", FormatAnimeSize(ma.Ani.Size));
+				if (ma.ListView.SelectedObject == ma.Ani)
+				{
+					Form.tsslSelSpace.Text = String.Format("Selected Size: {0}", FormatAnimeSize(ma.Ani.Size));
+					Form.UpdateTabAnime(ma.Ani.Remark);
+				}
 
 				// undo push2
 				this.AniStack.Push(new AnimeStack(EditType.ModifyAftr, ma.Ani));
@@ -349,7 +353,11 @@ namespace AnimeTidy.Cores
 						ma.RevertFromMod(astk.EAnime);
 						olv.RefreshObject(ma);
 						// bug sel name also change
-						Form.tsslSelSpace.Text = String.Format("Selected Size: {0}", FormatAnimeSize(ma.Size));
+						if (olv.SelectedObject == ma)
+						{
+							Form.tsslSelName.Text = String.Format("Selected: {0}", ma.Name);
+							Form.tsslSelSpace.Text = String.Format("Selected Size: {0}", FormatAnimeSize(ma.Size));
+						}
 						break;
 
 					case EditType.ModifyAftr:

@@ -348,29 +348,29 @@ namespace AnimeTidy.Tabs
 
 		private void olvAnime_CellEditFinishing(object sender, CellEditEventArgs e)
 		{
-			// bug 选择项变更又取消的 -> fixed
-			if (e.Cancel)
-			{
-				AnimeInfo.AniStack.Pop();
-				return;
-			}
+			//// bug 选择项变更又取消的 -> fixed
+			//if (e.Cancel)
+			//{
+			//	AnimeInfo.AniStack.Pop();
+			//	return;
+			//}
 
-			if (e.Value.ToString() == e.NewValue.ToString())
-			{
-				AnimeInfo.AniStack.Pop();
-				return;
-			}
+			//if (e.Value.ToString() == e.NewValue.ToString())
+			//{
+			//	AnimeInfo.AniStack.Pop();
+			//	return;
+			//}
 
-			Anime a = e.RowObject as Anime;
-			a.UpdateTime = DateTime.Now;
-			this.richtxtNote.Text = a.Remark;
+			//Anime a = e.RowObject as Anime;
+			//a.UpdateTime = DateTime.Now;
+			//this.richtxtNote.Text = a.Remark;
 
-			// undo push2
-			AnimeInfo.AniStack.Push(new AnimeStack(EditType.ModifyAftr, a));
+			//// undo push2
+			//AnimeInfo.AniStack.Push(new AnimeStack(EditType.ModifyAftr, a));
 
-			AnimeInfo.IsSaved = false;
-			// bug can't update
-			AnimeInfo.UpdateStatusStripSelected(a.Name);
+			//AnimeInfo.IsSaved = false;
+			//// bug can't update
+			//AnimeInfo.UpdateStatusStripSelected(a.Name);
 		}
 
 		private void olvAnime_CellToolTipShowing(object sender, ToolTipShowingEventArgs e)
@@ -384,8 +384,36 @@ namespace AnimeTidy.Tabs
 
 		private void olvAnime_CellEditStarting(object sender, CellEditEventArgs e)
 		{
-			// undo push
-			AnimeInfo.AniStack.Push(new AnimeStack(EditType.ModifyBefo, ((Anime)e.RowObject).CopyForMod()));
+			//// undo push
+			//AnimeInfo.AniStack.Push(new AnimeStack(EditType.ModifyBefo, ((Anime)e.RowObject).CopyForMod()));
+		}
+
+		private void olvAnime_CellEditFinished(object sender, CellEditEventArgs e)
+		{
+			Anime a = e.RowObject as Anime;
+			a.UpdateTime = DateTime.Now;
+			this.richtxtNote.Text = a.Remark;
+
+			if (e.Column == this.olvColName)
+				AnimeInfo.UpdateStatusStripSelected(a.Name);
+
+			AnimeInfo.IsSaved = false;
+			// undo push2
+			AnimeInfo.AniStack.Push(new AnimeStack(EditType.ModifyAftr, a));
+		}
+
+		private void olvAnime_CellEditValidating(object sender, CellEditEventArgs e)
+		{
+			if (e.Value.ToString() == e.NewValue.ToString())
+				e.Cancel = true;
+			else
+				// undo push
+				AnimeInfo.AniStack.Push(new AnimeStack(EditType.ModifyBefo, ((Anime)e.RowObject).CopyForMod()));
+		}
+
+		public void UpdateRichTxtNote(string note)
+		{
+			this.richtxtNote.Text = note;
 		}
 	}
 }
