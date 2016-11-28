@@ -10,6 +10,13 @@ namespace AnimeTidy.Forms
 		public ModAnime(ObjectListView olv, Anime a) : base(olv, a)
 		{
 			this.Text = "Modify a Anime";
+			this._oriAni = a.CopyForMod();
+		}
+
+		private Anime _oriAni;
+		public Anime OriAni
+		{
+			get	{ return this._oriAni; }
 		}
 
 		protected override void InitTable()

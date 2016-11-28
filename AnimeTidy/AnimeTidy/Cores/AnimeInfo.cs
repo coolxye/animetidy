@@ -256,9 +256,6 @@ namespace AnimeTidy.Cores
 				ModAnime ma = new ModAnime(olv, a);
 				ma.FormClosed += ma_FormClosed;
 				ma.Show();
-
-				// undo push
-				this.AniStack.Push(new AnimeStack(EditType.ModifyBefo, a.CopyForMod()));
 			}
 		}
 
@@ -283,7 +280,8 @@ namespace AnimeTidy.Cores
 					Form.UpdateTabAnime(ma.Ani.Remark);
 				}
 
-				// undo push2
+				// undo push upgrade
+				this.AniStack.Push(new AnimeStack(EditType.ModifyBefo, ma.OriAni));
 				this.AniStack.Push(new AnimeStack(EditType.ModifyAftr, ma.Ani));
 
 				base.ModifyInfo(ma.ListView);
