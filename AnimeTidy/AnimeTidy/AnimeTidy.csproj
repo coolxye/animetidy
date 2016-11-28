@@ -35,10 +35,14 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ComTab.cs">
@@ -212,8 +216,16 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AnimeTidyLib\AnimeTidyLib.csproj">
-      <Project>{18FEDA0C-D147-4286-B39A-01204808106A}</Project>
+      <Project>{c064d389-d9be-4a44-8a10-f1b2f61fb0af}</Project>
       <Name>AnimeTidyLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Core\Core.csproj">
+      <Project>{6cdea24a-3f60-4835-b43c-d33a7aefbe9a}</Project>
+      <Name>Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Shell\Shell.csproj">
+      <Project>{346af638-737f-4ab7-b1e0-779620e4c2ad}</Project>
+      <Name>Shell</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

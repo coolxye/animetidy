@@ -1,5 +1,6 @@
 ﻿using AnimeTidy.Models;
 using AnimeTidyLib;
+using AnimeTidyPack.Dialogs;
 using System;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
@@ -192,6 +193,11 @@ namespace AnimeTidy.Forms
 		private void btnPath_Click(object sender, EventArgs e)
 		{
 			// todo upgrade
+			CommonOpenFileDialog cfd = new CommonOpenFileDialog();
+			cfd.IsFolderPicker = true;
+
+			if (cfd.ShowDialog(this.Handle) == CommonFileDialogResult.Ok)
+				this.tbPath.Text = cfd.FileName;
 		}
 	}
 }

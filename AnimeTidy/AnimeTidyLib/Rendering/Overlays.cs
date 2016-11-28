@@ -112,7 +112,7 @@ namespace AnimeTidyLib
     /// <summary>
     /// An overlay that will draw an image over the top of the ObjectListView
     /// </summary>
-    [TypeConverter("BrightIdeasSoftware.Design.OverlayConverter")]
+    [TypeConverter("AnimeTidyLib.Design.OverlayConverter")]
     public class ImageOverlay : ImageAdornment, ITransparentOverlay
     {
         /// <summary>
@@ -174,7 +174,7 @@ namespace AnimeTidyLib
     /// <summary>
     /// An overlay that will draw text over the top of the ObjectListView
     /// </summary>
-    [TypeConverter("BrightIdeasSoftware.Design.OverlayConverter")]
+    [TypeConverter("AnimeTidyLib.Design.OverlayConverter")]
     public class TextOverlay : TextAdornment, ITransparentOverlay
     {
         /// <summary>
