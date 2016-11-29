@@ -262,33 +262,31 @@ namespace AnimeTidy.Cores
 		private void ma_FormClosed(object sender, FormClosedEventArgs e)
 		{
 			ModAnime ma = sender as ModAnime;
-			if (ma.DialogResult == DialogResult.OK &&
-				ma.IsModified)
+			if (ma.DialogResult == DialogResult.OK)
 			{
-				long lsize = ma.Ani.Size;
-				if (ma.Ani.Path == String.Empty)
-					ma.Ani.Size = 0L;
-				// up
-				else if (AnimeInfo.IsStorageReady())
-					ma.Ani.Size = Anime.GetSize(ma.Ani.Path);
-				this.Space += ma.Ani.Size - lsize;
-
-				ma.ListView.RefreshObject(ma.Ani);
-				if (ma.ListView.SelectedObject == ma.Ani)
+				if (ma.IsModified)
 				{
-					Form.tsslSelSpace.Text = String.Format("Selected Size: {0}", FormatAnimeSize(ma.Ani.Size));
-					Form.UpdateTabAnime(ma.Ani.Remark);
+					long lsize = ma.Ani.Size;
+					if (ma.Ani.Path == String.Empty)
+						ma.Ani.Size = 0L;
+					// up
+					else if (AnimeInfo.IsStorageReady())
+						ma.Ani.Size = Anime.GetSize(ma.Ani.Path);
+					this.Space += ma.Ani.Size - lsize;
+
+					ma.ListView.RefreshObject(ma.Ani);
+					if (ma.ListView.SelectedObject == ma.Ani)
+					{
+						Form.tsslSelSpace.Text = String.Format("Selected Size: {0}", FormatAnimeSize(ma.Ani.Size));
+						Form.UpdateTabAnime(ma.Ani.Remark);
+					}
+
+					// undo push upgrade
+					this.AniStack.Push(new AnimeStack(EditType.ModifyBefo, ma.OriAni));
+					this.AniStack.Push(new AnimeStack(EditType.ModifyAftr, ma.Ani));
+
+					base.ModifyInfo(ma.ListView);
 				}
-
-				// undo push upgrade
-				this.AniStack.Push(new AnimeStack(EditType.ModifyBefo, ma.OriAni));
-				this.AniStack.Push(new AnimeStack(EditType.ModifyAftr, ma.Ani));
-
-				base.ModifyInfo(ma.ListView);
-			}
-			else
-			{
-				this.AniStack.Pop();
 			}
 		}
 

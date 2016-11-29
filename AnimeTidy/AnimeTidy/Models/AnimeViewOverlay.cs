@@ -23,9 +23,20 @@ namespace AnimeTidy.Models
 				return;
 
 			Rectangle rhrow = olv.GetItem(olv.HotRowIndex).Bounds;
-			Rectangle rView = rhrow.Bottom + iSpacing * 2 + ih > r.Bottom ?
-				new Rectangle(r.Right - iw - iSpacing, rhrow.Top - ih - iSpacing, iw, ih) :
-				new Rectangle(r.Right - iw - iSpacing, rhrow.Bottom + iSpacing, iw, ih);
+			if (r.Right - iSpacing * 2 - iw < r.Left)
+				return;
+
+			Rectangle rView;
+			if (rhrow.Top - iSpacing * 2 - ih >= r.Top)
+				rView = new Rectangle(r.Right - iw - iSpacing, rhrow.Top - ih - iSpacing, iw, ih);
+			else if (rhrow.Bottom + iSpacing * 2 + ih <= r.Bottom)
+				rView = new Rectangle(r.Right - iw - iSpacing, rhrow.Bottom + iSpacing, iw, ih);
+			else
+				return;
+
+			//Rectangle rView = rhrow.Bottom + iSpacing * 2 + ih > r.Bottom ?
+			//	new Rectangle(r.Right - iw - iSpacing, rhrow.Top - ih - iSpacing, iw, ih) :
+			//	new Rectangle(r.Right - iw - iSpacing, rhrow.Bottom + iSpacing, iw, ih);
 
 			//Rectangle rView;
 			//if (olv.HotRowIndex - olv.TopItemIndex < 9)
