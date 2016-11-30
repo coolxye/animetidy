@@ -137,6 +137,7 @@ namespace AnimeTidy.Tabs
 			// Note of Anime
 			this.olvColNote.AspectToStringConverter = otn => otn.ToString().Replace('\u0002', '\u0020');
 
+			// this.olvAnime.UseHotItem auto true
 			this.olvAnime.UseTranslucentHotItem = true;
 			this.olvAnime.UseTranslucentSelection = true;
 			this.olvAnime.HotItemStyle.Overlay = new AnimeViewOverlay();
@@ -148,22 +149,9 @@ namespace AnimeTidy.Tabs
 		private void InitAnime()
 		{
 			// AnimeList Load before
-			// Total, Total Size todo
+			// Total, Total Size
 			AnimeInfo.TotalChanged += AnimeInfo_TotalChanged;
 			AnimeInfo.SpaceChanged += AnimeInfo_SpaceChanged;
-
-			//if (AnimeInfo.AnimeList != null)
-			//{
-			//	this.olvAnime.SetObjects(AnimeInfo.AnimeList);
-
-			//	// todo
-			//	AnimeInfo.IsCreated = true;
-			//	AnimeInfo.IsSaved = true;
-			//	AnimeInfo.UpdateStatusStrip();
-
-			//	// todo
-			//	//AnimeInfo.UpdateStatusStripTotal();
-			//}
 
 			AnimeInfo.CreateStatusChanged += AnimeInfo_CreateStatusChanged;
 			AnimeInfo.SaveStatusChanged += AnimeInfo_SaveStatusChanged;
@@ -184,7 +172,7 @@ namespace AnimeTidy.Tabs
 			// init, open step2
 			if (AnimeInfo.IsCreated)
 			{
-				// bug fix new->save
+				// bug fix new->save, event dispatch
 				if (this.olvAnime.GetItemCount() <= 0)
 					this.olvAnime.SetObjects(AnimeInfo.AnimeList);
 
@@ -221,19 +209,7 @@ namespace AnimeTidy.Tabs
 			AnimeInfo.Path = xml.XatPath;
 
 			if (AnimeInfo.AnimeList != null)
-			{
-				//this.olvAnime.SetObjects(AnimeInfo.AnimeList);
-
-				// todo
 				AnimeInfo.IsCreated = true;
-				//AnimeInfo.IsSaved = true;
-
-				// test
-				//AnimeInfo.UpdateStatusStrip();
-
-				// todo
-				//AnimeInfo.UpdateStatusStripTotal();
-			}
 		}
 
 		public override void HandleNew() { AnimeInfo.CreateInfoList(this.olvAnime); }
@@ -262,75 +238,7 @@ namespace AnimeTidy.Tabs
 
 		public override void HandleBackup() { AnimeInfo.BackupInfo(this.olvAnime); }
 
-		public override bool PerformClosing()
-		{
-			return AnimeInfo.CanClose(this.olvAnime);
-		}
-
-		public void CreateAnimeInfo()
-		{
-			AnimeInfo.CreateInfoList(this.olvAnime);
-		}
-
-		public void OpenAnimeInfo()
-		{
-			AnimeInfo.OpenInfoList(this.olvAnime);
-		}
-
-		public void SaveAnimeInfo()
-		{
-			AnimeInfo.SaveInfoList(this.olvAnime);
-		}
-
-		public void AddAnime()
-		{
-			AnimeInfo.AddInfo(this.olvAnime);
-		}
-
-		public void ModifyAnime()
-		{
-			AnimeInfo.ModifyInfo(this.olvAnime);
-		}
-
-		public void DuplicateAnime()
-		{
-			AnimeInfo.DuplicateInfo(this.olvAnime);
-		}
-
-		public void DeleteAnime()
-		{
-			AnimeInfo.DeleteInfo(this.olvAnime);
-		}
-
-		public void UndoAnime()
-		{
-			AnimeInfo.UndoInfo(this.olvAnime);
-		}
-
-		public void RefreshAnime()
-		{
-			AnimeInfo.RefreshInfo(this.olvAnime);
-		}
-
-		public void FindAnime()
-		{
-			AnimeInfo.FindInfo(this.olvAnime);
-		}
-
-		public void GroupAnime()
-		{
-			AnimeInfo.GroupInfo(this.olvAnime);
-		}
-
-		public void OverlayAnime()
-		{
-			AnimeInfo.OverlayInfo(this.olvAnime);
-		}
-
-		public void BackupAnime()
-		{
-			AnimeInfo.BackupInfo(this.olvAnime);
-		}
+		public override bool PerformClosing() { return AnimeInfo.CanClose(this.olvAnime); }
 
 		private void olvAnime_SelectionChanged(object sender, EventArgs e)
 		{
@@ -346,33 +254,6 @@ namespace AnimeTidy.Tabs
 			e.Url = e.Text;
 		}
 
-		private void olvAnime_CellEditFinishing(object sender, CellEditEventArgs e)
-		{
-			//// bug 选择项变更又取消的 -> fixed
-			//if (e.Cancel)
-			//{
-			//	AnimeInfo.AniStack.Pop();
-			//	return;
-			//}
-
-			//if (e.Value.ToString() == e.NewValue.ToString())
-			//{
-			//	AnimeInfo.AniStack.Pop();
-			//	return;
-			//}
-
-			//Anime a = e.RowObject as Anime;
-			//a.UpdateTime = DateTime.Now;
-			//this.richtxtNote.Text = a.Remark;
-
-			//// undo push2
-			//AnimeInfo.AniStack.Push(new AnimeStack(EditType.ModifyAftr, a));
-
-			//AnimeInfo.IsSaved = false;
-			//// bug can't update
-			//AnimeInfo.UpdateStatusStripSelected(a.Name);
-		}
-
 		private void olvAnime_CellToolTipShowing(object sender, ToolTipShowingEventArgs e)
 		{
 			if (e.Column == null || e.Column != this.olvColPath)
@@ -380,12 +261,6 @@ namespace AnimeTidy.Tabs
 
 			e.AutoPopDelay = 8000;
 			e.Text = ((Anime)e.Model).Preview;
-		}
-
-		private void olvAnime_CellEditStarting(object sender, CellEditEventArgs e)
-		{
-			//// undo push
-			//AnimeInfo.AniStack.Push(new AnimeStack(EditType.ModifyBefo, ((Anime)e.RowObject).CopyForMod()));
 		}
 
 		private void olvAnime_CellEditFinished(object sender, CellEditEventArgs e)

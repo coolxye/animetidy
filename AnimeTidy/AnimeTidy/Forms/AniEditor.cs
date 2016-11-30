@@ -29,6 +29,7 @@ namespace AnimeTidy.Forms
 
 			this.tbTitle = new TextBox();
 			this.tbTitle.Anchor = AnchorStyles.Left;
+			this.tbTitle.Width = 200;
 
 			this.lblAirDate = new Label();
 			this.lblAirDate.AutoSize = true;
@@ -68,9 +69,11 @@ namespace AnimeTidy.Forms
 
 			this.tbPath = new TextBox();
 			this.tbPath.Anchor = AnchorStyles.Left;
+			this.tbPath.Width = 200;
 
 			this.btnPath = new Button();
 			this.btnPath.Anchor = AnchorStyles.Left;
+			this.btnPath.Width = 30;
 			this.btnPath.Click += btnPath_Click;
 
 			this.pnlPath = new FlowLayoutPanel();
@@ -86,6 +89,7 @@ namespace AnimeTidy.Forms
 
 			this.tbKana = new TextBox();
 			this.tbKana.Anchor = AnchorStyles.Left;
+			this.tbKana.Width = 200;
 
 			this.lblEpisode = new Label();
 			this.lblEpisode.AutoSize = true;
@@ -94,6 +98,7 @@ namespace AnimeTidy.Forms
 
 			this.tbEpisode = new TextBox();
 			this.tbEpisode.Anchor = AnchorStyles.Left;
+			this.tbEpisode.Width = 200;
 
 			this.lblInc = new Label();
 			this.lblInc.AutoSize = true;
@@ -102,6 +107,7 @@ namespace AnimeTidy.Forms
 
 			this.tbInc = new TextBox();
 			this.tbInc.Anchor = AnchorStyles.Left;
+			this.tbInc.Width = 200;
 
 			this.lblNote = new Label();
 			this.lblNote.AutoSize = true;
@@ -110,6 +116,10 @@ namespace AnimeTidy.Forms
 
 			this.rtbNote = new RichTextBox();
 			this.rtbNote.Anchor = AnchorStyles.Left;
+			this.rtbNote.Width = 200;
+
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+			this.Size = new System.Drawing.Size(400, 300);
 		}
 
 		//protected override void InitTable()

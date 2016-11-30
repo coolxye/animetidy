@@ -31,6 +31,7 @@ namespace AnimeTidy.Forms
 
 			this.tbName = new TextBox();
 			this.tbName.Anchor = AnchorStyles.Left;
+			this.tbName.Width = 200;
 
 			this.lblType = new Label();
 			this.lblType.AutoSize = true;
@@ -104,7 +105,7 @@ namespace AnimeTidy.Forms
 
 		protected override void InitTable()
 		{
-			this.tableLayoutPanelEdit.ColumnCount = 2;
+			//this.tableLayoutPanelEdit.ColumnCount = 2;
 			this.tableLayoutPanelEdit.RowCount = 16;
 			this.tableLayoutPanelEdit.Controls.AddRange(new Control[] {
 				this.lblTitle, this.tbTitle,

@@ -21,7 +21,7 @@ namespace AnimeTidy.Forms
 
 		protected override void InitTable()
 		{
-			this.tableLayoutPanelEdit.ColumnCount = 2;
+			//this.tableLayoutPanelEdit.ColumnCount = 2;
 			this.tableLayoutPanelEdit.RowCount = 10;
 			this.tableLayoutPanelEdit.Controls.AddRange(new Control[] {
 				this.lblTitle, this.tbTitle,

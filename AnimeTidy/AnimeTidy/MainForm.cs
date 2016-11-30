@@ -2,12 +2,8 @@
 using AnimeTidy.Models;
 using AnimeTidyLib;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
 using System.Windows.Forms;
-using System.Xml;
-using System.Xml.XPath;
 
 namespace AnimeTidy
 {
@@ -26,7 +22,7 @@ namespace AnimeTidy
 
 		private void InitSelfData()
 		{
-			//this.Size = new Size(960, 540);
+			this.Size = new Size(960, 540);
 			this.TXml = new TidyXml();
 		}
 
@@ -36,6 +32,9 @@ namespace AnimeTidy
 				this.Font = new Font("Segoe UI", 8);	// Microsoft YaHei
 
 			this.tabPageAnime.Tag = this.tabAnimes;
+
+			// temp
+			this.tabControlMain.Controls.Remove(this.tabPageMusic);
 
 			// Anime, Music, Other Info todo
 			AnimeInfo info = new AnimeInfo(this);

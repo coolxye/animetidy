@@ -108,7 +108,7 @@
 			this.radbtnPrefix.UseVisualStyleBackColor = true;
 			this.radbtnPrefix.Click += new System.EventHandler(this.radbtnPrefix_Click);
 			// 
-			// FindForm
+			// FilterForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -116,7 +116,8 @@
 			this.Controls.Add(this.grpboxOption);
 			this.Controls.Add(this.tbFind);
 			this.Controls.Add(this.lblFind);
-			this.Name = "FindForm";
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+			this.Name = "FilterForm";
 			this.Text = "FindForm";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FindForm_FormClosing);
 			this.grpboxOption.ResumeLayout(false);
