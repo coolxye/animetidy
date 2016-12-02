@@ -127,9 +127,6 @@ namespace AnimeTidy.Cores
 			if (this.IsCreated)
 			{
 				this.SaveDeal(olv);
-				//UpdateAnimeDoc();
-				//_ai.IsSaved = true;
-
 				return true;
 			}
 
@@ -138,13 +135,6 @@ namespace AnimeTidy.Cores
 
 			if (sfd.ShowDialog() == DialogResult.OK)
 			{
-				//_ai.Path = sfd.FileName;
-				//_ai.Name = Path.GetFileName(_ai.Path);
-				//_ai.IsNew = false;
-				//_ai.IsSaved = true;
-
-				//UpdateAnimeDoc();
-
 				this.Name = sfd.FileName.Substring(sfd.FileName.LastIndexOf('\\') + 1);
 				this.Path = sfd.FileName;
 
@@ -164,11 +154,7 @@ namespace AnimeTidy.Cores
 		public void CreateInfoList(ObjectListView olv)
 		{
 			if (this.CheckSaveStatus(olv))
-			{
 				this.IsCreated = false;
-				//this.IsSaved = false;
-				// upgrade clear list?
-			}
 		}
 
 		public void OpenInfoList(ObjectListView olv)
@@ -188,8 +174,6 @@ namespace AnimeTidy.Cores
 		{
 			// Add Fin
 			this.IsSaved = false;
-			// bug fix
-			//this.Uid++;
 		}
 
 		public virtual void ModifyInfo(ObjectListView olv)
@@ -224,7 +208,6 @@ namespace AnimeTidy.Cores
 		public virtual void FindInfo(ObjectListView olv)
 		{
 			FilterForm ff = FilterForm.GetInstance(olv);
-			ff.Text = "Find Animes";
 			if (!ff.Created || !ff.Visible)
 				ff.Show();
 			else

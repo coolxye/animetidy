@@ -49,6 +49,14 @@ namespace AnimeTidy.Cores
 			this._mainForm = mainForm;
 		}
 
+		public event EventHandler<EventArgs> RemarkChanged;
+
+		protected virtual void OnRemarkChanged()
+		{
+			if (this.RemarkChanged != null)
+				this.RemarkChanged(this, EventArgs.Empty);
+		}
+
 		public List<Anime> LoadAnimeList(String path)
 		{
 			StreamReader sr = new StreamReader(path);
@@ -174,7 +182,7 @@ namespace AnimeTidy.Cores
 						this.Path = ofd.FileName;
 						this.IsCreated = true;
 
-						// update TidyXml todo upgrade
+						// update TidyXml
 						this.UpdateXmlDeal();
 					}
 				}
@@ -205,6 +213,11 @@ namespace AnimeTidy.Cores
 			Form.tsslSelName.Text = String.Format("Selected: {0}", name);
 		}
 
+		public void UpdateStatusStripSelectedSize(long size)
+		{
+			Form.tsslSelSpace.Text = String.Format("Selected Size: {0}", FormatAnimeSize(size));
+		}
+
 		public void UpdateStatusStripTotal()
 		{
 			Form.tsslTotal.Text = this.Total <= 0 ? "Total: -" :
@@ -213,7 +226,8 @@ namespace AnimeTidy.Cores
 
 		public void UpdateStatusStripSpace()
 		{
-			Form.tsslTotSpace.Text = String.Format("Total Size: {0}", FormatAnimeSize(this.Space));
+			Form.tsslTotSpace.Text = this.Space <= 0 ? "Total Size: -" :
+				String.Format("Total Size: {0}", FormatAnimeSize(this.Space));
 		}
 
 		public void UpdateToolStripButton()
@@ -278,12 +292,11 @@ namespace AnimeTidy.Cores
 					if (ma.ListView.SelectedObject == ma.Ani)
 					{
 						Form.tsslSelSpace.Text = String.Format("Selected Size: {0}", FormatAnimeSize(ma.Ani.Size));
-						Form.UpdateTabAnime(ma.Ani.Remark);
+						this.OnRemarkChanged();
 					}
 
-					// undo push upgrade
-					this.AniStack.Push(new AnimeStack(EditType.ModifyBefo, ma.OriAni));
-					this.AniStack.Push(new AnimeStack(EditType.ModifyAftr, ma.Ani));
+					// undo push, modify eanime = org's copy, organime = list's anime
+					this.AniStack.Push(new AnimeStack(EditType.Modify, ma.OriAni, ma.Ani));
 
 					base.ModifyInfo(ma.ListView);
 				}
@@ -330,7 +343,6 @@ namespace AnimeTidy.Cores
 
 		public override void UndoInfo(ObjectListView olv)
 		{
-			Anime ma = null;
 			foreach (AnimeStack astk in this.AniStack)
 			{
 				switch (astk.EType)
@@ -344,20 +356,19 @@ namespace AnimeTidy.Cores
 
 						break;
 
-					case EditType.ModifyBefo:
+					case EditType.Modify:
+						Anime ma = astk.OrgAnime;
 						this.Space += astk.EAnime.Size - ma.Size;
-						ma.RevertFromMod(astk.EAnime);
+						ma.RevertSelf(astk.EAnime);
 						olv.RefreshObject(ma);
 						// bug sel name also change
 						if (olv.SelectedObject == ma)
 						{
 							Form.tsslSelName.Text = String.Format("Selected: {0}", ma.Name);
 							Form.tsslSelSpace.Text = String.Format("Selected Size: {0}", FormatAnimeSize(ma.Size));
+							this.OnRemarkChanged();
 						}
-						break;
 
-					case EditType.ModifyAftr:
-						ma = astk.EAnime;
 						break;
 
 					case EditType.Delete:
@@ -455,6 +466,8 @@ namespace AnimeTidy.Cores
 				Form.tsslSelName.Text = String.Format("Selected: {0}", icount);
 				Form.tsslSelSpace.Text = String.Format("Selected Size: {0}", FormatAnimeSize(lc));
 			}
+
+			this.OnRemarkChanged();
 		}
 
 		private string FormatAnimeSize(long size)

@@ -122,22 +122,6 @@ namespace AnimeTidy.Forms
 			this.Size = new System.Drawing.Size(400, 300);
 		}
 
-		//protected override void InitTable()
-		//{
-		//	this.tableLayoutPanelEdit.ColumnCount = 2;
-		//	this.tableLayoutPanelEdit.RowCount = 9;
-		//	this.tableLayoutPanelEdit.Controls.AddRange(new Control[] {
-		//		this.lblTitle, this.tbTitle,
-		//		this.lblAirDate, this.dtpAirDate,
-		//		this.lblFormat, this.cboFormat,
-		//		this.lblSubStyle, this.cboSubStyle,
-		//		this.lblPath, this.pnlPath,
-		//		this.lblKana, this.tbKana,
-		//		this.lblEpisode, this.tbEpisode,
-		//		this.lblInc, this.tbInc
-		//	});
-		//}
-
 		protected virtual void InitData()
 		{
 			this.cboFormat.DataSource = Enum.GetValues(typeof(MergeFormat));

@@ -3,8 +3,7 @@
 	public enum EditType
 	{
 		Add,
-		ModifyBefo,
-		ModifyAftr,
+		Modify,
 		Copy,
 		Delete
 	}

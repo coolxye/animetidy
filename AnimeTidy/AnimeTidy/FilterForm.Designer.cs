@@ -118,7 +118,7 @@
 			this.Controls.Add(this.lblFind);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
 			this.Name = "FilterForm";
-			this.Text = "FindForm";
+			this.Text = "Find";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FindForm_FormClosing);
 			this.grpboxOption.ResumeLayout(false);
 			this.grpboxOption.PerformLayout();

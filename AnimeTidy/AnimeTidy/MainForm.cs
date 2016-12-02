@@ -94,7 +94,6 @@ namespace AnimeTidy
 			switch (this.tabControlMain.SelectedIndex)
 			{
 				case 0:
-					//this.tsbtnNew.Visible = false;
 					break;
 
 				case 1:
@@ -110,7 +109,6 @@ namespace AnimeTidy
 			switch (this.tabControlMain.SelectedIndex)
 			{
 				case 0:
-					//this.tsbtnNew.Visible = true;
 					break;
 
 				case 1:
@@ -196,11 +194,6 @@ namespace AnimeTidy
 					break;
 				}
 			}
-		}
-
-		public void UpdateTabAnime(string note)
-		{
-			this.tabAnimes.UpdateRichTxtNote(note);
 		}
 	}
 }

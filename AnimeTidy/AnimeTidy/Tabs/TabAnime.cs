@@ -155,6 +155,8 @@ namespace AnimeTidy.Tabs
 
 			AnimeInfo.CreateStatusChanged += AnimeInfo_CreateStatusChanged;
 			AnimeInfo.SaveStatusChanged += AnimeInfo_SaveStatusChanged;
+
+			AnimeInfo.RemarkChanged += AnimeInfo_RemarkChanged;
 		}
 
 		private void AnimeInfo_TotalChanged(object sender, PropertyChangedEventArgs e)
@@ -203,6 +205,12 @@ namespace AnimeTidy.Tabs
 			AnimeInfo.UpdateToolStripButton();
 		}
 
+		private void AnimeInfo_RemarkChanged(object sender, EventArgs e)
+		{
+			Anime a = this.olvAnime.SelectedObject as Anime;
+			this.richtxtNote.Text = (a == null ? String.Empty : a.Remark);
+		}
+
 		public void InitAnimeInfo(XatXml xml)
 		{
 			AnimeInfo.Name = xml.XatName;
@@ -243,10 +251,6 @@ namespace AnimeTidy.Tabs
 		private void olvAnime_SelectionChanged(object sender, EventArgs e)
 		{
 			AnimeInfo.HandleSelectionChanged(this.olvAnime);
-
-			// todo upgrade
-			Anime a = this.olvAnime.SelectedObject as Anime;
-			this.richtxtNote.Text = (a == null ? String.Empty : a.Remark);
 		}
 
 		private void olvAnime_IsHyperlink(object sender, IsHyperlinkEventArgs e)
@@ -273,8 +277,8 @@ namespace AnimeTidy.Tabs
 				AnimeInfo.UpdateStatusStripSelected(a.Name);
 
 			AnimeInfo.IsSaved = false;
-			// undo push2
-			AnimeInfo.AniStack.Push(new AnimeStack(EditType.ModifyAftr, a));
+			// undo, modify organime = list's anime
+			AnimeInfo.AniStack.Peek().OrgAnime = a;
 		}
 
 		private void olvAnime_CellEditValidating(object sender, CellEditEventArgs e)
@@ -282,13 +286,8 @@ namespace AnimeTidy.Tabs
 			if (e.Value.ToString() == e.NewValue.ToString())
 				e.Cancel = true;
 			else
-				// undo push
-				AnimeInfo.AniStack.Push(new AnimeStack(EditType.ModifyBefo, ((Anime)e.RowObject).CopyForMod()));
-		}
-
-		public void UpdateRichTxtNote(string note)
-		{
-			this.richtxtNote.Text = note;
+				// undo push, modify eanime = org's copy
+				AnimeInfo.AniStack.Push(new AnimeStack(EditType.Modify, new Anime((Anime)e.RowObject)));
 		}
 	}
 }

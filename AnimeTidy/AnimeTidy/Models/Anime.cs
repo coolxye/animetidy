@@ -118,7 +118,22 @@ namespace AnimeTidy.Models
 			this.ID = id;
 		}
 
+		public Anime(Anime copy)
+		{
+			this.RevertSelf(copy);
+		}
+
 		public Anime(Anime copy, Int64 id)
+		{
+			this.RevertSelf(copy, id, DateTime.Now, DateTime.Now);
+		}
+
+		public void RevertSelf(Anime copy)
+		{
+			this.RevertSelf(copy, copy.ID, copy.CreateTime, copy.UpdateTime);
+		}
+
+		public void RevertSelf(Anime copy, Int64 id, DateTime createTime, DateTime updateTime)
 		{
 			this.ID = id;
 			this.Title = copy.Title;
@@ -134,43 +149,12 @@ namespace AnimeTidy.Models
 			this.Store = copy.Store;
 			this.Enjoy = copy.Enjoy;
 			this.Grade = copy.Grade;
-			this.CreateTime = DateTime.Now;
-			this.UpdateTime = DateTime.Now;
+			this.CreateTime = createTime;
+			this.UpdateTime = updateTime;
 			this.Kana = copy.Kana;
 			this.Episode = copy.Episode;
 			this.Inc = copy.Inc;
 			this.Note = copy.Note;
-		}
-
-		public Anime CopyForMod()
-		{
-			Anime ani = new Anime(this, this.ID);
-			ani.CreateTime = this.CreateTime;
-			ani.UpdateTime = this.UpdateTime;
-			return ani;
-		}
-
-		public void RevertFromMod(Anime nani)
-		{
-			this.Title = nani.Title;
-			this.Year = nani.Year;
-			this.Month = nani.Month;
-			this.Format = nani.Format;
-			this.SubStyle = nani.SubStyle;
-			this.Path = nani.Path;
-			this.Size = nani.Size;
-			this.UpdateTime = nani.UpdateTime;
-			this.Kana = nani.Kana;
-			this.Episode = nani.Episode;
-			this.Inc = nani.Inc;
-			this.Note = nani.Note;
-
-			this.Name = nani.Name;
-			this.Type = nani.Type;
-			this.SubTeam = nani.SubTeam;
-			this.Store = nani.Store;
-			this.Enjoy = nani.Enjoy;
-			this.Grade = nani.Grade;
 		}
 
 		public static String GetPreview(String path)
