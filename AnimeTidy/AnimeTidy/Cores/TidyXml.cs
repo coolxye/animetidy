@@ -47,14 +47,13 @@ namespace AnimeTidy.Cores
 					XatXml txml = new XatXml();
 					txml.XatType = (TidyType)Enum.Parse(typeof(TidyType), type);
 					XPathNavigator xt = xpnavi.SelectSingleNode("Name");
-
-					if (xt == null || String.IsNullOrEmpty(xt.Value))
+					if (xt == null)
 						continue;
 
 					txml.XatName = xt.Value;
-					xt = xpnavi.SelectSingleNode("Path");
 
-					if (xt == null || String.IsNullOrEmpty(xt.Value) || !File.Exists(xt.Value))
+					xt = xpnavi.SelectSingleNode("Path");
+					if (xt == null)
 						continue;
 
 					txml.XatPath = xt.Value;
@@ -109,7 +108,6 @@ namespace AnimeTidy.Cores
 			xnlst[0].SelectSingleNode("Name").InnerText = xx.XatName;
 			xnlst[0].SelectSingleNode("Path").InnerText = xx.XatPath;
 
-			// upgrade tab '\t'
 			xdoc.Save(TidyConst.XmlPath);
 		}
 
@@ -139,7 +137,6 @@ namespace AnimeTidy.Cores
 
 			xn.AppendChild(xe);
 
-			// upgrade tab '\t'
 			xdoc.Save(TidyConst.XmlPath);
 		}
 

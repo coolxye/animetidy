@@ -213,7 +213,11 @@ namespace AnimeTidy.Tabs
 
 		public void InitAnimeInfo(XatXml xml)
 		{
-			AnimeInfo.Name = xml.XatName;
+			if (xml.XatPath.Length == 0)
+				return;
+			
+			AnimeInfo.Name = xml.XatName.Length == 0 ?
+				xml.XatPath.Substring(xml.XatPath.LastIndexOf('\\') + 1) : xml.XatName;
 			AnimeInfo.Path = xml.XatPath;
 
 			if (AnimeInfo.AnimeList != null)

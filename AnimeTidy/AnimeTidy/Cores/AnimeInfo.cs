@@ -59,6 +59,13 @@ namespace AnimeTidy.Cores
 
 		public List<Anime> LoadAnimeList(String path)
 		{
+			if (!File.Exists(path))
+			{
+				this.Name = this.Path = String.Empty;
+
+				return null;
+			}
+
 			StreamReader sr = new StreamReader(path);
 			string line = sr.ReadLine();
 
