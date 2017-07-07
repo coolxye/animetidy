@@ -1304,7 +1304,7 @@ namespace AnimeTidyLib
         /// Gets Columns for this list. We hide the original so we can associate
         /// a specialised editor with it.
         /// </summary>
-        [Editor("BrightIdeasSoftware.Design.OLVColumnCollectionEditor", "System.Drawing.Design.UITypeEditor")]
+        [Editor("AnimeTidyLib.Design.OLVColumnCollectionEditor", "System.Drawing.Design.UITypeEditor")]
         new public ListView.ColumnHeaderCollection Columns {
             get {
                 return base.Columns;
