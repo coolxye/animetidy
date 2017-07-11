@@ -137,6 +137,7 @@ namespace AnimeTidy.Cores
 			{
 				this.Name = sfd.FileName.Substring(sfd.FileName.LastIndexOf('\\') + 1);
 				this.Path = sfd.FileName;
+				this.IsCreated = true;
 
 				this.UpdateXmlDeal();
 				this.SaveDeal(olv);
@@ -167,7 +168,8 @@ namespace AnimeTidy.Cores
 
 		public void SaveInfoList(ObjectListView olv)
 		{
-			this.CheckCreateStatus(olv);
+			if (this.CheckCreateStatus(olv))
+				this.IsSaved = true;
 		}
 
 		public virtual void AddInfo(ObjectListView olv)
