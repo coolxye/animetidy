@@ -1,5 +1,6 @@
 ﻿using AnimeTidy.Models;
 using AnimeTidyLib;
+using Ookii.Dialogs;
 using System;
 using System.Drawing;
 using System.Text.RegularExpressions;
@@ -189,6 +190,12 @@ namespace AnimeTidy.Forms
 		private void btnPath_Click(object sender, EventArgs e)
 		{
 			// todo upgrade
+			if (!VistaFolderBrowserDialog.IsVistaFolderDialogSupported)
+				return;
+
+			VistaFolderBrowserDialog ofd = new VistaFolderBrowserDialog();
+			if (ofd.ShowDialog(this) == DialogResult.OK)
+				this.tbPath.Text = ofd.SelectedPath;
 		}
 	}
 }

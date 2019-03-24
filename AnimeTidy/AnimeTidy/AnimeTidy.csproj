@@ -215,6 +215,10 @@
       <Project>{18FEDA0C-D147-4286-B39A-01204808106A}</Project>
       <Name>AnimeTidyLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Ookii.Dialogs\Ookii.Dialogs.csproj">
+      <Project>{779e62b3-c5a6-494d-9d87-96c0dec7ffb0}</Project>
+      <Name>Ookii.Dialogs</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
