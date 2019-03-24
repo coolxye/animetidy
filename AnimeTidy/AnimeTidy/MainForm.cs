@@ -1,17 +1,9 @@
 ﻿using AnimeTidy.Cores;
 using AnimeTidy.Models;
+using AnimeTidyLib;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Xml;
-using System.Xml.XPath;
 
 namespace AnimeTidy
 {
@@ -20,100 +12,188 @@ namespace AnimeTidy
 		public MainForm()
 		{
 			InitializeComponent();
-			// AnimeTidy.xml
-			InitTidyXmlFile();
+			InitSelfData();
 			// Anime, Music, Other..
-			InitTabAnime();
+			InitTabs();
 		}
 
-		private static List<TidyXml> TidyXmlLst
+		public TidyXml TXml
 		{ get; set; }
 
-		private static String TidyXmlPath
+		private void InitSelfData()
 		{
-			get
-			{ return @".\AnimeTidy.xml"; }
+			this.Size = new Size(960, 540);
+			this.TXml = new TidyXml();
 		}
 
-		private void InitTidyXmlFile()
+		private void InitTabs()
 		{
-			if (!File.Exists(TidyXmlPath))
-				return;
+			if (ObjectListView.IsVistaOrLater)
+				this.Font = new Font("Segoe UI", 8);	// Microsoft YaHei
 
-			TidyXmlLst = new List<TidyXml>();
-			XPathDocument xptdoc = new XPathDocument(TidyXmlPath);
-			XPathNavigator xptnavi = xptdoc.CreateNavigator();
-			XPathNodeIterator xpnode = xptnavi.Select("/AnimeTidy/Settings/Xat");
+			this.tabPageAnime.Tag = this.tabAnimes;
 
-			if (xpnode == null)
-				return;
+			// temp
+			this.tabControlMain.Controls.Remove(this.tabPageMusic);
 
-			while (xpnode.MoveNext())
+			// Anime, Music, Other Info todo
+			AnimeInfo info = new AnimeInfo(this);
+			this.tabAnimes.AnimeInfo = info;
+
+			foreach (XatXml xx in TXml.XatLst)
 			{
-				XPathNavigator xpnavi = xpnode.Current;
-				String type = xpnavi.GetAttribute("Type", String.Empty);
-
-				if (!String.IsNullOrEmpty(type))
+				switch (xx.XatType)
 				{
-					TidyXml txml = new TidyXml();
-					txml.XatType = (TidyType)Enum.Parse(typeof(TidyType), type);
-					XPathNavigator xt = xpnavi.SelectSingleNode("LastAccessName");
-					
-					if (xt == null || String.IsNullOrEmpty(xt.Value))
-						continue;
+					case TidyType.Anime:
+						this.tabAnimes.InitAnimeInfo(xx);
+						break;
 
-					txml.XatName = xt.Value;
-					xt = xpnavi.SelectSingleNode("LastAccessPath");
+					case TidyType.Music:
+						break;
 
-					if (xt == null || String.IsNullOrEmpty(xt.Value) || !File.Exists(xt.Value))
-						continue;
+					case TidyType.Other:
+						break;
 
-					txml.XatPath = xt.Value;
-
-					TidyXmlLst.Add(txml);
+					default:
+						break;
 				}
 			}
 		}
 
-		private void SetTidyXmlFile()
+		protected override bool ProcessDialogKey(Keys keyData)
 		{
-			XmlWriterSettings xwSet = new XmlWriterSettings();
-			xwSet.Indent = true;
-			xwSet.IndentChars = "\t";
-
-			XmlWriter xWriter = XmlWriter.Create(TidyXmlPath, xwSet);
-			xWriter.WriteStartElement("AnimeTidy");
-			xWriter.WriteStartElement("Settings");
-
-			foreach (TidyXml tx in TidyXmlLst)
+			switch (keyData)
 			{
-				xWriter.WriteStartElement("Xat");
-				xWriter.WriteAttributeString("Type", tx.XatType.ToString());
-				xWriter.WriteElementString("LastAccessName", tx.XatName);
-				xWriter.WriteElementString("LastAccessPath", tx.XatPath);
-				xWriter.WriteEndElement();
-			}
+				case (Keys.S | Keys.Control):
+					this.tsbtnSave_Click(this.tsbtnSave, EventArgs.Empty);
+					return true;
 
-			xWriter.WriteEndElement();
-			xWriter.WriteEndElement();
-			xWriter.Flush();
-			xWriter.Close();
+				case (Keys.I | Keys.Control):
+					this.tsbtnAdd_Click(this.tsbtnAdd, EventArgs.Empty);
+					return true;
+
+				case (Keys.E | Keys.Control):
+					this.tsbtnModify_Click(this.tsbtnModify, EventArgs.Empty);
+					return true;
+
+				case (Keys.D | Keys.Control):
+					this.tsbtnDuplicate_Click(this.tsbtnDuplicate, EventArgs.Empty);
+					return true;
+
+				case (Keys.F | Keys.Control):
+					this.tsbtnFind_Click(this.tsbtnFind, EventArgs.Empty);
+					return true;
+
+				default:
+					return base.ProcessDialogKey(keyData);
+			}
 		}
 
-		private void InitTabAnime()
+		private void tabControlMain_Deselected(object sender, TabControlEventArgs e)
 		{
-			AnimeInfo info = new AnimeInfo(this);
+			switch (this.tabControlMain.SelectedIndex)
+			{
+				case 0:
+					break;
 
-			foreach (TidyXml tx in TidyXmlLst)
-				if (tx.XatType == TidyType.Anime)
+				case 1:
+					break;
+
+				default:
+					break;
+			}
+		}
+
+		private void tabControlMain_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			switch (this.tabControlMain.SelectedIndex)
+			{
+				case 0:
+					break;
+
+				case 1:
+					break;
+
+				default:
+					break;
+			}
+		}
+
+		private void tsbtnNew_Click(object sender, EventArgs e)
+		{
+			((ComTab)this.tabControlMain.SelectedTab.Tag).HandleNew();
+		}
+
+		private void tsbtnOpen_Click(object sender, EventArgs e)
+		{
+			((ComTab)this.tabControlMain.SelectedTab.Tag).HandleOpen();
+		}
+
+		private void tsbtnSave_Click(object sender, EventArgs e)
+		{
+			((ComTab)this.tabControlMain.SelectedTab.Tag).HandleSave();
+		}
+
+		private void tsbtnAdd_Click(object sender, EventArgs e)
+		{
+			((ComTab)this.tabControlMain.SelectedTab.Tag).HandleAdd();
+		}
+
+		private void tsbtnModify_Click(object sender, EventArgs e)
+		{
+			((ComTab)this.tabControlMain.SelectedTab.Tag).HandleModify();
+		}
+
+		private void tsbtnDuplicate_Click(object sender, EventArgs e)
+		{
+			((ComTab)this.tabControlMain.SelectedTab.Tag).HandleDuplicate();
+		}
+
+		private void tsbtnDelete_Click(object sender, EventArgs e)
+		{
+			((ComTab)this.tabControlMain.SelectedTab.Tag).HandleDelete();
+		}
+
+		private void tsbtnUndo_Click(object sender, EventArgs e)
+		{
+			((ComTab)this.tabControlMain.SelectedTab.Tag).HandleUndo();
+		}
+
+		private void tsbtnRefresh_Click(object sender, EventArgs e)
+		{
+			((ComTab)this.tabControlMain.SelectedTab.Tag).HandleRefresh();
+		}
+
+		private void tsbtnFind_Click(object sender, EventArgs e)
+		{
+			((ComTab)this.tabControlMain.SelectedTab.Tag).HandleFind();
+		}
+
+		private void tsbtnGroup_Click(object sender, EventArgs e)
+		{
+			((ComTab)this.tabControlMain.SelectedTab.Tag).HandleGroup();
+		}
+
+		private void tsbtnOverlay_Click(object sender, EventArgs e)
+		{
+			((ComTab)this.tabControlMain.SelectedTab.Tag).HandleOverlay();
+		}
+
+		private void tabtnBackup_Click(object sender, EventArgs e)
+		{
+			((ComTab)this.tabControlMain.SelectedTab.Tag).HandleBackup();
+		}
+
+		private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			foreach (TabPage tab in this.tabControlMain.TabPages)
+			{
+				if (tab.Tag != null && !((ComTab)tab.Tag).PerformClosing())
 				{
-					info.Name = tx.XatName;
-					info.Path = tx.XatPath;
-
+					e.Cancel = true;
 					break;
 				}
-
-			this.tabAnimes.AnimeInfo = info;
+			}
 		}
 	}
 }

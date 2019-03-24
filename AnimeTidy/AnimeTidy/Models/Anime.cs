@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 
 namespace AnimeTidy.Models
@@ -104,9 +102,59 @@ namespace AnimeTidy.Models
 			}
 		}
 
-		public Anime(UInt64 id)
+		public override string ToString()
+		{		
+			return String.Join("\t", 
+				this.ID, this.Title, this.Name, this.Year, this.Season, this.Type, this.Format,
+				this.SubTeam, this.SubStyle, this.Path, this.Size, this.Store,
+				this.Enjoy, this.Grade, this.CreateTime, this.UpdateTime, this.Kana,
+				this.Episode, this.Inc, this.Note);
+		}
+
+		public Anime() { }
+
+		public Anime(Int64 id)
 		{
 			this.ID = id;
+		}
+
+		public Anime(Anime copy)
+		{
+			this.RevertSelf(copy);
+		}
+
+		public Anime(Anime copy, Int64 id)
+		{
+			this.RevertSelf(copy, id, DateTime.Now, DateTime.Now);
+		}
+
+		public void RevertSelf(Anime copy)
+		{
+			this.RevertSelf(copy, copy.ID, copy.CreateTime, copy.UpdateTime);
+		}
+
+		public void RevertSelf(Anime copy, Int64 id, DateTime createTime, DateTime updateTime)
+		{
+			this.ID = id;
+			this.Title = copy.Title;
+			this.Name = copy.Name;
+			this.Year = copy.Year;
+			this.Season = copy.Season;
+			this.Type = copy.Type;
+			this.Format = copy.Format;
+			this.SubTeam = copy.SubTeam;
+			this.SubStyle = copy.SubStyle;
+			this.Path = copy.Path;
+			this.Size = copy.Size;
+			this.Store = copy.Store;
+			this.Enjoy = copy.Enjoy;
+			this.Grade = copy.Grade;
+			this.CreateTime = createTime;
+			this.UpdateTime = updateTime;
+			this.Kana = copy.Kana;
+			this.Episode = copy.Episode;
+			this.Inc = copy.Inc;
+			this.Note = copy.Note;
 		}
 
 		public static String GetPreview(String path)
