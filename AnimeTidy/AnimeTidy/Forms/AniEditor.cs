@@ -1,6 +1,7 @@
 ﻿using AnimeTidy.Models;
 using AnimeTidyLib;
 using System;
+using System.Drawing;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
@@ -117,6 +118,7 @@ namespace AnimeTidy.Forms
 			this.rtbNote = new RichTextBox();
 			this.rtbNote.Anchor = AnchorStyles.Left;
 			this.rtbNote.Width = 200;
+			this.rtbNote.Font = new Font("Segoe UI", 9);
 
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
 			this.Size = new System.Drawing.Size(400, 300);
@@ -175,8 +177,9 @@ namespace AnimeTidy.Forms
 			if (keyData == Keys.Enter)
 				if (this.rtbNote.Focused)
 				{
-					this.rtbNote.Text += "\n";
-					this.rtbNote.SelectionStart = this.rtbNote.TextLength;
+					int cur = this.rtbNote.SelectionStart;
+					this.rtbNote.Text = this.rtbNote.Text.Insert(cur, "\n");
+					this.rtbNote.SelectionStart = cur + 1;
 					return true;
 				}
 
