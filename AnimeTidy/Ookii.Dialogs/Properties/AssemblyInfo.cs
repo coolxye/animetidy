@@ -1,17 +1,20 @@
-﻿using System.Reflection;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("AnimeTidy")]
-[assembly: AssemblyDescription("Tidy lots of Animes")]
+[assembly: AssemblyTitle("Ookii.Dialogs")]
+[assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Invincible Army")]
-[assembly: AssemblyProduct("AnimeTidy")]
-[assembly: AssemblyCopyright("Copyright © Invincible Army 2010-2017")]
+[assembly: AssemblyCompany("Ookii.org")]
+[assembly: AssemblyProduct("Ookii.Dialogs")]
+[assembly: AssemblyCopyright("Copyright © Sven Groot (Ookii.org) 2009")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
+[assembly: System.CLSCompliant(true)]
+[assembly: System.Resources.NeutralResourcesLanguage("en-US")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
 // to COM components.  If you need to access a type in this assembly from 
@@ -19,7 +22,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("d8150175-8b6e-4eff-b85a-f768b5f949c1")]
+[assembly: Guid("16078df2-e2d1-4754-9864-84c288a1e9bd")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -31,5 +34,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.1.0.*")]
-[assembly: AssemblyFileVersion("1.1.2.0")]
+[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("1.0.0.0")]
