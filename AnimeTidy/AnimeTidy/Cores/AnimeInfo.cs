@@ -118,8 +118,9 @@ namespace AnimeTidy.Cores
 					ani.SubStyle = (SubStyle)Enum.Parse(typeof(SubStyle), info[8]);
 					ani.Path = info[9];
 					ani.Size = Int64.Parse(info[10]);
-					ani.Store = Boolean.Parse(info[11]);
-					ani.Enjoy = Boolean.Parse(info[12]);
+					bool bl;
+					ani.Store = Boolean.TryParse(info[11], out bl) ? (bl ? StoreState.Fin : StoreState.Cont) : (StoreState)Enum.Parse(typeof(StoreState), info[11]);
+					ani.Enjoy = Boolean.TryParse(info[12], out bl) ? (bl ? EnjoyState.Done : EnjoyState.NotYet) : (EnjoyState)Enum.Parse(typeof(EnjoyState), info[12]);
 					ani.Grade = Int32.Parse(info[13]);
 					ani.CreateTime = DateTime.Parse(info[14]);
 					ani.UpdateTime = DateTime.Parse(info[15]);

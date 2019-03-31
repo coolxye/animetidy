@@ -113,13 +113,25 @@ namespace AnimeTidy.Tabs
 
 			// Store of Anime
 			tc = new TypedColumn<Anime>(this.olvColStore);
-			tc.AspectPutter = (Anime a, object opg) => { a.Store = (bool)opg; };
-			this.olvColStore.Renderer = new MappedImageRenderer(true, Properties.Resources.Accept, false, Properties.Resources.Alert);
+			//tc.AspectPutter = (Anime a, object opg) => { a.Store = (bool)opg; };
+			//this.olvColStore.Renderer = new MappedImageRenderer(true, Properties.Resources.Accept, false, Properties.Resources.Alert);
+			tc.AspectPutter = (Anime a, object ops) => { a.Store = (StoreState)ops; };
+			this.olvColStore.Renderer = new MappedImageRenderer(new object[] {
+				StoreState.Ignore, null,
+				StoreState.Cont, Properties.Resources.Alert,
+				StoreState.Fin, Properties.Resources.Accept
+			});
 
 			// Enjoy of Anime
 			tc = new TypedColumn<Anime>(this.olvColEnjoy);
-			tc.AspectPutter = (Anime a, object opv) => { a.Enjoy = (bool)opv; };
-			this.olvColEnjoy.Renderer = new MappedImageRenderer(true, Properties.Resources.Smile, false, Properties.Resources.Sad);
+			//tc.AspectPutter = (Anime a, object opv) => { a.Enjoy = (bool)opv; };
+			//this.olvColEnjoy.Renderer = new MappedImageRenderer(true, Properties.Resources.Smile, false, Properties.Resources.Sad);
+			tc.AspectPutter = (Anime a, object ope) => { a.Enjoy = (EnjoyState)ope; };
+			this.olvColEnjoy.Renderer = new MappedImageRenderer(new object[] {
+				EnjoyState.Ignore, null,
+				EnjoyState.NotYet, Properties.Resources.Sad,
+				EnjoyState.Done, Properties.Resources.Smile
+			});
 
 			// Grade of Anime
 			tc = new TypedColumn<Anime>(this.olvColGrade);

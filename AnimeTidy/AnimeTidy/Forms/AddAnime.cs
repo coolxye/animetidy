@@ -67,7 +67,8 @@ namespace AnimeTidy.Forms
 			this.cboStore = new ComboBox();
 			this.cboStore.DropDownStyle = ComboBoxStyle.DropDownList;
 			this.cboStore.Items.AddRange(new object[] {
-				"Con.",
+				"Ignore",
+				"Cont.",
 				"Fin."
 			});
 			this.cboStore.SelectedIndex = 0;
@@ -81,8 +82,9 @@ namespace AnimeTidy.Forms
 			this.cboEnjoy = new ComboBox();
 			this.cboEnjoy.DropDownStyle = ComboBoxStyle.DropDownList;
 			this.cboEnjoy.Items.AddRange(new object[] {
-				"-~-",
-				"^-^"
+				"Ignore",
+				"Not yet",
+				"Done"
 			});
 			this.cboEnjoy.SelectedIndex = 0;
 			this.cboEnjoy.Anchor = AnchorStyles.Left;
@@ -158,8 +160,8 @@ namespace AnimeTidy.Forms
 			Ani.SubStyle = (SubStyle)this.cboSubStyle.SelectedItem;
 			Ani.Path = this.tbPath.Text;
 			Ani.Size = Anime.GetSize(Ani.Path);
-			Ani.Store = (this.cboStore.SelectedIndex == 1) ? true : false;
-			Ani.Enjoy = (this.cboEnjoy.SelectedIndex == 1) ? true : false;
+			Ani.Store = (StoreState)this.cboStore.SelectedIndex;
+			Ani.Enjoy = (EnjoyState)this.cboEnjoy.SelectedIndex;
 			Ani.Grade = Int32.Parse(this.cboGrade.Text);
 			Ani.CreateTime = DateTime.Now;
 			Ani.UpdateTime = DateTime.Now;
