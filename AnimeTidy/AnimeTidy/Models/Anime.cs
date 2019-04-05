@@ -64,10 +64,10 @@ namespace AnimeTidy.Models
 		public Int64 Size
 		{ get; set; }
 
-		public Boolean Store
+		public StoreState Store
 		{ get; set; }
 
-		public Boolean Enjoy
+		public EnjoyState Enjoy
 		{ get; set; }
 
 		public Int32 Grade
