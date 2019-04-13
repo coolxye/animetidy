@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Windows.Forms;
 using AnimeTidyLib;
@@ -252,7 +252,13 @@ namespace AnimeTidy.Tabs
 
 		public override void HandleUndo() { AnimeInfo.UndoInfo(this.olvAnime); }
 
-		public override void HandleRefresh() { AnimeInfo.RefreshInfo(this.olvAnime); }
+		public override void HandleRefresh()
+		{
+			if (this.olvAnime.SelectedObjects.Count == 0)
+				AnimeInfo.RefreshInfo(this.olvAnime, TidyConst.RefreshType.All);
+			else
+				AnimeInfo.RefreshInfo(this.olvAnime);
+		}
 
 		public override void HandleFind() { AnimeInfo.FindInfo(this.olvAnime); }
 

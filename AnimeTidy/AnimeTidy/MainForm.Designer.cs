@@ -235,7 +235,6 @@
 			// tsbtnRefresh
 			// 
 			this.tsbtnRefresh.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.tsbtnRefresh.Enabled = false;
 			this.tsbtnRefresh.Image = global::AnimeTidy.Properties.Resources.TsRefresh;
 			this.tsbtnRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.tsbtnRefresh.Name = "tsbtnRefresh";

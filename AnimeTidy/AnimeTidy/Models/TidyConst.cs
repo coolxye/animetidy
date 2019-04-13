@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace AnimeTidy.Models
 {
@@ -23,5 +24,24 @@ namespace AnimeTidy.Models
 		/// TabAnime Page's Name
 		/// </summary>
 		public const String TabAnimeName = "Anime";
+
+		/// <summary>
+		/// RefreshType
+		/// </summary>
+		public enum RefreshType
+		{
+			AnySelected,
+			All
+		}
+
+		/// <summary>
+		/// Storage Disk
+		/// </summary>
+		public static readonly List<String> VolumnLabels = new List<String>(3)
+		{
+			"StorageA",
+			"StorageB",
+			"StorageC"
+		};
 	}
 }

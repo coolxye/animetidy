@@ -292,7 +292,7 @@ namespace AnimeTidy.Cores
 					if (ma.Ani.Path == String.Empty)
 						ma.Ani.Size = 0L;
 					// up
-					else if (AnimeInfo.IsStorageReady())
+					else if (Directory.Exists(ma.Ani.Path))
 						ma.Ani.Size = Anime.GetSize(ma.Ani.Path);
 					this.Space += ma.Ani.Size - lsize;
 
@@ -394,7 +394,7 @@ namespace AnimeTidy.Cores
 
 		public override void RefreshInfo(ObjectListView olv)
 		{
-			if (!AnimeInfo.IsStorageReady())
+			if (this.StoreDrive.Capacity == 0)
 				return;
 
 			long lSize = 0L;
@@ -405,6 +405,9 @@ namespace AnimeTidy.Cores
 			foreach (Anime a in olv.SelectedObjects)
 			{
 				if (a.Path.Length == 0)
+					continue;
+
+				if (!Directory.Exists(a.Path))
 					continue;
 
 				lSize = Anime.GetSize(a.Path);
@@ -428,6 +431,68 @@ namespace AnimeTidy.Cores
 			Form.tsslSelSpace.Text = String.Format("Selected Size: {0}", FormatAnimeSize(lSelSize));
 		}
 
+		public override void RefreshInfo(ObjectListView olv, TidyConst.RefreshType key)
+		{
+			if (this.StoreDrive.Capacity == 0)
+				return;
+
+			long lSpace = this.Space;
+			int iFresh = 0;
+
+			foreach (Anime a in olv.Objects)
+			{
+				if (a.Path.Length == 0)
+					continue;
+
+				bool bPathUp = false;
+				bool bSizeUp = false;
+
+				if (Directory.Exists(a.Path))
+				{
+					long lSize = Anime.GetSize(a.Path);
+					if (a.Size != lSize)
+					{
+						bSizeUp = true;
+
+						lSpace += lSize - a.Size;
+						a.Size = lSize;
+					}
+				}
+				else
+				{
+					string srelative = a.Path.Substring(a.Path.IndexOf('\\') + 1);
+					foreach (string drive in this.StoreDrive)
+						if (Directory.Exists(drive + srelative))
+						{
+							a.Path = drive + srelative;
+							bPathUp = true;
+
+							long lSize = Anime.GetSize(a.Path);
+							if (a.Size != lSize)
+							{
+								bSizeUp = true;
+
+								lSpace += lSize - a.Size;
+								a.Size = lSize;
+							}
+
+							break;
+						}
+				}
+
+				if (bPathUp || bSizeUp)
+				{
+					olv.RefreshObject(a);
+					iFresh++;
+				}
+			}
+
+			this.Space = lSpace;
+
+			if (iFresh > 0)
+				base.RefreshInfo(olv, key);
+		}
+
 		public override void BackupInfo(ObjectListView olv)
 		{
 			SaveToFile(
@@ -445,7 +510,7 @@ namespace AnimeTidy.Cores
 				Form.tsbtnModify.Enabled = false;
 				Form.tsbtnDuplicate.Enabled = false;
 				Form.tsbtnDelete.Enabled = false;
-				Form.tsbtnRefresh.Enabled = false;
+				//Form.tsbtnRefresh.Enabled = false;
 
 				Form.tsslSelName.Text = "Selected: -";
 				Form.tsslSelSpace.Text = "Selected Size: -";
@@ -455,7 +520,7 @@ namespace AnimeTidy.Cores
 				Form.tsbtnModify.Enabled = true;
 				Form.tsbtnDuplicate.Enabled = true;
 				Form.tsbtnDelete.Enabled = true;
-				Form.tsbtnRefresh.Enabled = true;
+				//Form.tsbtnRefresh.Enabled = true;
 
 				Anime a = olv.SelectedObject as Anime;
 				Form.tsslSelName.Text = String.Format("Selected: {0}", a.Name);
@@ -466,7 +531,7 @@ namespace AnimeTidy.Cores
 				Form.tsbtnModify.Enabled = false;
 				Form.tsbtnDuplicate.Enabled = true;
 				Form.tsbtnDelete.Enabled = true;
-				Form.tsbtnRefresh.Enabled = true;
+				//Form.tsbtnRefresh.Enabled = true;
 
 				long lc = 0L;
 				foreach (Anime ac in olv.SelectedObjects)
