@@ -1,6 +1,7 @@
 ﻿using AnimeTidy.Models;
 using AnimeTidyLib;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Windows.Forms;
@@ -55,7 +56,7 @@ namespace AnimeTidy.Cores
 			get
 			{ return TidyType.Invalid; }
 		}
-		
+
 		private Boolean _isCreated;
 		public Boolean IsCreated
 		{
@@ -88,10 +89,18 @@ namespace AnimeTidy.Cores
 			}
 		}
 
+		private List<String> _storeDrive;
+		public List<String> StoreDrive
+		{
+			get
+			{ return this.GetStorageDrive(); }
+		}
+
 		public TidyInfo()
 		{
 			this._isCreated = false;
 			this._isSaved = true;
+			this._storeDrive = new List<string>();
 		}
 
 		public event EventHandler<PropertyChangedEventArgs> TotalChanged;
@@ -112,7 +121,7 @@ namespace AnimeTidy.Cores
 
 			DialogResult dr;
 			dr = MessageBox.Show(String.Format("Save current {0}?", Type),
-				"Save",	MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
+				"Save", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
 
 			if (dr == DialogResult.Yes)
 				return CheckCreateStatus(olv);
@@ -207,6 +216,11 @@ namespace AnimeTidy.Cores
 			this.IsSaved = false;
 		}
 
+		public virtual void RefreshInfo(ObjectListView olv, TidyConst.RefreshType key)
+		{
+			this.RefreshInfo(olv);
+		}
+
 		public virtual void FindInfo(ObjectListView olv)
 		{
 			FilterForm ff = FilterForm.GetInstance(olv);
@@ -235,21 +249,19 @@ namespace AnimeTidy.Cores
 			return this.CheckSaveStatus(olv);
 		}
 
-		public static Boolean IsStorageReady()
+		private List<String> GetStorageDrive()
 		{
-			bool br = false;
+			if (this._storeDrive.Capacity != 0)
+				this._storeDrive.Clear();
+
 			DriveInfo[] allDrives = DriveInfo.GetDrives();
 
 			foreach (DriveInfo dr in allDrives)
-				if (dr.IsReady)
-					if ((dr.VolumeLabel == "Anime" || dr.VolumeLabel == "Favs") &&
-						(dr.DriveType == DriveType.Fixed || dr.DriveType == DriveType.Removable))
-					{
-						br = true;
-						break;
-					}
+				if (dr.IsReady && dr.DriveType == DriveType.Fixed)
+					if (TidyConst.VolumnLabels.Exists(x => x == dr.VolumeLabel))
+						this._storeDrive.Add(dr.Name);
 
-			return br;
+			return this._storeDrive;
 		}
 	}
 }
