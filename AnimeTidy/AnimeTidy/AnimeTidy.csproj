@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>AnimeTidy</RootNamespace>
     <AssemblyName>AnimeTidy</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -79,11 +79,13 @@
     <Compile Include="Models\AnimeStack.cs" />
     <Compile Include="Models\AnimeViewOverlay.cs" />
     <Compile Include="Models\EditType.cs" />
+    <Compile Include="Models\EnjoyState.cs" />
     <Compile Include="Models\MatchKind.cs" />
     <Compile Include="Models\MediaType.cs" />
     <Compile Include="Models\MergeFormat.cs" />
     <Compile Include="Models\Metadata.cs" />
     <Compile Include="Models\Music.cs" />
+    <Compile Include="Models\StoreState.cs" />
     <Compile Include="Models\SubStyle.cs" />
     <Compile Include="Models\TidyConst.cs" />
     <Compile Include="Models\TidyType.cs" />

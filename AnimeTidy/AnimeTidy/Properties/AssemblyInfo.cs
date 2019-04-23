@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Invincible Army")]
 [assembly: AssemblyProduct("AnimeTidy")]
-[assembly: AssemblyCopyright("Copyright © Invincible Army 2010-2017")]
+[assembly: AssemblyCopyright("Copyright © Invincible Army 2010-2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -32,4 +32,4 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.1.0.*")]
-[assembly: AssemblyFileVersion("1.1.2.0")]
+[assembly: AssemblyFileVersion("1.1.4.0")]
