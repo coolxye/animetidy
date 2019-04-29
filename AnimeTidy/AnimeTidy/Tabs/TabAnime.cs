@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using AnimeTidyLib;
 using AnimeTidy.Models;
 using AnimeTidy.Cores;
+using System.Drawing;
 
 namespace AnimeTidy.Tabs
 {
@@ -149,11 +150,24 @@ namespace AnimeTidy.Tabs
 			// Note of Anime
 			this.olvColNote.AspectToStringConverter = otn => otn.ToString().Replace('\u0002', '\u0020');
 
-			// this.olvAnime.UseHotItem auto true
-			this.olvAnime.UseTranslucentHotItem = true;
+			// Item Style
 			this.olvAnime.UseTranslucentSelection = true;
-			this.olvAnime.HotItemStyle.Overlay = new AnimeViewOverlay();
-			this.olvAnime.HotItemStyle = this.olvAnime.HotItemStyle;
+			this.olvAnime.UseHotItem = true;
+
+			HotItemStyle hotItemStyle = new HotItemStyle();
+			hotItemStyle.BackColor = Color.Bisque;
+			hotItemStyle.Overlay = new AnimeViewOverlay();
+
+			this.olvAnime.HotItemStyle = hotItemStyle;
+
+			// Make the decoration
+			RowBorderDecoration rbd = new RowBorderDecoration();
+			rbd.BorderPen = new Pen(Color.LightSkyBlue);
+			rbd.FillBrush = new SolidBrush(Color.FromArgb(64, Color.DeepSkyBlue));
+			rbd.BoundsPadding = new Size(0, 0);
+			rbd.CornerRounding = 1.0f;
+			this.olvAnime.SelectedRowDecoration = rbd;
+
 			this.olvAnime.PrimarySortColumn = this.olvColTitle;
 			this.olvAnime.PrimarySortOrder = SortOrder.Ascending;
 		}
