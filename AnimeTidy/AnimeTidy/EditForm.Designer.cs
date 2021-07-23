@@ -84,6 +84,9 @@
 			this.Controls.Add(this.tableLayoutPanelEdit);
 			this.Controls.Add(this.btnOK);
 			this.Controls.Add(this.btnCancel);
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+			this.MaximizeBox = false;
+			this.MinimizeBox = false;
 			this.Name = "EditForm";
 			this.Text = "EditForm";
 			this.ResumeLayout(false);

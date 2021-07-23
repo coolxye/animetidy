@@ -121,8 +121,7 @@ namespace AnimeTidy.Forms
 			this.rtbNote.Width = 200;
 			this.rtbNote.Font = new Font("Segoe UI", 9);
 
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-			this.Size = new System.Drawing.Size(400, 300);
+			this.Size = new System.Drawing.Size(400, 400);
 		}
 
 		protected virtual void InitData()
