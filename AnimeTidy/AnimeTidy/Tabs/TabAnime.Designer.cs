@@ -93,7 +93,7 @@
 			this.olvAnime.AllColumns.Add(this.olvColGrade);
 			this.olvAnime.AllColumns.Add(this.olvColNote);
 			this.olvAnime.AllowColumnReorder = true;
-			this.olvAnime.AlternateRowBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+			this.olvAnime.AlternateRowBackColor = System.Drawing.Color.FromArgb(200, 255, 200);
 			this.olvAnime.CellEditActivation = AnimeTidyLib.ObjectListView.CellEditActivateMode.DoubleClick;
 			this.olvAnime.CellEditUseWholeCell = false;
 			this.olvAnime.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
