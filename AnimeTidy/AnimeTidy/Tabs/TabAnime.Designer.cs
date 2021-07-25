@@ -31,17 +31,17 @@
 			this.lblDes = new System.Windows.Forms.Label();
 			this.splitCtnAnime = new System.Windows.Forms.SplitContainer();
 			this.olvAnime = new AnimeTidyLib.ObjectListView();
-			this.olvColTitle = new AnimeTidyLib.OLVColumn();
-			this.olvColName = new AnimeTidyLib.OLVColumn();
-			this.olvColAirdate = new AnimeTidyLib.OLVColumn();
-			this.olvColType = new AnimeTidyLib.OLVColumn();
-			this.olvColSubTeam = new AnimeTidyLib.OLVColumn();
-			this.olvColPath = new AnimeTidyLib.OLVColumn();
-			this.olvColSize = new AnimeTidyLib.OLVColumn();
-			this.olvColStore = new AnimeTidyLib.OLVColumn();
-			this.olvColEnjoy = new AnimeTidyLib.OLVColumn();
-			this.olvColGrade = new AnimeTidyLib.OLVColumn();
-			this.olvColNote = new AnimeTidyLib.OLVColumn();
+			this.olvColTitle = ((AnimeTidyLib.OLVColumn)(new AnimeTidyLib.OLVColumn()));
+			this.olvColName = ((AnimeTidyLib.OLVColumn)(new AnimeTidyLib.OLVColumn()));
+			this.olvColAirdate = ((AnimeTidyLib.OLVColumn)(new AnimeTidyLib.OLVColumn()));
+			this.olvColType = ((AnimeTidyLib.OLVColumn)(new AnimeTidyLib.OLVColumn()));
+			this.olvColSubTeam = ((AnimeTidyLib.OLVColumn)(new AnimeTidyLib.OLVColumn()));
+			this.olvColPath = ((AnimeTidyLib.OLVColumn)(new AnimeTidyLib.OLVColumn()));
+			this.olvColSize = ((AnimeTidyLib.OLVColumn)(new AnimeTidyLib.OLVColumn()));
+			this.olvColStore = ((AnimeTidyLib.OLVColumn)(new AnimeTidyLib.OLVColumn()));
+			this.olvColEnjoy = ((AnimeTidyLib.OLVColumn)(new AnimeTidyLib.OLVColumn()));
+			this.olvColGrade = ((AnimeTidyLib.OLVColumn)(new AnimeTidyLib.OLVColumn()));
+			this.olvColNote = ((AnimeTidyLib.OLVColumn)(new AnimeTidyLib.OLVColumn()));
 			this.richtxtNote = new System.Windows.Forms.RichTextBox();
 			((System.ComponentModel.ISupportInitialize)(this.splitCtnAnime)).BeginInit();
 			this.splitCtnAnime.Panel1.SuspendLayout();
@@ -53,9 +53,10 @@
 			// lblDes
 			// 
 			this.lblDes.AutoSize = true;
-			this.lblDes.Location = new System.Drawing.Point(3, 0);
+			this.lblDes.Location = new System.Drawing.Point(4, 0);
+			this.lblDes.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.lblDes.Name = "lblDes";
-			this.lblDes.Size = new System.Drawing.Size(107, 12);
+			this.lblDes.Size = new System.Drawing.Size(161, 18);
 			this.lblDes.TabIndex = 0;
 			this.lblDes.Text = "Anime description";
 			// 
@@ -64,7 +65,8 @@
 			this.splitCtnAnime.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.splitCtnAnime.Location = new System.Drawing.Point(0, 15);
+			this.splitCtnAnime.Location = new System.Drawing.Point(0, 22);
+			this.splitCtnAnime.Margin = new System.Windows.Forms.Padding(4);
 			this.splitCtnAnime.Name = "splitCtnAnime";
 			this.splitCtnAnime.Orientation = System.Windows.Forms.Orientation.Horizontal;
 			// 
@@ -75,8 +77,9 @@
 			// splitCtnAnime.Panel2
 			// 
 			this.splitCtnAnime.Panel2.Controls.Add(this.richtxtNote);
-			this.splitCtnAnime.Size = new System.Drawing.Size(150, 135);
-			this.splitCtnAnime.SplitterDistance = 106;
+			this.splitCtnAnime.Size = new System.Drawing.Size(225, 202);
+			this.splitCtnAnime.SplitterDistance = 138;
+			this.splitCtnAnime.SplitterWidth = 6;
 			this.splitCtnAnime.TabIndex = 2;
 			// 
 			// olvAnime
@@ -93,7 +96,7 @@
 			this.olvAnime.AllColumns.Add(this.olvColGrade);
 			this.olvAnime.AllColumns.Add(this.olvColNote);
 			this.olvAnime.AllowColumnReorder = true;
-			this.olvAnime.AlternateRowBackColor = System.Drawing.Color.FromArgb(200, 255, 200);
+			this.olvAnime.AlternateRowBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(255)))), ((int)(((byte)(200)))));
 			this.olvAnime.CellEditActivation = AnimeTidyLib.ObjectListView.CellEditActivateMode.DoubleClick;
 			this.olvAnime.CellEditUseWholeCell = false;
 			this.olvAnime.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
@@ -114,13 +117,15 @@
 			this.olvAnime.FullRowSelect = true;
 			this.olvAnime.GroupWithItemCountFormat = "{0} [{1} Animes]";
 			this.olvAnime.GroupWithItemCountSingularFormat = "{0} [{1} Anime]";
+			this.olvAnime.HideSelection = false;
 			this.olvAnime.Location = new System.Drawing.Point(0, 0);
+			this.olvAnime.Margin = new System.Windows.Forms.Padding(4);
 			this.olvAnime.Name = "olvAnime";
 			this.olvAnime.ShowCommandMenuOnRightClick = true;
 			this.olvAnime.ShowGroups = false;
 			this.olvAnime.ShowItemCountOnGroups = true;
 			this.olvAnime.ShowItemToolTips = true;
-			this.olvAnime.Size = new System.Drawing.Size(150, 106);
+			this.olvAnime.Size = new System.Drawing.Size(225, 138);
 			this.olvAnime.TabIndex = 1;
 			this.olvAnime.UseAlternatingBackColors = true;
 			this.olvAnime.UseCompatibleStateImageBehavior = false;
@@ -227,20 +232,23 @@
 			// 
 			this.richtxtNote.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.richtxtNote.Location = new System.Drawing.Point(0, 0);
+			this.richtxtNote.Margin = new System.Windows.Forms.Padding(4);
 			this.richtxtNote.Name = "richtxtNote";
 			this.richtxtNote.ReadOnly = true;
 			this.richtxtNote.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-			this.richtxtNote.Size = new System.Drawing.Size(150, 25);
+			this.richtxtNote.Size = new System.Drawing.Size(225, 58);
 			this.richtxtNote.TabIndex = 0;
 			this.richtxtNote.Text = "";
 			// 
 			// TabAnime
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+			this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.splitCtnAnime);
 			this.Controls.Add(this.lblDes);
+			this.Margin = new System.Windows.Forms.Padding(4);
 			this.Name = "TabAnime";
+			this.Size = new System.Drawing.Size(225, 225);
 			this.splitCtnAnime.Panel1.ResumeLayout(false);
 			this.splitCtnAnime.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitCtnAnime)).EndInit();

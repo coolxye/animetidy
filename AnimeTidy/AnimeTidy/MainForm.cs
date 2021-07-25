@@ -22,7 +22,7 @@ namespace AnimeTidy
 
 		private void InitSelfData()
 		{
-			this.Size = new Size(960, 540);
+			this.Size = new Size((Int32)(960 * TidyConst.DpiRatio), (Int32)(540 * TidyConst.DpiRatio));
 			this.TXml = new TidyXml();
 		}
 
@@ -166,7 +166,7 @@ namespace AnimeTidy
 
 		private void tsbtnFind_Click(object sender, EventArgs e)
 		{
-			((ComTab)this.tabControlMain.SelectedTab.Tag).HandleFind();
+			((ComTab)this.tabControlMain.SelectedTab.Tag).HandleFind(this);
 		}
 
 		private void tsbtnGroup_Click(object sender, EventArgs e)

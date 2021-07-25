@@ -13,6 +13,7 @@ namespace AnimeTidy.Tabs
 		public TabAnime()
 		{
 			InitializeComponent();
+			InitColForDpi();
 			InitModel();
 		}
 
@@ -31,9 +32,26 @@ namespace AnimeTidy.Tabs
 			}
 		}
 
+		private void InitColForDpi()
+		{
+			this.olvColAirdate.MinimumWidth = (Int32)(this.olvColAirdate.MinimumWidth * TidyConst.DpiRatio);
+			this.olvColEnjoy.MinimumWidth = (Int32)(this.olvColEnjoy.MinimumWidth * TidyConst.DpiRatio);
+			this.olvColGrade.MinimumWidth = (Int32)(this.olvColGrade.MinimumWidth * TidyConst.DpiRatio);
+			this.olvColName.MinimumWidth = (Int32)(this.olvColName.MinimumWidth * TidyConst.DpiRatio);
+			this.olvColNote.MinimumWidth = (Int32)(this.olvColNote.MinimumWidth * TidyConst.DpiRatio);
+			this.olvColPath.MinimumWidth = (Int32)(this.olvColPath.MinimumWidth * TidyConst.DpiRatio);
+			this.olvColSize.MinimumWidth = (Int32)(this.olvColSize.MinimumWidth * TidyConst.DpiRatio);
+			this.olvColStore.MinimumWidth = (Int32)(this.olvColStore.MinimumWidth * TidyConst.DpiRatio);
+			this.olvColSubTeam.MinimumWidth = (Int32)(this.olvColSubTeam.MinimumWidth * TidyConst.DpiRatio);
+			this.olvColTitle.MinimumWidth = (Int32)(this.olvColTitle.MinimumWidth * TidyConst.DpiRatio);
+			this.olvColType.MinimumWidth = (Int32)(this.olvColType.MinimumWidth * TidyConst.DpiRatio);
+		}
+
 		// Initalize the Format of the ObjectListView
 		private void InitModel()
 		{
+			this.richtxtNote.LanguageOption = RichTextBoxLanguageOptions.UIFonts;
+
 			this.olvAnime.AddDecoration(new EditingCellBorderDecoration(true));
 
 			TypedObjectListView<Anime> tolv = new TypedObjectListView<Anime>(this.olvAnime);
@@ -274,7 +292,7 @@ namespace AnimeTidy.Tabs
 				AnimeInfo.RefreshInfo(this.olvAnime);
 		}
 
-		public override void HandleFind() { AnimeInfo.FindInfo(this.olvAnime); }
+		public override void HandleFind(Form ffm) { AnimeInfo.FindInfo(this.olvAnime, ffm); }
 
 		public override void HandleGroup() { AnimeInfo.GroupInfo(this.olvAnime); }
 

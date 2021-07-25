@@ -53,10 +53,10 @@ namespace AnimeTidy.Models
 		private Brush TitleBrush = Brushes.DodgerBlue;
 		private Brush TextBrush = Brushes.DarkSlateGray;
 
-		private const int iw = 240;
-		private const int ih = 120;
-		private const int iSpacing = 8;
-		private const int iPicW = 80;
+		private const int iw = (Int32)(240 * TidyConst.DpiRatio);
+		private const int ih = (Int32)(120 * TidyConst.DpiRatio);
+		private const int iSpacing = (Int32)(8 * TidyConst.DpiRatio);
+		private const int iPicW = (Int32)(80 * TidyConst.DpiRatio);
 
 		private void DrawAnimeView(Graphics g, Rectangle r, Anime av)
 		{
@@ -127,7 +127,7 @@ namespace AnimeTidy.Models
 
 			String txt = av.Name.Length == 0 ? av.Title : av.Name;
 
-			using (Font ft = new Font("Tahoma", 9, FontStyle.Bold))
+			using (Font ft = new Font("Tahoma", 8, FontStyle.Bold))
 			{
 				SizeF sf = g.MeasureString(txt, ft, rText.Width, fmt);
 				rText.Height = (int)sf.Height;
@@ -139,7 +139,7 @@ namespace AnimeTidy.Models
 			fmt.Alignment = StringAlignment.Near;
 
 			// Draw the other infos
-			using (Font ft = new Font("Meiryo UI", 8, FontStyle.Regular))
+			using (Font ft = new Font("Meiryo UI", 7, FontStyle.Regular))
 			{
 				txt = "Kana: " + av.Kana;
 				SizeF sf = g.MeasureString(txt, ft, rText.Width, fmt);
@@ -147,7 +147,7 @@ namespace AnimeTidy.Models
 				g.DrawString(txt, ft, this.TextBrush, rText, fmt);
 			}
 
-			using (Font ft = new Font("Tahoma", 8))
+			using (Font ft = new Font("Tahoma", 7))
 			{
 				rText.Y += rText.Height;
 				txt = "Episode: " + av.Episode;
@@ -164,7 +164,7 @@ namespace AnimeTidy.Models
 
 			fmt.Alignment = StringAlignment.Far;
 
-			using (Font ft = new Font("Tahoma", 7))
+			using (Font ft = new Font("Tahoma", 6))
 			{
 				txt = "ID: "+ av.ID;
 				SizeF sf = g.MeasureString(txt, ft, rText.Width, fmt);
