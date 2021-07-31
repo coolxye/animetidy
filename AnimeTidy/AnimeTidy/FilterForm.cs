@@ -8,10 +8,12 @@ namespace AnimeTidy
 {
 	public partial class FilterForm : Form
 	{
-		private FilterForm()
+		private FilterForm(Form ffm)
 		{
 			InitializeComponent();
 
+			this.StartPosition = FormStartPosition.Manual;
+			this.Location = new System.Drawing.Point(ffm.Location.X + ffm.Width, ffm.Location.Y);
 			this._kind = MatchKind.Prefix;
 		}
 
@@ -29,17 +31,17 @@ namespace AnimeTidy
 			get { return this._kind; }
 		}
 
-		public static FilterForm GetInstance(ObjectListView olv)
+		public static FilterForm GetInstance(ObjectListView olv, Form ffm)
 		{
 			_olv = olv;
 
 			if (ff == null)
-				ff = new FilterForm();
+				ff = new FilterForm(ffm);
 
 			if (ff.IsDisposed)
 			{
 				ff = null;
-				ff = new FilterForm();
+				ff = new FilterForm(ffm);
 			}
 
 			return ff;

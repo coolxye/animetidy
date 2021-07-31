@@ -221,9 +221,9 @@ namespace AnimeTidy.Cores
 			this.RefreshInfo(olv);
 		}
 
-		public virtual void FindInfo(ObjectListView olv)
+		public virtual void FindInfo(ObjectListView olv, Form ffm)
 		{
-			FilterForm ff = FilterForm.GetInstance(olv);
+			FilterForm ff = FilterForm.GetInstance(olv, ffm);
 			if (!ff.Created || !ff.Visible)
 				ff.Show();
 			else

@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using AnimeTidyLib;
 using AnimeTidy.Models;
 using AnimeTidy.Cores;
+using System.Drawing;
 
 namespace AnimeTidy.Tabs
 {
@@ -12,6 +13,7 @@ namespace AnimeTidy.Tabs
 		public TabAnime()
 		{
 			InitializeComponent();
+			InitColForDpi();
 			InitModel();
 		}
 
@@ -30,9 +32,26 @@ namespace AnimeTidy.Tabs
 			}
 		}
 
+		private void InitColForDpi()
+		{
+			this.olvColAirdate.MinimumWidth = (Int32)(this.olvColAirdate.MinimumWidth * TidyConst.DpiRatio);
+			this.olvColEnjoy.MinimumWidth = (Int32)(this.olvColEnjoy.MinimumWidth * TidyConst.DpiRatio);
+			this.olvColGrade.MinimumWidth = (Int32)(this.olvColGrade.MinimumWidth * TidyConst.DpiRatio);
+			this.olvColName.MinimumWidth = (Int32)(this.olvColName.MinimumWidth * TidyConst.DpiRatio);
+			this.olvColNote.MinimumWidth = (Int32)(this.olvColNote.MinimumWidth * TidyConst.DpiRatio);
+			this.olvColPath.MinimumWidth = (Int32)(this.olvColPath.MinimumWidth * TidyConst.DpiRatio);
+			this.olvColSize.MinimumWidth = (Int32)(this.olvColSize.MinimumWidth * TidyConst.DpiRatio);
+			this.olvColStore.MinimumWidth = (Int32)(this.olvColStore.MinimumWidth * TidyConst.DpiRatio);
+			this.olvColSubTeam.MinimumWidth = (Int32)(this.olvColSubTeam.MinimumWidth * TidyConst.DpiRatio);
+			this.olvColTitle.MinimumWidth = (Int32)(this.olvColTitle.MinimumWidth * TidyConst.DpiRatio);
+			this.olvColType.MinimumWidth = (Int32)(this.olvColType.MinimumWidth * TidyConst.DpiRatio);
+		}
+
 		// Initalize the Format of the ObjectListView
 		private void InitModel()
 		{
+			this.richtxtNote.LanguageOption = RichTextBoxLanguageOptions.UIFonts;
+
 			this.olvAnime.AddDecoration(new EditingCellBorderDecoration(true));
 
 			TypedObjectListView<Anime> tolv = new TypedObjectListView<Anime>(this.olvAnime);
@@ -149,11 +168,24 @@ namespace AnimeTidy.Tabs
 			// Note of Anime
 			this.olvColNote.AspectToStringConverter = otn => otn.ToString().Replace('\u0002', '\u0020');
 
-			// this.olvAnime.UseHotItem auto true
-			this.olvAnime.UseTranslucentHotItem = true;
+			// Item Style
 			this.olvAnime.UseTranslucentSelection = true;
-			this.olvAnime.HotItemStyle.Overlay = new AnimeViewOverlay();
-			this.olvAnime.HotItemStyle = this.olvAnime.HotItemStyle;
+			this.olvAnime.UseHotItem = true;
+
+			HotItemStyle hotItemStyle = new HotItemStyle();
+			hotItemStyle.BackColor = Color.Bisque;
+			hotItemStyle.Overlay = new AnimeViewOverlay();
+
+			this.olvAnime.HotItemStyle = hotItemStyle;
+
+			// Make the decoration
+			RowBorderDecoration rbd = new RowBorderDecoration();
+			rbd.BorderPen = new Pen(Color.LightSkyBlue);
+			rbd.FillBrush = new SolidBrush(Color.FromArgb(64, Color.DeepSkyBlue));
+			rbd.BoundsPadding = new Size(0, 0);
+			rbd.CornerRounding = 1.0f;
+			this.olvAnime.SelectedRowDecoration = rbd;
+
 			this.olvAnime.PrimarySortColumn = this.olvColTitle;
 			this.olvAnime.PrimarySortOrder = SortOrder.Ascending;
 		}
@@ -260,7 +292,7 @@ namespace AnimeTidy.Tabs
 				AnimeInfo.RefreshInfo(this.olvAnime);
 		}
 
-		public override void HandleFind() { AnimeInfo.FindInfo(this.olvAnime); }
+		public override void HandleFind(Form ffm) { AnimeInfo.FindInfo(this.olvAnime, ffm); }
 
 		public override void HandleGroup() { AnimeInfo.GroupInfo(this.olvAnime); }
 
