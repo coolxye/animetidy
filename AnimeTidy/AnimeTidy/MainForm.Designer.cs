@@ -307,6 +307,7 @@
 			this.tabControlMain.ShowToolTips = true;
 			this.tabControlMain.Size = new System.Drawing.Size(390, 308);
 			this.tabControlMain.TabIndex = 2;
+			this.tabControlMain.TabStop = false;
 			this.tabControlMain.SelectedIndexChanged += new System.EventHandler(this.tabControlMain_SelectedIndexChanged);
 			this.tabControlMain.Deselected += new System.Windows.Forms.TabControlEventHandler(this.tabControlMain_Deselected);
 			// 

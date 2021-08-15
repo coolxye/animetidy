@@ -30,8 +30,7 @@ namespace AnimeTidy.Forms
 			this.lblName.Anchor = AnchorStyles.Left;
 
 			this.tbName = new TextBox();
-			this.tbName.Anchor = AnchorStyles.Left;
-			this.tbName.Width = 200;
+			this.tbName.Anchor = AnchorStyles.Left | AnchorStyles.Right;
 
 			this.lblType = new Label();
 			this.lblType.AutoSize = true;
@@ -120,11 +119,11 @@ namespace AnimeTidy.Forms
 				this.lblStore, this.cboStore,
 				this.lblEnjoy, this.cboEnjoy,
 				this.lblGrade, this.cboGrade,
-				this.lblPath, this.pnlPath,
+				this.lblPath, this.tlpPath,
 				this.lblKana, this.tbKana,
 				this.lblEpisode, this.tbEpisode,
 				this.lblInc, this.tbInc,
-				this.lblNote, this.rtbNote
+				this.lblNote, this.tbNote
 			});
 		}
 
@@ -168,7 +167,7 @@ namespace AnimeTidy.Forms
 			Ani.Kana = this.tbKana.Text;
 			Ani.Episode = this.tbEpisode.Text;
 			Ani.Inc = this.tbInc.Text;
-			Ani.Note = this.rtbNote.Text.Replace('\n', '\u0002');
+			Ani.Note = this.tbNote.Text.Replace(Environment.NewLine, "\u0002");
 		}
 	}
 }

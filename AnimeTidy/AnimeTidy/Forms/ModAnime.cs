@@ -28,11 +28,11 @@ namespace AnimeTidy.Forms
 				this.lblAirDate, this.dtpAirDate,
 				this.lblFormat, this.cboFormat,
 				this.lblSubStyle, this.cboSubStyle,
-				this.lblPath, this.pnlPath,
+				this.lblPath, this.tlpPath,
 				this.lblKana, this.tbKana,
 				this.lblEpisode, this.tbEpisode,
 				this.lblInc, this.tbInc,
-				this.lblNote, this.rtbNote
+				this.lblNote, this.tbNote
 			});
 		}
 
@@ -48,7 +48,7 @@ namespace AnimeTidy.Forms
 			this.tbKana.Text = Ani.Kana;
 			this.tbEpisode.Text = Ani.Episode;
 			this.tbInc.Text = Ani.Inc;
-			this.rtbNote.Text = Ani.Note.Replace('\u0002', '\n');
+			this.tbNote.Text = Ani.Note.Replace("\u0002", Environment.NewLine);
 		}
 
 		public Boolean IsModified
@@ -65,7 +65,7 @@ namespace AnimeTidy.Forms
 				Ani.Kana != this.tbKana.Text ||
 				Ani.Episode != this.tbEpisode.Text ||
 				Ani.Inc != this.tbInc.Text ||
-				Ani.Note != this.rtbNote.Text.Replace('\n', '\u0002'))
+				Ani.Note != this.tbNote.Text.Replace(Environment.NewLine, "\u0002"))
 			{
 				Ani.Title = this.tbTitle.Text;
 				Ani.Year = this.dtpAirDate.Value.Year;
@@ -77,7 +77,7 @@ namespace AnimeTidy.Forms
 				Ani.Kana = this.tbKana.Text;
 				Ani.Episode = this.tbEpisode.Text;
 				Ani.Inc = this.tbInc.Text;
-				Ani.Note = this.rtbNote.Text.Replace('\n', '\u0002');
+				Ani.Note = this.tbNote.Text.Replace(Environment.NewLine, "\u0002");
 
 				IsModified = true;
 			}

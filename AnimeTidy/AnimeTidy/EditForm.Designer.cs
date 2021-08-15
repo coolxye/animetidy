@@ -38,7 +38,7 @@
 			this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
 			this.btnCancel.Location = new System.Drawing.Point(296, 340);
-			this.btnCancel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.btnCancel.Margin = new System.Windows.Forms.Padding(4);
 			this.btnCancel.Name = "btnCancel";
 			this.btnCancel.Size = new System.Drawing.Size(112, 34);
 			this.btnCancel.TabIndex = 2;
@@ -51,7 +51,7 @@
 			this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.btnOK.Location = new System.Drawing.Point(174, 340);
-			this.btnOK.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.btnOK.Margin = new System.Windows.Forms.Padding(4);
 			this.btnOK.Name = "btnOK";
 			this.btnOK.Size = new System.Drawing.Size(112, 34);
 			this.btnOK.TabIndex = 1;
@@ -69,8 +69,9 @@
 			this.tableLayoutPanelEdit.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.tableLayoutPanelEdit.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.tableLayoutPanelEdit.Location = new System.Drawing.Point(20, 18);
-			this.tableLayoutPanelEdit.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.tableLayoutPanelEdit.Margin = new System.Windows.Forms.Padding(4);
 			this.tableLayoutPanelEdit.Name = "tableLayoutPanelEdit";
+			this.tableLayoutPanelEdit.Padding = new System.Windows.Forms.Padding(0, 0, 20, 4);
 			this.tableLayoutPanelEdit.RowCount = 2;
 			this.tableLayoutPanelEdit.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanelEdit.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -87,7 +88,7 @@
 			this.Controls.Add(this.tableLayoutPanelEdit);
 			this.Controls.Add(this.btnOK);
 			this.Controls.Add(this.btnCancel);
-			this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.Margin = new System.Windows.Forms.Padding(4);
 			this.Name = "EditForm";
 			this.Text = "EditForm";
 			this.ResumeLayout(false);
