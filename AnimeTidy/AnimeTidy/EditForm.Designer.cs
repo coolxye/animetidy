@@ -37,9 +37,10 @@
 			// 
 			this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.btnCancel.Location = new System.Drawing.Point(197, 227);
+			this.btnCancel.Location = new System.Drawing.Point(296, 340);
+			this.btnCancel.Margin = new System.Windows.Forms.Padding(4);
 			this.btnCancel.Name = "btnCancel";
-			this.btnCancel.Size = new System.Drawing.Size(75, 23);
+			this.btnCancel.Size = new System.Drawing.Size(112, 34);
 			this.btnCancel.TabIndex = 2;
 			this.btnCancel.Text = "Cancel";
 			this.btnCancel.UseVisualStyleBackColor = true;
@@ -49,9 +50,10 @@
 			// 
 			this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.btnOK.Location = new System.Drawing.Point(116, 227);
+			this.btnOK.Location = new System.Drawing.Point(174, 340);
+			this.btnOK.Margin = new System.Windows.Forms.Padding(4);
 			this.btnOK.Name = "btnOK";
-			this.btnOK.Size = new System.Drawing.Size(75, 23);
+			this.btnOK.Size = new System.Drawing.Size(112, 34);
 			this.btnOK.TabIndex = 1;
 			this.btnOK.Text = "OK";
 			this.btnOK.UseVisualStyleBackColor = true;
@@ -66,24 +68,27 @@
 			this.tableLayoutPanelEdit.ColumnCount = 2;
 			this.tableLayoutPanelEdit.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.tableLayoutPanelEdit.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanelEdit.Location = new System.Drawing.Point(13, 12);
+			this.tableLayoutPanelEdit.Location = new System.Drawing.Point(20, 18);
+			this.tableLayoutPanelEdit.Margin = new System.Windows.Forms.Padding(4);
 			this.tableLayoutPanelEdit.Name = "tableLayoutPanelEdit";
+			this.tableLayoutPanelEdit.Padding = new System.Windows.Forms.Padding(0, 0, 20, 4);
 			this.tableLayoutPanelEdit.RowCount = 2;
 			this.tableLayoutPanelEdit.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanelEdit.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanelEdit.Size = new System.Drawing.Size(259, 209);
+			this.tableLayoutPanelEdit.Size = new System.Drawing.Size(388, 314);
 			this.tableLayoutPanelEdit.TabIndex = 0;
 			// 
 			// EditForm
 			// 
 			this.AcceptButton = this.btnOK;
-			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
+			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
 			this.CancelButton = this.btnCancel;
-			this.ClientSize = new System.Drawing.Size(284, 262);
+			this.ClientSize = new System.Drawing.Size(426, 393);
 			this.Controls.Add(this.tableLayoutPanelEdit);
 			this.Controls.Add(this.btnOK);
 			this.Controls.Add(this.btnCancel);
+			this.Margin = new System.Windows.Forms.Padding(4);
 			this.Name = "EditForm";
 			this.Text = "EditForm";
 			this.ResumeLayout(false);

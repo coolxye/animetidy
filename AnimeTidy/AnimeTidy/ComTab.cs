@@ -22,7 +22,7 @@ namespace AnimeTidy
 
 		public virtual void HandleRefresh() { }
 
-		public virtual void HandleFind() { }
+		public virtual void HandleFind(Form ffm) { }
 
 		public virtual void HandleGroup() { }
 

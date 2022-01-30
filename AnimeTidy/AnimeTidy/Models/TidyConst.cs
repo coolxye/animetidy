@@ -43,5 +43,10 @@ namespace AnimeTidy.Models
 			"StorageB",
 			"StorageC"
 		};
+
+		/// <summary>
+		/// DPI Ratio
+		/// </summary>
+		public const Double DpiRatio = 1.2;
 	}
 }

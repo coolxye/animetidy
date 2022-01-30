@@ -40,9 +40,10 @@
 			// lblFind
 			// 
 			this.lblFind.AutoSize = true;
-			this.lblFind.Location = new System.Drawing.Point(12, 15);
+			this.lblFind.Location = new System.Drawing.Point(18, 22);
+			this.lblFind.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.lblFind.Name = "lblFind";
-			this.lblFind.Size = new System.Drawing.Size(35, 12);
+			this.lblFind.Size = new System.Drawing.Size(53, 18);
 			this.lblFind.TabIndex = 0;
 			this.lblFind.Text = "Find:";
 			// 
@@ -50,9 +51,10 @@
 			// 
 			this.tbFind.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.tbFind.Location = new System.Drawing.Point(53, 12);
+			this.tbFind.Location = new System.Drawing.Point(80, 18);
+			this.tbFind.Margin = new System.Windows.Forms.Padding(4);
 			this.tbFind.Name = "tbFind";
-			this.tbFind.Size = new System.Drawing.Size(219, 21);
+			this.tbFind.Size = new System.Drawing.Size(326, 28);
 			this.tbFind.TabIndex = 1;
 			this.tbFind.TextChanged += new System.EventHandler(this.tbFind_TextChanged);
 			// 
@@ -64,9 +66,11 @@
 			this.grpboxOption.Controls.Add(this.radbtnRegex);
 			this.grpboxOption.Controls.Add(this.radbtnAnyText);
 			this.grpboxOption.Controls.Add(this.radbtnPrefix);
-			this.grpboxOption.Location = new System.Drawing.Point(12, 39);
+			this.grpboxOption.Location = new System.Drawing.Point(18, 58);
+			this.grpboxOption.Margin = new System.Windows.Forms.Padding(4);
 			this.grpboxOption.Name = "grpboxOption";
-			this.grpboxOption.Size = new System.Drawing.Size(260, 211);
+			this.grpboxOption.Padding = new System.Windows.Forms.Padding(4);
+			this.grpboxOption.Size = new System.Drawing.Size(390, 316);
 			this.grpboxOption.TabIndex = 2;
 			this.grpboxOption.TabStop = false;
 			this.grpboxOption.Text = "Find Option";
@@ -74,9 +78,10 @@
 			// radbtnRegex
 			// 
 			this.radbtnRegex.AutoSize = true;
-			this.radbtnRegex.Location = new System.Drawing.Point(7, 67);
+			this.radbtnRegex.Location = new System.Drawing.Point(10, 100);
+			this.radbtnRegex.Margin = new System.Windows.Forms.Padding(4);
 			this.radbtnRegex.Name = "radbtnRegex";
-			this.radbtnRegex.Size = new System.Drawing.Size(53, 16);
+			this.radbtnRegex.Size = new System.Drawing.Size(78, 22);
 			this.radbtnRegex.TabIndex = 2;
 			this.radbtnRegex.TabStop = true;
 			this.radbtnRegex.Text = "Regex";
@@ -86,9 +91,10 @@
 			// radbtnAnyText
 			// 
 			this.radbtnAnyText.AutoSize = true;
-			this.radbtnAnyText.Location = new System.Drawing.Point(7, 44);
+			this.radbtnAnyText.Location = new System.Drawing.Point(10, 66);
+			this.radbtnAnyText.Margin = new System.Windows.Forms.Padding(4);
 			this.radbtnAnyText.Name = "radbtnAnyText";
-			this.radbtnAnyText.Size = new System.Drawing.Size(71, 16);
+			this.radbtnAnyText.Size = new System.Drawing.Size(105, 22);
 			this.radbtnAnyText.TabIndex = 1;
 			this.radbtnAnyText.TabStop = true;
 			this.radbtnAnyText.Text = "Any Text";
@@ -99,9 +105,10 @@
 			// 
 			this.radbtnPrefix.AutoSize = true;
 			this.radbtnPrefix.Checked = true;
-			this.radbtnPrefix.Location = new System.Drawing.Point(7, 21);
+			this.radbtnPrefix.Location = new System.Drawing.Point(10, 32);
+			this.radbtnPrefix.Margin = new System.Windows.Forms.Padding(4);
 			this.radbtnPrefix.Name = "radbtnPrefix";
-			this.radbtnPrefix.Size = new System.Drawing.Size(59, 16);
+			this.radbtnPrefix.Size = new System.Drawing.Size(87, 22);
 			this.radbtnPrefix.TabIndex = 0;
 			this.radbtnPrefix.TabStop = true;
 			this.radbtnPrefix.Text = "Prefix";
@@ -110,13 +117,16 @@
 			// 
 			// FilterForm
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(284, 262);
+			this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
+			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+			this.ClientSize = new System.Drawing.Size(426, 393);
 			this.Controls.Add(this.grpboxOption);
 			this.Controls.Add(this.tbFind);
 			this.Controls.Add(this.lblFind);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+			this.Margin = new System.Windows.Forms.Padding(4);
+			this.MaximizeBox = false;
+			this.MinimizeBox = false;
 			this.Name = "FilterForm";
 			this.Text = "Find";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FindForm_FormClosing);

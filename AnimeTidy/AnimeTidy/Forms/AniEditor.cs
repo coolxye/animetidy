@@ -1,4 +1,4 @@
-﻿using AnimeTidy.Models;
+using AnimeTidy.Models;
 using AnimeTidyLib;
 using Ookii.Dialogs;
 using System;
@@ -24,14 +24,16 @@ namespace AnimeTidy.Forms
 
 		protected override void InitForm()
 		{
+			if (ObjectListView.IsVistaOrLater)
+				this.Font = new Font("Microsoft YaHei", 8);
+
 			this.lblTitle = new Label();
 			this.lblTitle.AutoSize = true;
 			this.lblTitle.Text = "Title";
 			this.lblTitle.Anchor = AnchorStyles.Left;
 
 			this.tbTitle = new TextBox();
-			this.tbTitle.Anchor = AnchorStyles.Left;
-			this.tbTitle.Width = 200;
+			this.tbTitle.Anchor = AnchorStyles.Left | AnchorStyles.Right;
 
 			this.lblAirDate = new Label();
 			this.lblAirDate.AutoSize = true;
@@ -70,19 +72,24 @@ namespace AnimeTidy.Forms
 			this.lblPath.Anchor = AnchorStyles.Left;
 
 			this.tbPath = new TextBox();
-			this.tbPath.Anchor = AnchorStyles.Left;
-			this.tbPath.Width = 200;
+			this.tbPath.Anchor = AnchorStyles.Left | AnchorStyles.Right;
 
 			this.btnPath = new Button();
 			this.btnPath.Anchor = AnchorStyles.Left;
-			this.btnPath.Width = 30;
+			this.btnPath.Width = 40;
+			this.btnPath.Height = this.tbPath.Height;
 			this.btnPath.Click += btnPath_Click;
 
-			this.pnlPath = new FlowLayoutPanel();
-			this.pnlPath.AutoSize = true;
-			this.pnlPath.Anchor = AnchorStyles.Left;
-			this.pnlPath.Margin = new Padding(0);
-			this.pnlPath.Controls.AddRange(new Control[] { this.tbPath, this.btnPath });
+			this.tlpPath = new TableLayoutPanel();
+			this.tlpPath.AutoSize = true;
+			this.tlpPath.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+			this.tlpPath.Margin = new Padding(0);
+			this.tlpPath.ColumnCount = 2;
+			this.tlpPath.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 80));
+			this.tlpPath.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20));
+			this.tlpPath.RowCount = 1;
+			this.tlpPath.RowStyles.Add(new RowStyle());
+			this.tlpPath.Controls.AddRange(new Control[] { this.tbPath, this.btnPath });
 
 			this.lblKana = new Label();
 			this.lblKana.AutoSize = true;
@@ -90,8 +97,7 @@ namespace AnimeTidy.Forms
 			this.lblKana.Anchor = AnchorStyles.Left;
 
 			this.tbKana = new TextBox();
-			this.tbKana.Anchor = AnchorStyles.Left;
-			this.tbKana.Width = 200;
+			this.tbKana.Anchor = AnchorStyles.Left | AnchorStyles.Right;
 
 			this.lblEpisode = new Label();
 			this.lblEpisode.AutoSize = true;
@@ -99,8 +105,7 @@ namespace AnimeTidy.Forms
 			this.lblEpisode.Anchor = AnchorStyles.Left;
 
 			this.tbEpisode = new TextBox();
-			this.tbEpisode.Anchor = AnchorStyles.Left;
-			this.tbEpisode.Width = 200;
+			this.tbEpisode.Anchor = AnchorStyles.Left | AnchorStyles.Right;
 
 			this.lblInc = new Label();
 			this.lblInc.AutoSize = true;
@@ -108,21 +113,28 @@ namespace AnimeTidy.Forms
 			this.lblInc.Anchor = AnchorStyles.Left;
 
 			this.tbInc = new TextBox();
-			this.tbInc.Anchor = AnchorStyles.Left;
-			this.tbInc.Width = 200;
+			this.tbInc.Anchor = AnchorStyles.Left | AnchorStyles.Right;
 
 			this.lblNote = new Label();
 			this.lblNote.AutoSize = true;
 			this.lblNote.Text = "Note";
-			this.lblNote.Anchor = AnchorStyles.Left;
+			this.lblNote.Anchor = AnchorStyles.Left | AnchorStyles.Top;
+			this.lblNote.Margin = new Padding(this.lblNote.Margin.Left, this.lblNote.Margin.Top + 8,
+				this.lblNote.Margin.Right, this.lblNote.Margin.Bottom);
 
-			this.rtbNote = new RichTextBox();
-			this.rtbNote.Anchor = AnchorStyles.Left;
-			this.rtbNote.Width = 200;
-			this.rtbNote.Font = new Font("Segoe UI", 9);
+			this.tbNote = new TextBox();
+			this.tbNote.Multiline = true;
+			this.tbNote.ScrollBars = ScrollBars.Vertical;
+			this.tbNote.AcceptsReturn = true;
+			this.tbNote.WordWrap = true;
+			this.tbNote.Height = 120;
+			this.tbNote.Anchor = AnchorStyles.Left | AnchorStyles.Right;
 
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-			this.Size = new System.Drawing.Size(400, 300);
+			this.FormBorderStyle = FormBorderStyle.SizableToolWindow;
+			this.MaximizeBox = false;
+			this.MinimizeBox = false;
+			this.Size = new Size((Int32)(400 * TidyConst.DpiRatio), (Int32)(400 * TidyConst.DpiRatio));
+			this.MinimumSize = this.Size;
 		}
 
 		protected virtual void InitData()
@@ -142,7 +154,7 @@ namespace AnimeTidy.Forms
 		protected Label lblPath;
 		protected TextBox tbPath;
 		protected Button btnPath;
-		protected FlowLayoutPanel pnlPath;
+		protected TableLayoutPanel tlpPath;
 		protected Label lblKana;
 		protected TextBox tbKana;
 		protected Label lblEpisode;
@@ -150,7 +162,7 @@ namespace AnimeTidy.Forms
 		protected Label lblInc;
 		protected TextBox tbInc;
 		protected Label lblNote;
-		protected RichTextBox rtbNote;
+		protected TextBox tbNote;
 
 		protected override void Confirm()
 		{
@@ -172,20 +184,6 @@ namespace AnimeTidy.Forms
 		}
 
 		protected virtual void Manipulate() { }
-
-		protected override bool ProcessDialogKey(Keys keyData)
-		{
-			if (keyData == Keys.Enter)
-				if (this.rtbNote.Focused)
-				{
-					int cur = this.rtbNote.SelectionStart;
-					this.rtbNote.Text = this.rtbNote.Text.Insert(cur, "\n");
-					this.rtbNote.SelectionStart = cur + 1;
-					return true;
-				}
-
-			return base.ProcessDialogKey(keyData);
-		}
 
 		private void btnPath_Click(object sender, EventArgs e)
 		{
